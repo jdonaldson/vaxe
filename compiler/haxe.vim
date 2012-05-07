@@ -12,6 +12,6 @@ if exists(":CompilerSet") != 2		" older Vim always used :setlocal
   command -nargs=* CompilerSet setlocal <args>
 endif
 
-CompilerSet makeprg=haxe
+CompilerSet makeprg=haxe\ build.hxml\
 
-CompilerSet errorformat=%E%f:%l:\ %m,%-Z%p^,%-C%.%#,%-G%.%#
+CompilerSet errorformat=%E%f:%l:\ characters\ %c-\d\ :\ %m
