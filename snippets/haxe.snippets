@@ -1,0 +1,248 @@
+snippet iterator
+	class IntIter {
+	    var min : Int;
+	    var max : Int;
+	
+	    public function new( min : Int, max : Int ) {
+	        this.min = min;
+	        this.max = max;
+	    }
+	
+	    public function hasNext() {
+	        return( min < max );
+	    }
+	
+	    public function next() {
+	        return min++;
+	    }
+	}
+snippet switch
+	switch (<++>){
+	      case <++>:
+	        trace("hello world");
+	      case 1:
+	        var but = flash.Lib.current.attachMovie("button", "but001", 0);
+	        but._x = 10;
+	        but._y = 20;
+	      case 2,3:
+	        trace("undefined");
+	      case default:
+	    }
+snippet case
+	case ${1}:
+		${2}
+snippet filters
+	var shadow : DropShadowFilter = new DropShadowFilter(
+	  4,45,0x000000,0.8,
+	  4,4,
+	  0.65,BitmapFilterQuality.HIGH, false, false
+	);
+	var af : Array<Dynamic> = new Array();
+	af.push(shadow);
+	sprite.filters = af;
+snippet timer
+	// set up a timer 
+	progressTimer = new Timer(10);
+	progressTimer.addEventListener(TimerEvent.TIMER,updateProgress);
+	progressTimer.stop();
+	
+	static function updateProgress(event:TimerEvent){
+snippet try
+	try{
+	}catch(e:Dynamic){
+	  // Ignore any errors.
+	}
+snippet for
+	for( ${1:var} in ${2:iterator} )
+snippet class HAXE
+	class `expand('%:t:r')` {
+	
+		function new(arg) {
+			super(arg)
+		}
+
+		static function main() {
+			trace("hello world");
+		}    
+
+	}
+snippet main
+	static function main() {
+		trace("hello world");
+	}
+snippet new
+	public function new(${1:arg}) {
+		super($1);
+		${2}
+	}
+snippet fun private
+	function ${1:name}(${2:arg}) {
+		${3}
+	}
+snippet pcf public function
+	public function ${1:name}(${2:arg}) {
+		${3}
+	}
+
+snippet pf static public function
+	public function ${1:name}(${2:arg}) {
+		${3}
+	}
+
+snippet spf static public function
+	static public function ${1:name}(${2:arg}) {
+		${3}
+	}
+
+snippet psif
+	public static inline function ${1:name}(${2:arg}) {
+		${3}
+	}
+
+snippet pof public override function
+	public override function ${1:name}(${2:arg}) {
+		${3}
+	}
+snippet of private override function
+	override function ${1:name}(${2:arg}) {
+		${3}
+	}
+
+snippet trace
+	trace("${1}");
+snippet f_trace
+	flash.Lib.trace("${1}");
+snippet resize_listener
+	class Test1 extends Sprite {
+
+
+	  static function main() {
+		/*
+
+		var st:Test1 = new Test1();
+
+		var current = flash.Lib.current;
+		current.addChild(st);
+		current.addEventListener(Event.RESIZE, resizeListener);
+		*/
+
+		var bg = new Test1();
+		Lib.current.stage.addChild(bg);
+		Lib.current.stage.addEventListener(Event.RESIZE, resizeListener);
+
+		flash.Lib.current.stage.align = flash.display.StageAlign.TOP_LEFT;
+		Lib.current.stage.scaleMode = flash.display.StageScaleMode.NO_SCALE;
+
+	  }    
+
+
+	  static public function resizeListener(a){
+		trace("resized");
+	  }
+
+	}
+snippet current
+	var current:flash.display.MovieClip = flash.Lib.current;
+snippet stage_scale
+	stage.align = flash.display.StageAlign.TOP_LEFT;
+	stage.scaleMode = flash.display.StageScaleMode.NO_SCALE;
+snippet params
+		var params:Dynamic<String> = flash.Lib.current.loaderInfo.parameters;
+snippet g_fill
+	${1:g}.beginFill(0x${2:FFFFFF});
+		${3}
+	$1.endFill();
+snippet cast
+	cast(${1:cast_this}, ${2:type})
+snippet interface
+	interface ${1:name}${2: implements this}${3:, implements other}{
+		var thing : String;
+		function name(): String;
+	}
+		
+snippet pv public var
+	public var
+# snipMate does not upport making vars upper case or such. (See its documentation) That's why
+# I'm using a function to generate the snippet.
+snippet getter_setter
+	`haxe#GetterSetter(0)`
+
+snippet getter_setter_action
+	`haxe_snipmate#GetterSetter(1)`
+
+snippet super
+	`haxe_snipmate#Super()`
+
+snippet #if
+	#if js, php, cpp, flash
+	#end
+
+snippet typedef
+	typedef Position<T> = {
+		var x:T;
+	}
+snippet resource_bytes
+	haxe.Resource.getBytes("${1:name}")
+snippet resource_bytes_load
+	var loader = new Loader();
+	loader.contentLoaderInfo.addEvent(Event.COMPLETE, function (e:Dynamic){});
+	loader.loadBytes(haxe.Resource.getBytes("${1:name}"));
+snippet untyped_code
+	untyped{ ${1} }
+snippet php_code
+	__php__("php code")
+snippet php_call
+	untyped __call__("${1:func_name}", ${2:args ...} );
+snippet php_global_var
+	__var__(${1:_GET|_SERVER|_HOST}, ${2:key})
+snippet php_strict_equal
+	__physeq__(${1}, ${2})
+
+
+snippet enum
+	enum ${1:name} {
+		blue;
+		grey( v : Int );
+	}
+snippet flash_trace_to_log
+	haxe.Log.trace = function (v:Dynamic, ?infos: haxe.PosInfos ):Void{
+		var loc = (infos == null) ? "" : infos.fileName+" "+infos.lineNumber+" ";
+		flash.Lib.trace(loc+v);
+	}
+snippet get_host
+	ExternalInterface.call("window.location.href.match(/http:\\/\\/([^/]*)/)[1].toString",[])
+
+snippet class_db_object
+	class ${1:name} extends neko.db.Object {
+	
+		public var id:Int;
+		public var surname:String;
+		public var lastname:String;
+	
+	
+		public function new(arg) {
+		super(arg)
+		}
+	
+		static function main() {
+			trace("hello world");
+		}    
+	
+		// special fields:
+		static var manager : Neko.db.Manager = new neko.db.Manager<${1}>(${1})
+		static var PRIVATE_FIELDS = [ "xx", "yyy" ]; // not used by database
+		static var TABLE_NAME = "User"; // optional defaults to class name
+		static var local_manager: neko.db.Manager<neko.db.Object> // don't know yet
+		static var TABLE_IDS: Array<String> // ids to be used
+	
+	}
+
+snippet using
+	using StringTools;
+	using Lambda;
+snippet writeFile
+		static function writeFile(path, lines:Array<String>){
+			var f =neko.io.File.write(path, true);
+			for (s in lines) f.writeString(s+"\n");
+			f.close();
+		}

@@ -1,0 +1,28 @@
+snippet resource
+	-resource ${1:file}${2:@name(optional)}
+
+snippet target_neko
+	-neko $1.n
+	-main ${1:Index}
+snippet target_flash
+	-swf9 <++>.swf -swf-version=10
+	-main ${1:Index}
+snippet away3d
+	-swf-version 10
+	-swf9 Main.swf
+	-main <+class+>
+	-resource assets/earth.jpg@earth
+snippet target_php
+	-main ${1:Index}
+	--php-front index.php
+	--remap neko:php
+	-php php
+snippet target_js
+	-main Main
+	-cp ${1:dir}
+	--js-namespace ${2:hxroot}
+	-js ${3:js-haxe.js}
+snippet target_cpp
+	-main ${1:Index}
+	--remap neko:cpp
+	-cpp cpp
