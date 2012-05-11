@@ -15,17 +15,12 @@ if exists('g:vihxen_build_index')
     let g:vihxen_build_index = 0
 endif   
 
-"s:FindInParent
-" find the file argument and returns the path to it.
-" Starting with the current working dir, it walks up the parent folders
-" until it finds the file, or it hits the stop dir.
-" If it doesn't find it, it returns "Nothing"
 function! s:FindInParent(fln,flsrt,flstp)
     let here = a:flsrt
     while ( strlen( here) > 0 ) 
         let p = split(globpath(here, a:fln), '\n')
         if len(p) > 0 
-            return ['ok', here, fnamemodify(p[0], ':p:t'), idx ]
+            return ['ok', here, fnamemodify(p[0], ':p:t'), ]
         endif
         let fr = match(here, '/[^/]*$')
         if fr == -1
@@ -38,6 +33,13 @@ function! s:FindInParent(fln,flsrt,flstp)
     endwhile
     return ['fail', '', ''] 
 endfunction
+
+function! g:Unlet(str)
+    if exists(a:str)
+        eval("unlet ".a:str)
+    endif    
+    return
+endfunction    
 
 if exists('s:vihxen_build_name')
     :unlet s:vihxen_build_name
@@ -56,7 +58,6 @@ if exists('g:vihxen_build_directory')
 endif
 
 function! s:VihxenUpdateBuild()
-    echomsg 'hooo'
     let [success, hxmldir, hxmlname] = s:FindInParent('*.hxml', expand('%:p:h')  ,'/')    
     if success == 'ok'
         if !exists('s:vihxen_build_directory')
@@ -69,15 +70,16 @@ function! s:VihxenUpdateBuild()
     if !exists('s:vihxen_build_directory')
         echoerr 'vihxen could not set a build directory'
     elseif !exists('s:vihxen_build_name')
-        echoerr 'vihxen could not set a build directory'
+        echoerr 'vihxen could not set a build name'
     else
-        CompilerSet makeprg='cd'.s:vihxen_build_directory.'; haxe '. s:vihxen_build_name
-        echomsg 'vihxen makeprg set: '. makeprg 
+        let makeprg_str = 'cd '.s:vihxen_build_directory.'; haxe '.s:vihxen_build_name
+        "CompilerSet makeprg=makeprg_str
+        let &makeprg=makeprg_str
+        echomsg 'vihxen makeprg set: '.&makeprg 
         CompilerSet errorformat=%E%f:%l:\ characters\ %c-\d\ :\ %m
         let current_compiler = "haxe"
     endif
     return 'true'
 endfunction
-echomsg 'test'
 let test = s:VihxenUpdateBuild()
 
