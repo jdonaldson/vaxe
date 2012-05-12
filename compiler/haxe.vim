@@ -72,12 +72,12 @@ function! s:VihxenUpdateBuild()
     elseif !exists('s:vihxen_build_name')
         echoerr 'vihxen could not set a build name'
     else
+        let current_compiler = "haxe"
         let makeprg_str = 'cd '.s:vihxen_build_directory.'; haxe '.s:vihxen_build_name
         "CompilerSet makeprg=makeprg_str
         let &makeprg=makeprg_str
-        echomsg 'vihxen makeprg set: '.&makeprg 
-        CompilerSet errorformat=%E%f:%l:\ characters\ %c-\d\ :\ %m
-        let current_compiler = "haxe"
+        "echomsg 'vihxen makeprg set: '.&makeprg 
+        CompilerSet errorformat=%E%f:%l:\ characters\ %c-%*[0-9]\ :\ %m,%I%f:%l:\ %m
     endif
     return 'true'
 endfunction
