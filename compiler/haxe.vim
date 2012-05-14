@@ -58,6 +58,16 @@ if !filereadable(g:vihxen_build)
     \       " in the working directory: ".expand("%:p")
 endif
 
+function! g:Completion(file_name, byte_count)
+    let hxfile = join(readfile(g:vihxen_build),"\n")
+    let parts = split(hxfile,'--next')
+    let complete = filter(copy(parts), 'match(v:val, "^\s*#\s*vihxen")')
+    if len(complete) == 0
+        complete = parts
+    endif
+    return complete[0]."\n"."--display ".a:file_name.'@'.a:byte_count
+endfunction
+
 let build_command = "cd ".fnamemodify(g:vihxen_build,":p:h")."; haxe ".g:vihxen_build
 
 let &makeprg = build_command
