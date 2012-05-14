@@ -68,7 +68,20 @@ function! g:Completion(file_name, byte_count)
     return complete[0]."\n"."--display ".a:file_name.'@'.a:byte_count
 endfunction
 
-let build_command = "cd ".fnamemodify(g:vihxen_build,":p:h")."; haxe ".g:vihxen_build
+
+function! g:Complete()
+    let complete_args = g:Completion(expand("%:p"), (line2byte('.')+col('.')-2))
+    let hxml_cd = fnamemodify(g:vihxen_build,":p:h")
+    let hxml_sys = "cd ".hxml_cd."; haxe ".complete_args." 2>&1"
+    let hxml_sys =  join(split(hxml_sys,"\n")," ")
+    silent exe ":w"
+    let complete_output = system(hxml_sys)
+    echomsg complete_output
+    return complete_output
+endfunction
+
+
+let build_command = "cd '".fnamemodify(g:vihxen_build,":p:h")."'; haxe '".g:vihxen_build."' 2>&1"
 
 let &makeprg = build_command
 
