@@ -77,6 +77,14 @@ function! g:Complete()
     silent exe ":w"
     let complete_output = system(hxml_sys)
     echomsg complete_output
+    python << endpython
+    import vim, libxml2
+    complete_output = vim.eval("complete_output")
+    doc = libxml2.parseDoc(complete_output) 
+    ctxt = doc.xpathNewContext()
+    res = ctxt.xpathEval("//list/i")
+    
+    endpython
     return complete_output
 endfunction
 
