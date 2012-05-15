@@ -58,7 +58,7 @@ if !filereadable(g:vihxen_build)
     \       " in the working directory: ".expand("%:p")
 endif
 
-function! g:Completion(file_name, byte_count)
+function! g:RawCompletion(file_name, byte_count)
     let hxfile = join(readfile(g:vihxen_build),"\n")
     let parts = split(hxfile,'--next')
     let complete = filter(copy(parts), 'match(v:val, "^\s*#\s*vihxen")')
@@ -69,23 +69,46 @@ function! g:Completion(file_name, byte_count)
 endfunction
 
 
-function! g:Complete()
-    let complete_args = g:Completion(expand("%:p"), (line2byte('.')+col('.')-2))
+function! g:DisplayCompletion()
+    let complete_args = g:RawCompletion(expand("%:p"), (line2byte('.')+col('.')-2))
     let hxml_cd = fnamemodify(g:vihxen_build,":p:h")
     let hxml_sys = "cd ".hxml_cd."; haxe ".complete_args." 2>&1"
     let hxml_sys =  join(split(hxml_sys,"\n")," ")
     silent exe ":w"
     let complete_output = system(hxml_sys)
-    echomsg complete_output
-    python << endpython
-    import vim, libxml2
-    complete_output = vim.eval("complete_output")
-    doc = libxml2.parseDoc(complete_output) 
-    ctxt = doc.xpathNewContext()
-    res = ctxt.xpathEval("//list/i")
-    
-    endpython
-    return complete_output
+    let output = []
+python << endpython
+import vim, re
+import xml.etree.ElementTree as ET
+complete_output = vim.eval("complete_output")
+root= ET.XML("<result>"+complete_output+"</result>")
+res = root.findall("list/i")
+
+def xml2completion(x):
+    word =x.attrib["n"]
+    menu =x.find("t").text
+    info = x.find("d").text
+    info = '' if info is None else info
+    kind = 'v'
+    if  menu == '': kind = 'm'
+    elif re.match("\-",menu): kind = 'f' # if it has a ->
+    return {'word': word, 'info':info, 'kind':kind, 'menu':menu}
+
+completes = map(xml2completion, res)
+print str(completes)
+vim.command("let output = " + str(completes))
+endpython
+    return output
+endfunction
+
+function! g:HaxeComplete(findstart,base)
+   echomsg 'hi'
+   if a:findstart
+       return a:findstart
+   else
+       "return g:DisplayCompletion()
+       return ['foo','bar']
+   endif
 endfunction
 
 
