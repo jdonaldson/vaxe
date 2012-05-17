@@ -44,7 +44,11 @@ function! g:SelectHxml(...)
     endfor
     let found_title = ['Select hxml']
     let found_title += map(copy(found_hxml), '"(".(v:key+1)."):".v:val')
-    let selected_index = inputlist(found_title)
+    if len(found_title) == 1
+        let selected_index = 1 
+    else
+        let selected_index = inputlist(found_title)
+    endif
     let g:vihxen_build = found_hxml[selected_index-1]
     return g:vihxen_build
 endfunction
@@ -81,7 +85,9 @@ python << endpython
 import vim, re
 import xml.etree.ElementTree as ET
 complete_output = vim.eval("complete_output")
-root= ET.XML("<result>"+complete_output+"</result>")
+
+# wrap in a tag to prevent parsing errors
+root= ET.XML("<output>"+complete_output+"</output>")
 res = root.findall("list/i")
 
 def xml2completion(x):
@@ -91,11 +97,10 @@ def xml2completion(x):
     info = '' if info is None else info
     kind = 'v'
     if  menu == '': kind = 'm'
-    elif re.match("\-",menu): kind = 'f' # if it has a ->
+    elif re.search("\->",menu): kind = 'f' # if it has a ->
     return {'word': word, 'info':info, 'kind':kind, 'menu':menu}
 
 completes = map(xml2completion, res)
-print str(completes)
 vim.command("let output = " + str(completes))
 endpython
     return output
@@ -104,13 +109,14 @@ endfunction
 function! g:HaxeComplete(findstart,base)
    echomsg 'hi'
    if a:findstart
-       return a:findstart
+       return col('.') 
    else
-       "return g:DisplayCompletion()
-       return ['foo','bar']
+       return g:DisplayCompletion()
+       "return ['foo','bar']
    endif
 endfunction
 
+set omnifunc=g:HaxeComplete
 
 let build_command = "cd '".fnamemodify(g:vihxen_build,":p:h")."'; haxe '".g:vihxen_build."' 2>&1"
 
