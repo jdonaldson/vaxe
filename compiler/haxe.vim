@@ -44,7 +44,7 @@ function! g:SelectHxml(...)
     endfor
     let found_title = ['Select hxml']
     let found_title += map(copy(found_hxml), '"(".(v:key+1)."):".v:val')
-    if len(found_title) == 1
+    if len(found_title) == 2
         let selected_index = 1 
     else
         let selected_index = inputlist(found_title)
@@ -94,10 +94,11 @@ def xml2completion(x):
     word =x.attrib["n"]
     menu =x.find("t").text
     info = x.find("d").text
+    menu = '' if menu is None else menu
     info = '' if info is None else info
     kind = 'v'
     if  menu == '': kind = 'm'
-    elif re.search("\->",menu): kind = 'f' # if it has a ->
+    elif re.search("\->", menu): kind = 'f' # if it has a ->
     return {'word': word, 'info':info, 'kind':kind, 'menu':menu}
 
 completes = map(xml2completion, res)
@@ -107,9 +108,8 @@ endpython
 endfunction
 
 function! g:HaxeComplete(findstart,base)
-   echomsg 'hi'
    if a:findstart
-       return col('.') 
+       return col('.')
    else
        return g:DisplayCompletion()
        "return ['foo','bar']
