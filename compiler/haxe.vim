@@ -42,10 +42,10 @@ function! g:SelectHxml(...)
         let found_hxml = filter(found_hxml,
         \ 'fnamemodify(v:val,":t:r") == fnamemodify(g,":t:r")')
     endfor
-    let found_title = ['Select hxml']
-    let found_title += map(copy(found_hxml), '"(".(v:key+1)."):".v:val')
+    let found_title = ["Select hxml"]
+    let found_title += map(range(0,len(found_hxml)-1), '"(".(v:val+1)."):".found_hxml[v:val]')
     if len(found_title) == 2
-        let selected_index = 1 
+        let selected_index = 1
     else
         let selected_index = inputlist(found_title)
     endif
@@ -84,24 +84,31 @@ function! g:DisplayCompletion()
 python << endpython
 import vim, re
 import xml.etree.ElementTree as ET
+import HTMLParser
+
 complete_output = vim.eval("complete_output")
 
 # wrap in a tag to prevent parsing errors
 root= ET.XML("<output>"+complete_output+"</output>")
-res = root.findall("list/i")
+fields = root.findall("list/i")
+if (fields.length > 0)
+    def xmlfield2completion(x):
+        word =x.attrib["n"]
+        menu =x.find("t").text
+        info = x.find("d").text
+        menu = '' if menu is None else menu
+        info = '' if info is None else info
+        kind = 'v'
+        if  menu == '': kind = 'm'
+        elif re.search("\->", menu): kind = 'f' # if it has a ->
+        return {'word': word, 'info':info, 'kind':kind, 'menu':menu}
 
-def xml2completion(x):
-    word =x.attrib["n"]
-    menu =x.find("t").text
-    info = x.find("d").text
-    menu = '' if menu is None else menu
-    info = '' if info is None else info
-    kind = 'v'
-    if  menu == '': kind = 'm'
-    elif re.search("\->", menu): kind = 'f' # if it has a ->
-    return {'word': word, 'info':info, 'kind':kind, 'menu':menu}
-
-completes = map(xml2completion, res)
+    completes = map(xmlfield2completion, fields)
+else
+    arguments = root.findall("type")
+    if (arguments.length >  0)
+        def xmlarg2completion(x):
+            h = HTMLParser.HTMLParser()
 vim.command("let output = " + str(completes))
 endpython
     return output
@@ -118,7 +125,7 @@ endfunction
 
 set omnifunc=g:HaxeComplete
 
-let build_command = "cd '".fnamemodify(g:vihxen_build,":p:h")."'; haxe '".g:vihxen_build."' 2>&1"
+let build_command = "cd '".fnamemodify(g:vihxen_build,":p:h")."'; haxe '".g:vihxen_build."' 2>&1; cd -"
 
 let &makeprg = build_command
 
