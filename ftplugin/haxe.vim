@@ -1,2 +1,2 @@
-:compiler haxe
+compiler haxe
 
