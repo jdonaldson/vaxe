@@ -52,11 +52,11 @@ function! g:SelectHxml(...)
     let b:vihxen_build = found_hxml[selected_index-1]
 
     set omnifunc=g:HaxeComplete
-    let build_command = "cd '".fnamemodify(b:vihxen_build,":p:h")."';haxe '".b:vihxen_build."' 2>&1;"
+    let build_command = "cd '".fnamemodify(b:vihxen_build,":p:h")."';haxe '".b:vihxen_build."' 2>&1"
     echomsg build_command
     let &makeprg = build_command
+    "CompilerSet errorformat=%E%f:%l:\ characters\ %c-%*[0-9\]\ :\ %m
     CompilerSet errorformat=%E%f:%l:\ characters\ %c-%*[0-9]\ :\ %m,%I%f:%l:\ %m
-
     return b:vihxen_build
 endfunction
 
@@ -74,7 +74,7 @@ function! g:RawCompletion(file_name, byte_count)
     let hxfile = join(readfile(b:vihxen_build),"\n")
     let parts = split(hxfile,'--next')
     let parts = map(parts, 'substitute(v:val,"#.*","","")')
-    "let parts = map(parts, 'substitute(v:val,"\s*-cmd","","")')
+    let parts = map(parts, 'substitute(v:val,"\s*-cmd\s*.*","","")')
     let complete = filter(copy(parts), 'match(v:val, "^\s*#\s*vihxen")')
     if len(complete) == 0
         complete = parts
@@ -101,7 +101,7 @@ import HTMLParser
 
 complete_output = vim.eval("complete_output")
 if complete_output is None: complete_output = ''
-print(complete_output) 
+print(complete_output)
 completes = []
 # wrap in a tag to prevent parsing errors
 
@@ -128,7 +128,7 @@ elif len(types) > 0:
     otype = types[0]
     h = HTMLParser.HTMLParser()
     info = h.unescape(otype.text).strip()
-    completes= [{'info':"signature "+ info, 'word':' ','abbr':info }]
+    completes= [{'info':"Signature: " + info, 'word':' ','abbr':info }]
 
 vim.command("let output = " + str(completes))
 endpython
@@ -144,4 +144,3 @@ function! g:HaxeComplete(findstart,base)
    endif
 endfunction
 
-    CompilerSet errorformat=%E%f:%l:\ characters\ %c-%*[0-9]\ :\ %m,%I%f:%l:\ %m
