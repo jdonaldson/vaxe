@@ -34,6 +34,10 @@ function! s:FindInParent(fln,flsrt,flstp)
     return p
 endfunction
 
+"TODO: make selecthxml less demanding, it should quietly
+"fail if it does not find hxml.  It should shut up if it finds more than one.
+"also, need to use a class path grep for imports/type declarations
+
 "Select a hxml file using s:FindInParent, and prefering files named
 "b:vihxen_prefer
 function! g:SelectHxml(...)
@@ -84,7 +88,7 @@ endfunction
 
 function! g:DisplayCompletion()
     let curchar = getline('.')[col('.')-1]
-    if match(curchar, '\w')
+    if match(curchar, ':')
         let xml_file = fnamemodify(b:vihxen_build,":p:h").'/test.xml'
 python << endpython
 import vim
@@ -95,6 +99,8 @@ xml_output = ET.XML(xml_string)
 xml_output.findall("class")
 completes = []
 for o in xml_output:
+    if o.find("new") is None:
+       continue 
     word = o.attrib["path"]
     menu = o.attrib["file"]
     info = o.find("haxe_doc")
@@ -103,7 +109,9 @@ for o in xml_output:
     else:
         info = ''
     completes.append({'word':word,'menu':menu,'info':info})
-    vim.command('let output = ' + str(completes))
+
+completes = sorted(completes, key=lambda x:x['word'])
+vim.command('let output = ' + str(completes))
 endpython
         return output
     endif
@@ -126,7 +134,7 @@ import HTMLParser
 complete_output = vim.eval("complete_output")
 if complete_output is None: complete_output = ''
 completes = []
-print(complete_output)
+#print(complete_output)
 # wrap in a tag to prevent parsing errors
 root= ET.XML("<output>"+complete_output+"</output>")
 fields = root.findall("list/i")
@@ -146,7 +154,7 @@ if len(fields) > 0:
         return {'word': word, 'info':info, 'kind':kind, 'menu':menu,'abbr':abbr}
     completes = map(fieldxml2completion, fields)
 elif len(types) > 0:
-    print(types[0].text)
+#   print(types[0].text)
     otype = types[0]
     h = HTMLParser.HTMLParser()
     word = ' '
