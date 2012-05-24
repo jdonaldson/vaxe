@@ -127,8 +127,10 @@ elif len(types) > 0:
     print(types[0].text)
     otype = types[0]
     h = HTMLParser.HTMLParser()
+    word = ' '
+    #word = 'foo:<`1`>'
     info = h.unescape(otype.text).strip()
-    completes= [{'info':"Signature: " + info, 'word':' ','abbr':info }]
+    completes= [{'info':"Signature: " + info, 'word':word,'abbr':info }]
 
 vim.command("let output = " + str(completes))
 endpython
