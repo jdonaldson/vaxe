@@ -5,4 +5,4 @@ let g:tagbar_type_haxe = {
         \ 'v:variables',
         \ 'f:functions',
     \ ]
-	\ }
+        \ }

@@ -52,7 +52,7 @@ function! g:SelectHxml(...)
     let b:vihxen_build = found_hxml[selected_index-1]
 
     set omnifunc=g:HaxeComplete
-    let build_command = "cd '".fnamemodify(b:vihxen_build,":p:h")."';haxe '".b:vihxen_build."' 2>&1"
+    let build_command = "cd '".fnamemodify(b:vihxen_build,":p:h")."';haxe '".b:vihxen_build."' 2>&1;"
     echomsg build_command
     let &makeprg = build_command
     "CompilerSet errorformat=%E%f:%l:\ characters\ %c-%*[0-9\]\ :\ %m
@@ -82,8 +82,32 @@ function! g:RawCompletion(file_name, byte_count)
     return complete[0]."\n"."--display ".a:file_name.'@'.a:byte_count
 endfunction
 
-
 function! g:DisplayCompletion()
+    let curchar = getline('.')[col('.')-1]
+    if match(curchar, '\w')
+        let xml_file = fnamemodify(b:vihxen_build,":p:h").'/test.xml'
+python << endpython
+import vim
+import xml.etree.ElementTree as ET
+xml_file = vim.eval("xml_file")
+xml_string = open(xml_file,'r').read()
+xml_output = ET.XML(xml_string)
+xml_output.findall("class")
+completes = []
+for o in xml_output:
+    word = o.attrib["path"]
+    menu = o.attrib["file"]
+    info = o.find("haxe_doc")
+    if info is not None:
+        info = info.text
+    else:
+        info = ''
+    completes.append({'word':word,'menu':menu,'info':info})
+    vim.command('let output = ' + str(completes))
+endpython
+        return output
+    endif
+
     let complete_args = g:RawCompletion(expand("%:p"), (line2byte('.')+col('.')-2))
     let hxml_cd = fnamemodify(b:vihxen_build,":p:h")
     let hxml_sys = "cd\ ".hxml_cd."; haxe ".complete_args."\ 2>&1"
@@ -101,11 +125,9 @@ import HTMLParser
 
 complete_output = vim.eval("complete_output")
 if complete_output is None: complete_output = ''
-print(complete_output)
 completes = []
-# wrap in a tag to prevent parsing errors
-
 print(complete_output)
+# wrap in a tag to prevent parsing errors
 root= ET.XML("<output>"+complete_output+"</output>")
 fields = root.findall("list/i")
 types = root.findall("type")
@@ -128,7 +150,6 @@ elif len(types) > 0:
     otype = types[0]
     h = HTMLParser.HTMLParser()
     word = ' '
-    #word = 'foo:<`1`>'
     info = h.unescape(otype.text).strip()
     completes= [{'info':"Signature: " + info, 'word':word,'abbr':info }]
 
@@ -142,7 +163,6 @@ function! g:HaxeComplete(findstart,base)
        return col('.')
    else
        return g:DisplayCompletion()
-       "return ['foo','bar']
    endif
 endfunction
 
