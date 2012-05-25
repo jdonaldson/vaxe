@@ -12,47 +12,14 @@ if exists(":CompilerSet") != 2		" older Vim always used :setlocal
 endif
 
 if !exists('g:vihxen_prefer')
-    let g:vihxen_prefer = 'build'       " prefer build.hxml files
+    let g:vihxen_prefer = 'build.hxml'       " prefer build.hxml files
 endif
 
-" build a list of files that match the fln regex, starting at flsrt and
-" ending at flstp
-function! s:FindInParent(fln,flsrt,flstp)
-    let here = a:flsrt
-    let p = []
-    while ( strlen( here) > 0 )
-        let p += split(globpath(here, a:fln),'\n')
-        let fr = match(here, '/[^/]*$')
-        if fr == -1
-            break
-        endif
-        let here = strpart(here, 0, fr)
-        if here == a:flstp
-            break
-        endif
-    endwhile
-    return p
-endfunction
 
-"TODO: make selecthxml less demanding, it should quietly
-"fail if it does not find hxml.  It should shut up if it finds more than one.
-"also, need to use a class path grep for imports/type declarations
-
-"Select a hxml file using s:FindInParent, and prefering files named
-"b:vihxen_prefer
-function! g:SelectHxml(...)
-    let found_hxml = s:FindInParent("*.hxml", expand("%:p:h"), "/")
-    for g in a:000
-        let found_hxml = filter(found_hxml,
-        \ 'fnamemodify(v:val,":t:r") == fnamemodify(g,":t:r")')
-    endfor
-    let found_title = ["Select hxml"]
-    let found_title += map(range(0,len(found_hxml)-1), '"(".(v:val+1)."):".found_hxml[v:val]')
-    if len(found_title) == 2
-        let selected_index = 1
-        let b:vihxen_build = found_hxml[selected_index-1]
-    else
-        return
+function! g:SelectHxml()
+    let b:vihxen_build = findfile(g:vihxen_prefer,".;")
+    if len(b:vihxen_build) == 0
+        echomsg "Preferred build file not found, please create one."
     endif
     set omnifunc=g:HaxeComplete
     let build_command = "cd '".fnamemodify(b:vihxen_build,":p:h")."';haxe '".b:vihxen_build."' 2>&1;"
@@ -64,12 +31,7 @@ function! g:SelectHxml(...)
 endfunction
 
 if !exists("b:vihxen_build")
-    let b:vihxen_build = g:SelectHxml(g:vihxen_prefer)
-endif
-
-if !filereadable(b:vihxen_build)
-    echom  "Could not read or find the specified build file:".b:vihxen_build
-    finish
+    let b:vihxen_build = g:SelectHxml()
 endif
 
 function! g:RawCompletion(file_name, byte_count)
@@ -85,6 +47,9 @@ function! g:RawCompletion(file_name, byte_count)
 endfunction
 
 function! g:DisplayCompletion()
+    if  synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") == 'Comment'
+        return []
+    endif
     let complete_args = g:RawCompletion(expand("%:p"), (line2byte('.')+col('.')-2))
     let hxml_cd = fnamemodify(b:vihxen_build,":p:h")
     let hxml_sys = "cd\ ".hxml_cd."; haxe ".complete_args."\ 2>&1"

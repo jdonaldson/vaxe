@@ -10,8 +10,9 @@ setlocal cindent cinoptions& cinoptions+=j1
 
 " Set the function to do the work.
 setlocal indentexpr=GetHaxeIndent()
-
 let b:undo_indent = "set cin< cino< indentkeys< indentexpr<"
+
+setlocal indentkeys+=/
 
 " Only define the function once.
 if exists("*GetHaxeIndent")
@@ -56,12 +57,6 @@ function GetHaxeIndent()
 " find start of previous line, in case it was a continuation line
   let lnum = SkipHaxeBlanksAndComments(v:lnum - 1)
 
-" If the previous line starts with '@', we should have the same indent as
-" the previous one
-  if getline(lnum) =~ '^\s*@\S\+\s*$'
-    return indent(lnum)
-  endif
-
   let prev = lnum
   while prev > 1
     let next_prev = SkipHaxeBlanksAndComments(prev - 1)
@@ -71,8 +66,6 @@ function GetHaxeIndent()
     let prev = next_prev
   endwhile
 
-
-
 " When the line starts with a }, try aligning it with the matching {,
   if getline(v:lnum) =~ '^\s*}\s*\(//.*\|/\*.*\)\=$'
     call cursor(v:lnum, 1)
@@ -81,7 +74,7 @@ function GetHaxeIndent()
     if lnum < v:lnum
       while lnum > 1
         let next_lnum = SkipHaxeBlanksAndComments(lnum - 1)
-        if getline(lnum) !~ '^\s*\(throws\|extends\|implements\)\>'
+        if getline(lnum) !~ '^\s*\(extends\|implements\)\>'
               \ && getline(next_lnum) !~ ',\s*$'
           break
         endif
