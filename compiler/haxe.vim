@@ -50,11 +50,10 @@ function! g:SelectHxml(...)
     let found_title += map(range(0,len(found_hxml)-1), '"(".(v:val+1)."):".found_hxml[v:val]')
     if len(found_title) == 2
         let selected_index = 1
+        let b:vihxen_build = found_hxml[selected_index-1]
     else
-        let selected_index = inputlist(found_title)
+        return
     endif
-    let b:vihxen_build = found_hxml[selected_index-1]
-
     set omnifunc=g:HaxeComplete
     let build_command = "cd '".fnamemodify(b:vihxen_build,":p:h")."';haxe '".b:vihxen_build."' 2>&1;"
     echomsg build_command
@@ -69,8 +68,7 @@ if !exists("b:vihxen_build")
 endif
 
 if !filereadable(b:vihxen_build)
-    echoerr  "Could not read the specified build file:"
-    echoerr b:vihxen_build
+    echom  "Could not read or find the specified build file:".b:vihxen_build
     finish
 endif
 
@@ -87,35 +85,6 @@ function! g:RawCompletion(file_name, byte_count)
 endfunction
 
 function! g:DisplayCompletion()
-    let curchar = getline('.')[col('.')-1]
-    if match(curchar, ':')
-        let xml_file = fnamemodify(b:vihxen_build,":p:h").'/test.xml'
-python << endpython
-import vim
-import xml.etree.ElementTree as ET
-xml_file = vim.eval("xml_file")
-xml_string = open(xml_file,'r').read()
-xml_output = ET.XML(xml_string)
-xml_output.findall("class")
-completes = []
-for o in xml_output:
-    if o.find("new") is None:
-       continue 
-    word = o.attrib["path"]
-    menu = o.attrib["file"]
-    info = o.find("haxe_doc")
-    if info is not None:
-        info = info.text
-    else:
-        info = ''
-    completes.append({'word':word,'menu':menu,'info':info})
-
-completes = sorted(completes, key=lambda x:x['word'])
-vim.command('let output = ' + str(completes))
-endpython
-        return output
-    endif
-
     let complete_args = g:RawCompletion(expand("%:p"), (line2byte('.')+col('.')-2))
     let hxml_cd = fnamemodify(b:vihxen_build,":p:h")
     let hxml_sys = "cd\ ".hxml_cd."; haxe ".complete_args."\ 2>&1"
@@ -124,8 +93,8 @@ endpython
     silent exe ":w"
     let complete_output = system(hxml_sys)
     let output = []
-    echomsg hxml_sys
-    echomsg complete_output
+    "echomsg hxml_sys
+    "echomsg complete_output
 python << endpython
 import vim, re, HTMLParser
 import xml.etree.ElementTree as ET
@@ -134,7 +103,7 @@ import HTMLParser
 complete_output = vim.eval("complete_output")
 if complete_output is None: complete_output = ''
 completes = []
-#print(complete_output)
+print(complete_output)
 # wrap in a tag to prevent parsing errors
 root= ET.XML("<output>"+complete_output+"</output>")
 fields = root.findall("list/i")
@@ -146,7 +115,10 @@ if len(fields) > 0:
         menu =x.find("t").text
         info = x.find("d").text
         menu = '' if menu is None else menu
-        info = '' if info is None else info.strip()
+        if info is None:
+            info = ''
+        else:
+            info = info.strip()
         abbr = word
         kind = 'v'
         if  menu == '': kind = 'm'
@@ -154,15 +126,17 @@ if len(fields) > 0:
         return {'word': word, 'info':info, 'kind':kind, 'menu':menu,'abbr':abbr}
     completes = map(fieldxml2completion, fields)
 elif len(types) > 0:
-#   print(types[0].text)
     otype = types[0]
     h = HTMLParser.HTMLParser()
     word = ' '
     info = h.unescape(otype.text).strip()
-    completes= [{'info':"Signature: " + info, 'word':word,'abbr':info }]
-
+    completes= [{'word':word,'abbr':info }]
 vim.command("let output = " + str(completes))
 endpython
+    for o in output
+        let o['info'] = o['info'] . "\n" . o['menu']
+    endfor
+
     return output
 endfunction
 
