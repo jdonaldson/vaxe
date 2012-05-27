@@ -16,8 +16,8 @@ endfunction
 
 
 function! haxe#FindHxmlInParentDir()
-    let b:vihxen_hxml = findfile(g:vihxen_prefer_hxml,".;")
-    if len(b:vihxen_hxml) == 0
+    let b:vihxen_hxml = fnamemodify(findfile(g:vihxen_prefer_hxml,".;"),'%p')
+    if filereadable(b:vihxen_hxml)
         echomsg "Preferred build file not found, please create one."
     endif
     set omnifunc=haxe#HaxeComplete
@@ -63,7 +63,7 @@ function! s:CurrentBlockHxml(file_name)
     let complete_string = complete[0]
     let parts = split(complete_string,"\n")
     let parts = map(parts, 'substitute(v:val,"#.*","","")')
-    let parts = map(parts, 'substitute(v:val,"\s*-(cmd|xml)\s*.*","","")')
+    let parts = map(parts, 'substitute(v:val,"\s*-(cmd|xml|v)\s*.*","","")')
     let complete_string = join(parts,"\n")
     return complete_string
 endfunction
@@ -103,8 +103,8 @@ types = root.findall("type")
 completes = []
 if len(fields) > 0:
     def fieldxml2completion(x):
-        word =x.attrib["n"]
-        menu =x.find("t").text
+        word = x.attrib["n"]
+        menu = x.find("t").text
         info = x.find("d").text
         menu = '' if menu is None else menu
         if info is None:
