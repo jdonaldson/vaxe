@@ -1,11 +1,11 @@
-function! haxe#OpenHxml()
+function! vihxen#OpenHxml()
     if filereadable(b:vihxen_hxml)
         exe ':edit '.b:vihxen_hxml
     endif
 endfunction
 
 
-function! haxe#HaxeComplete(findstart,base)
+function! vihxen#HaxeComplete(findstart,base)
    if a:findstart
        return col('.')
    else
@@ -15,24 +15,50 @@ endfunction
 
 
 
-function! haxe#FindHxmlInParentDir()
-    let b:vihxen_hxml = fnamemodify(findfile(g:vihxen_prefer_hxml,".;"),'%p')
-    if filereadable(b:vihxen_hxml)
+function! vihxen#FindHxml(...)
+    let choose_first = 1;
+    if a:0 > 1
+        let prefer_hxml = a:1
+        if a:0 == 2
+            let choose_first = a:2 
+        endif
+    else
+        let prefer_hxml = "**.hxml"
+    end
+    echom prefer_hxml
+    let hxmls = glob(prefer_hxml)
+    let hxmllist = split(hxmls,"\n")
+
+    if (choose_first || len(hxmls) == 1)
+        let b:vihxen_hxml = hxmllist[0]
+    else
+        let index = inputlist(["Select Hxml"] + hxmllist) 
+        let b:vihxen_hxml = hxmllist[index-1]
+    endif
+
+    if b:vihxen_hxml !~ "^//"
+        let b:vihxen_hxml = getcwd() . '/' . b:vihxen_hxml
+    endif
+
+    if !filereadable(b:vihxen_hxml)
         echomsg "Preferred build file not found, please create one."
     endif
-    set omnifunc=haxe#HaxeComplete
+
+    set omnifunc=vihxen#HaxeComplete
     let build_command = "cd '".fnamemodify(b:vihxen_hxml,":p:h")."';haxe '".b:vihxen_hxml."' 2>&1;"
     echomsg build_command
     let &makeprg = build_command
-    "CompilerSet errorformat=%E%f:%l:\ characters\ %c-%*[0-9\]\ :\ %m
+    if exists(":CompilerSet") != 2 " older Vim always used :setlocal
+        command -nargs=* CompilerSet setlocal <args>
+    endif
     CompilerSet errorformat=%E%f:%l:\ characters\ %c-%*[0-9]\ :\ %m,%I%f:%l:\ %m
     return b:vihxen_hxml
 endfunction
 
-"function! haxe#FindHxmlInWorkingDir()
+"function! vihxen#FindHxmlInWorkingDir()
 "endfunction
 
-function! haxe#CompilerClassPaths()
+function! vihxen#CompilerClassPaths()
    let complete_args = s:CurrentBlockHxml(b:vihxen_hxml)
    let complete_args.= "\n"."-v"."\n"."--no-output"
    let complete_args = join(split(complete_args,"\n"),' ')
@@ -46,8 +72,8 @@ function! haxe#CompilerClassPaths()
    return paths
 endfunction
 
-function! haxe#Ctags()
-    let paths = join(haxe#CompilerClassPaths(),' ')
+function! vihxen#Ctags()
+    let paths = join(vihxen#CompilerClassPaths(),' ')
     let hxml_cd = fnamemodify(b:vihxen_hxml,":p:h")
     let hxml_sys = "cd " . hxml_cd . "; ctags -R . " . paths
     call system(hxml_sys)
