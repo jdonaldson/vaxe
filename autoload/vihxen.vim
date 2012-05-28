@@ -16,23 +16,22 @@ endfunction
 
 
 function! vihxen#FindHxml(...)
-    let choose_first = 1;
+    let choose_first = 1
     if a:0 > 1
         let prefer_hxml = a:1
         if a:0 == 2
-            let choose_first = a:2 
+            let choose_first = a:2
         endif
     else
         let prefer_hxml = "**.hxml"
     end
-    echom prefer_hxml
     let hxmls = glob(prefer_hxml)
     let hxmllist = split(hxmls,"\n")
 
-    if (choose_first || len(hxmls) == 1)
+    if (choose_first || len(hxmllist) == 1)
         let b:vihxen_hxml = hxmllist[0]
     else
-        let index = inputlist(["Select Hxml"] + hxmllist) 
+        let index = inputlist(["Select Hxml"] + hxmllist)
         let b:vihxen_hxml = hxmllist[index-1]
     endif
 
@@ -45,8 +44,8 @@ function! vihxen#FindHxml(...)
     endif
 
     set omnifunc=vihxen#HaxeComplete
-    let build_command = "cd '".fnamemodify(b:vihxen_hxml,":p:h")."';haxe '".b:vihxen_hxml."' 2>&1;"
-    echomsg build_command
+    let build_command = "cd '".fnamemodify(b:vihxen_hxml,":p:h")."';haxe '".b:vihxen_hxml."' 2>&1"
+    "echomsg build_command
     let &makeprg = build_command
     if exists(":CompilerSet") != 2 " older Vim always used :setlocal
         command -nargs=* CompilerSet setlocal <args>
