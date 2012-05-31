@@ -27,12 +27,15 @@ function! vihxen#FindHxml(...)
     end
     let hxmls = glob(prefer_hxml)
     let hxmllist = split(hxmls,"\n")
-
-    if (choose_first || len(hxmllist) == 1)
+    let hxmlnames = map(range(len(hxmllist)),'(v:val+1)." ".hxmllist[v:val]')
+    if len(hxmllist) == 0
+        echomsg "no hxml found"
+        finish
+    elseif (choose_first || len(hxmllist) == 1)
         let b:vihxen_hxml = hxmllist[0]
     else
-        let index = inputlist(["Select Hxml"] + hxmllist)
-        let b:vihxen_hxml = hxmllist[index-1]
+        let index = inputlist(["Select Hxml"] + hxmlnames)
+        let b:vihxen_hxml = hxmllist[index]
     endif
 
     if b:vihxen_hxml !~ "^//"
@@ -44,13 +47,16 @@ function! vihxen#FindHxml(...)
     endif
 
     set omnifunc=vihxen#HaxeComplete
-    let build_command = "cd '".fnamemodify(b:vihxen_hxml,":p:h")."';haxe '".b:vihxen_hxml."' 2>&1"
+    let build_command = "cd '".fnamemodify(b:vihxen_hxml,":p:h")."';"
+                \."haxe '".b:vihxen_hxml."' 2>&1"
+
     "echomsg build_command
     let &makeprg = build_command
     if exists(":CompilerSet") != 2 " older Vim always used :setlocal
         command -nargs=* CompilerSet setlocal <args>
     endif
-    CompilerSet errorformat=%E%f:%l:\ characters\ %c-%*[0-9]\ :\ %m,%I%f:%l:\ %m
+    CompilerSet errorformat=%E%f:%l:\ characters\ %c-%*[0-9]\ :\ %m
+                \,%I%f:%l:\ %m
     return b:vihxen_hxml
 endfunction
 
@@ -102,7 +108,8 @@ function! s:DisplayCompletion()
     if  synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") == 'Comment'
         return []
     endif
-    let complete_args = s:CompletionHxml(expand("%:p"), (line2byte('.')+col('.')-2))
+    let complete_args = s:CompletionHxml(expand("%:p")
+                \, (line2byte('.')+col('.')-2))
     let hxml_cd = fnamemodify(b:vihxen_hxml,":p:h")
     let hxml_sys = "cd\ ".hxml_cd."; haxe ".complete_args."\ 2>&1"
     let hxml_sys =  join(split(hxml_sys,"\n")," ")
@@ -140,7 +147,8 @@ if len(fields) > 0:
         kind = 'v'
         if  menu == '': kind = 'm'
         elif re.search("\->", menu): kind = 'f' # if it has a ->
-        return {'word': word, 'info':info, 'kind':kind, 'menu':menu,'abbr':abbr}
+        return {  'word': word, 'info': info, 'kind': kind
+                \,'menu': menu, 'abbr': abbr }
     completes = map(fieldxml2completion, fields)
 elif len(types) > 0:
     otype = types[0]
