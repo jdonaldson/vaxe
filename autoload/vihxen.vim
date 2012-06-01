@@ -51,7 +51,7 @@ function! vihxen#FindHxml(...)
                 \."haxe '".b:vihxen_hxml."' 2>&1"
 
     "echomsg build_command
-    let &makeprg = build_command
+    let &l:makeprg = build_command
     if exists(":CompilerSet") != 2 " older Vim always used :setlocal
         command -nargs=* CompilerSet setlocal <args>
     endif

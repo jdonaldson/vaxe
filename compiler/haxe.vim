@@ -3,10 +3,6 @@
 " Maintainer:   Justin Donaldson <jdonaldson@gmail.com>
 " Last Change:  2012 May 5
 
-if exists("current_compiler")
-  finish
-endif
-
 " prefer build.hxml files
 if !exists('g:vihxen_prefer_hxml')
     let g:vihxen_prefer_hxml = '**/build.hxml'
