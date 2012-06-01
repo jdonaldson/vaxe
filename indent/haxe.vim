@@ -6,7 +6,7 @@ endif
 let b:did_indent = 1
 
 " Indent Haxe anonymous classes correctly.
-setlocal cindent cinoptions& cinoptions+=j1
+setlocal cindent cinoptions& cinoptions+=j1 cinoptions+=J1
 
 " Set the function to do the work.
 setlocal indentexpr=GetHaxeIndent()
@@ -39,21 +39,22 @@ function! SkipHaxeBlanksAndComments(startline)
     else
       break
     endif
-  endwhile
-  return lnum
 endfunction
 
 function GetHaxeIndent()
 
-" Haxe is just like C; use the built-in C indenting and then correct a few
-" specific cases.
+  " Haxe is similar to C; use the built-in C indenting and then correct a few
+  " specific cases.
   let theIndent = cindent(v:lnum)
 
-" If we're in the middle of a comment then just trust cindent
+  " If we're in the middle of a comment then just trust cindent
   if getline(v:lnum) =~ '^\s*\*'
     return theIndent
   endif
 
+  " If you see ({ at the end of the line, add an extra shift
+  "if getline(v:lnum) =~ '\(\{'
+      
 " find start of previous line, in case it was a continuation line
   let lnum = SkipHaxeBlanksAndComments(v:lnum - 1)
 
