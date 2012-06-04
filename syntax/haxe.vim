@@ -1,5 +1,5 @@
-" This file contains both syntax files found on haxe.org
-" Probably they share much code. I haven't checked yet.
+" This file contains a modified version of the syntax files collected by
+" Marc Weber (marco-oweber@gmx.de)
 
 if !exists('g:vim_haxe_syntax_scheme_nr')
   let g:vim_haxe_syntax_scheme_nr = 1
@@ -10,7 +10,6 @@ if g:vim_haxe_syntax_scheme_nr == 1
   " Language:     haxe
 
   " Please check :help haxe.vim for comments on some of the options available.
-
 
   " Quit when a syntax file was already loaded
   if !exists("main_syntax")
@@ -41,7 +40,7 @@ if g:vim_haxe_syntax_scheme_nr == 1
 
   " keyword definitions
   syn keyword haxeExternal	using import extern package
-  
+
   syn match haxeConditional     '#\(if\|else\|elseif\|end\)'
   syn keyword haxeConditional	if else switch
   syn keyword haxeRepeat	while for do in
