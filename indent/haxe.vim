@@ -16,7 +16,7 @@ setlocal nosmartindent
 
 " Now, set up our indentation expression and keys that trigger it.
 setlocal indentexpr=GetHaxeIndent()
-setlocal indentkeys=0{,0},0),0],!^F,o,O,e
+setlocal indentkeys=0{,0},0),0],0#,!^F,o,O,e
 
 " Only define the function once.
 if exists("*GetHaxeIndent")

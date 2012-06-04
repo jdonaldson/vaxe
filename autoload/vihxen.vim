@@ -127,7 +127,7 @@ import HTMLParser
 complete_output = vim.eval("complete_output")
 if complete_output is None: complete_output = ''
 completes = []
-print(complete_output)
+#print(complete_output)
 # wrap in a tag to prevent parsing errors
 root= ET.XML("<output>"+complete_output+"</output>")
 fields = root.findall("list/i")
