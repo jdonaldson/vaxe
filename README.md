@@ -161,16 +161,13 @@ Once enabled, Neocomplcache will automatically invoke Vihxen omnicompletion
 when you type a "." after a variable with fields, etc.
 
 # Acknowledgements
-Marc Weber (marco-oweber@gmx.de) : Most of the syntax and snippets are based off
-                                   of his vim bundle.
-                                    https://github.com/MarcWeber/vim-haxe
+ * Marc Weber (marco-oweber@gmx.de) : Most of the syntax and snippets are based 
+off of his vim bundle. https://github.com/MarcWeber/vim-haxe
 
-Preston Koprivica (pkopriv2@gmail.com) : He has a great indent script for
-                                        javascript that worked fine for Haxe
-                                        after minor modificiations.
-                                         http://www.vim.org/scripts/script.php?script_id=3081
+ * Preston Koprivica (pkopriv2@gmail.com) : He has a great indent script for
+javascript that worked fine for Haxe after minor modificiations. 
+http://www.vim.org/scripts/script.php?script_id=3081
 
-Ganesh Gunasegaran(me at itsgg.com) : I based my hxml syntax file off of his
-                                      version.
-                                      http://lists.motion-twin.com/pipermail/haxe/2008-July/018220.html
+* Ganesh Gunasegaran(me at itsgg.com) : I based my hxml syntax file off of his
+version. http://lists.motion-twin.com/pipermail/haxe/2008-July/018220.html
 
