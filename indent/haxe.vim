@@ -1,6 +1,6 @@
 " Vim indent file Language:		HaXe
-" Author: 		Preston Koprivica (pkopriv2@gmail.com)
-" Modified for Haxe by:          Justin Donaldson (jdonaldson@gmail.com)
+" Author: 	Justin Donaldson (jdonaldson@gmail.com)
+"       Based extensively on work by Preston Koprivica (pkopriv2@gmail.com)
 " URL:
 " Last Change:  June 3, 2011
 
@@ -15,11 +15,11 @@ endif
 let b:did_indent = 1
 
 " Set the global log variable 1 = logging enabled, 0 = logging disabled
-if !exists("g:js_indent_log")
-	let g:js_indent_log = 0
+if !exists("g:hx_indent_log")
+	let g:hx_indent_log = 0
 endif
 
-setlocal indentexpr=GetJsIndent(v:lnum)
+setlocal indentexpr=GetHxIndent(v:lnum)
 setlocal indentkeys=
 
 
@@ -31,9 +31,9 @@ setlocal autoindent
 " ============
 
 " Inline comments (for anchoring other statements)
-let s:js_mid_line_comment = '\s*\(\/\*.*\*\/\)*\s*'
-let s:js_end_line_comment = s:js_mid_line_comment . '\s*\(//.*\)*'
-let s:js_line_comment = s:js_end_line_comment
+let s:hx_mid_line_comment = '\s*\(\/\*.*\*\/\)*\s*'
+let s:hx_end_line_comment = s:hx_mid_line_comment . '\s*\(//.*\)*'
+let s:hx_line_comment = s:hx_end_line_comment
 
 " Comment/String Syntax Key
 let s:syn_comment = '\(Comment\|String\|Regexp\)'
@@ -103,8 +103,8 @@ endfunction
 
 " Object Helpers
 " ==============
-let s:object_beg = '{[^}]*' . s:js_end_line_comment . '$'
-let s:object_end = '^' . s:js_mid_line_comment . '}[;,]\='
+let s:object_beg = '{[^}]*' . s:hx_end_line_comment . '$'
+let s:object_end = '^' . s:hx_mid_line_comment . '}[;,]\='
 
 
 function! s:IsObjectBeg(line)
@@ -122,8 +122,8 @@ endfunction
 
 " Array Helpers
 " ==============
-let s:array_beg = '\[[^\]]*' . s:js_end_line_comment . '$'
-let s:array_end = '^' . s:js_mid_line_comment . '[^\[]*\][;,]*' . s:js_end_line_comment . '$'
+let s:array_beg = '\[[^\]]*' . s:hx_end_line_comment . '$'
+let s:array_end = '^' . s:hx_mid_line_comment . '[^\[]*\][;,]*' . s:hx_end_line_comment . '$'
 
 
 function! s:IsArrayBeg(line)
@@ -141,8 +141,8 @@ endfunction
 
 " MultiLine Declaration/Invocation Helpers
 " ========================================
-let s:paren_beg = '([^)]*' . s:js_end_line_comment . '$'
-let s:paren_end = '^' . s:js_mid_line_comment . '[^(]*)[;,]*'
+let s:paren_beg = '([^)]*' . s:hx_end_line_comment . '$'
+let s:paren_end = '^' . s:hx_mid_line_comment . '[^(]*)[;,]*'
 
 function! s:IsParenBeg(line)
 	return a:line =~ s:paren_beg
@@ -160,7 +160,7 @@ endfunction
 
 " Continuation Helpers
 " ====================
-let s:continuation = '\(+\|\\\)\{1}' . s:js_line_comment . '$'
+let s:continuation = '\(+\|\\\)\{1}' . s:hx_line_comment . '$'
 
 function! s:IsContinuationLine(line)
 	return a:line =~ s:continuation
@@ -179,8 +179,8 @@ endfunction
 
 " Switch Helpers
 " ==============
-let s:switch_beg_next_line = 'switch\s*(.*)\s*' . s:js_mid_line_comment . s:js_end_line_comment . '$'
-let s:switch_beg_same_line = 'switch\s*(.*)\s*' . s:js_mid_line_comment . '{\s*' . s:js_line_comment . '$'
+let s:switch_beg_next_line = 'switch\s*(.*)\s*' . s:hx_mid_line_comment . s:hx_end_line_comment . '$'
+let s:switch_beg_same_line = 'switch\s*(.*)\s*' . s:hx_mid_line_comment . '{\s*' . s:hx_line_comment . '$'
 let s:switch_mid = '^.*\(case.*\|default\)\s*:\s*'
 
 function! s:IsSwitchBeginNextLine(line)
@@ -201,10 +201,10 @@ endfunction
 let s:cntrl_beg_keys = '\(\(\(if\|for\|with\|while\)\s*(.*)\)\|\(try\|do\)\)\s*'
 let s:cntrl_mid_keys = '\(\(\(else\s*if\|catch\)\s*(.*)\)\|\(finally\|else\)\)\s*'
 
-let s:cntrl_beg = s:cntrl_beg_keys . s:js_end_line_comment . '$'
-let s:cntrl_mid = s:cntrl_mid_keys . s:js_end_line_comment . '$'
+let s:cntrl_beg = s:cntrl_beg_keys . s:hx_end_line_comment . '$'
+let s:cntrl_mid = s:cntrl_mid_keys . s:hx_end_line_comment . '$'
 
-let s:cntrl_end = '\(while\s*(.*)\)\s*;\=\s*' . s:js_end_line_comment . '$'
+let s:cntrl_end = '\(while\s*(.*)\)\s*;\=\s*' . s:hx_end_line_comment . '$'
 
 function! s:IsControlBeg(line)
 	return a:line =~ s:cntrl_beg
@@ -226,7 +226,7 @@ endfunction
 "
 " Logs a message to the stdout.
 function! s:Log(msg)
-	if g:js_indent_log
+	if g:hx_indent_log
 		echo "LOG: " . a:msg
 	endif
 endfunction
@@ -234,7 +234,7 @@ endfunction
 
 " 3. Indenter
 " ===========
-function! GetJsIndent(lnum)
+function! GetHxIndent(lnum)
 	" Grab the first non-comment line prior to this line
 	let pnum = s:GetNonCommentLine(a:lnum-1)
 
