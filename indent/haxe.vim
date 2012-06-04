@@ -2,7 +2,7 @@
 " Author: 		Preston Koprivica (pkopriv2@gmail.com)
 " Modified for Haxe by:          Justin Donaldson (jdonaldson@gmail.com)
 " URL:
-" Last Change: 	April 30, 2010
+" Last Change:  June 3, 2011
 
 " 0. Standard Stuff
 " =================
