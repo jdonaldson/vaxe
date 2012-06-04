@@ -1,7 +1,6 @@
 " Vim compiler file
 " Compiler:     haxe
 " Maintainer:   Justin Donaldson <jdonaldson@gmail.com>
-" Last Change:  2012 May 5
 
 " prefer build.hxml files
 if !exists('g:vihxen_prefer_hxml')

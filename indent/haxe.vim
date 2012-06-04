@@ -1,8 +1,7 @@
-" Vim indent file Language:		HaXe
+" Vim indent file
 " Author: 	Justin Donaldson (jdonaldson@gmail.com)
 "       Based extensively on work by Preston Koprivica (pkopriv2@gmail.com)
-" URL:
-" Last Change:  June 3, 2011
+" Language:     Haxe
 
 " 0. Standard Stuff
 " =================

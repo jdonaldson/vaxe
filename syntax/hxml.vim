@@ -1,3 +1,7 @@
+" Vim syntax file
+" Author    : Justin Donaldson (jdonaldson@gmail.com)
+"  Based extensively on a version by Ganesh Gunasegaran(me at itsgg.com)
+" Language  : hxml
 
 if !exists("main_syntax")
   if version < 600

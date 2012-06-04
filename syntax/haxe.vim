@@ -1,5 +1,7 @@
-" This file contains a modified version of the syntax files collected by
-" Marc Weber (marco-oweber@gmx.de)
+" Vim syntax file
+" Author    : Justin Donaldson (jdonaldson@gmail.com)
+"  Based extensively on a version by Marc Weber (marco-oweber@gmx.de)
+" Language  : haxe
 
 if !exists('g:vim_haxe_syntax_scheme_nr')
   let g:vim_haxe_syntax_scheme_nr = 1

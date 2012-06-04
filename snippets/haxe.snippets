@@ -1,17 +1,22 @@
+# Vim snippets file
+# Author    : Justin Donaldson (jdonaldson@gmail.com)
+#  Based extensively on a version by Marc Weber (marco-oweber@gmx.de)
+# Language  : haxe
+
 snippet iterator
 	class IntIter {
 	    var min : Int;
 	    var max : Int;
-	
+
 	    public function new( min : Int, max : Int ) {
 	        this.min = min;
 	        this.max = max;
 	    }
-	
+
 	    public function hasNext() {
 	        return( min < max );
 	    }
-	
+
 	    public function next() {
 	        return min++;
 	    }
@@ -41,11 +46,11 @@ snippet filters
 	af.push(shadow);
 	sprite.filters = af;
 snippet timer
-	// set up a timer 
+	// set up a timer
 	progressTimer = new Timer(10);
 	progressTimer.addEventListener(TimerEvent.TIMER,updateProgress);
 	progressTimer.stop();
-	
+
 	static function updateProgress(event:TimerEvent){
 snippet try
 	try{
@@ -56,14 +61,14 @@ snippet for
 	for( ${1:var} in ${2:iterator} )
 snippet class HAXE
 	class `expand('%:t:r')` {
-	
+
 		function new(arg) {
 			super(arg)
 		}
 
 		static function main() {
 			trace("hello world");
-		}    
+		}
 
 	}
 snippet main
@@ -133,7 +138,7 @@ snippet resize_listener
 		flash.Lib.current.stage.align = flash.display.StageAlign.TOP_LEFT;
 		Lib.current.stage.scaleMode = flash.display.StageScaleMode.NO_SCALE;
 
-	  }    
+	  }
 
 
 	  static public function resizeListener(a){
@@ -159,7 +164,7 @@ snippet interface
 		var thing : String;
 		function name(): String;
 	}
-		
+
 snippet pv public var
 	public var
 # snipMate does not upport making vars upper case or such. (See its documentation) That's why
@@ -214,27 +219,27 @@ snippet get_host
 
 snippet class_db_object
 	class ${1:name} extends neko.db.Object {
-	
+
 		public var id:Int;
 		public var surname:String;
 		public var lastname:String;
-	
-	
+
+
 		public function new(arg) {
 		super(arg)
 		}
-	
+
 		static function main() {
 			trace("hello world");
-		}    
-	
+		}
+
 		// special fields:
 		static var manager : Neko.db.Manager = new neko.db.Manager<${1}>(${1})
 		static var PRIVATE_FIELDS = [ "xx", "yyy" ]; // not used by database
 		static var TABLE_NAME = "User"; // optional defaults to class name
 		static var local_manager: neko.db.Manager<neko.db.Object> // don't know yet
 		static var TABLE_IDS: Array<String> // ids to be used
-	
+
 	}
 
 snippet using
