@@ -164,7 +164,7 @@ when you type a "." after a variable with fields, etc.
  * Marc Weber (marco-oweber@gmx.de) : Most of the syntax and snippets are based 
 off of his vim bundle. https://github.com/MarcWeber/vim-haxe
 
- * Preston Koprivica (pkopriv2@gmail.com) : He has a great indent script for
+* Darrick Wiebe (darrick at innatesofware.com) : He has a great indent script for
 javascript that worked fine for Haxe after minor modificiations. 
 http://www.vim.org/scripts/script.php?script_id=3081
 
