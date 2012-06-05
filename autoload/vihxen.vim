@@ -13,24 +13,29 @@ function! vihxen#HaxeComplete(findstart,base)
    endif
 endfunction
 
-
-
-function! vihxen#FindHxml(...)
+function! s:HandleHxmlList(use_glob,args)
+    if exists('b:vihxen_hxml')
+        unlet b:vihxen_hxml
+    endif
     let choose_first = 1
-    if a:0 > 1
-        let prefer_hxml = a:1
-        if a:0 == 2
-            let choose_first = a:2
+    if len(a:args) > 0
+        let prefer_hxml = a:args[0] 
+        if len(a:args) > 1 
+            let choose_first = a:args[1]
         endif
     else
-        let prefer_hxml = "**.hxml"
+        let prefer_hxml = "build.hxml"
     end
-    let hxmls = glob(prefer_hxml)
-    let hxmllist = split(hxmls,"\n")
+    if a:use_glob
+        let hxmllist = findfile(prefer_hxml, ".;",-1)
+    else
+        let hxmllist = glob("**/".prefer_hxml)
+    endif
+    "let hxmllist = split(hxmls,"\n")
     let hxmlnames = map(range(len(hxmllist)),'(v:val+1)." ".hxmllist[v:val]')
     if len(hxmllist) == 0
         echomsg "no hxml found"
-        finish
+        return ''
     elseif (choose_first || len(hxmllist) == 1)
         let b:vihxen_hxml = hxmllist[0]
     else
@@ -58,6 +63,14 @@ function! vihxen#FindHxml(...)
     CompilerSet errorformat=%E%f:%l:\ characters\ %c-%*[0-9]\ :\ %m
                 \,%I%f:%l:\ %m
     return b:vihxen_hxml
+endfunction
+
+function! vihxen#GlobHxml(...)
+   return s:HandleHxmlList(1, a:000)
+endfunction
+
+function! vihxen#RootHxml(...)
+   return s:HandleHxmlList(0, a:000)
 endfunction
 
 "function! vihxen#FindHxmlInWorkingDir()
