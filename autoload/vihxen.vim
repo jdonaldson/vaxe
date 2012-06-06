@@ -13,68 +13,66 @@ function! vihxen#HaxeComplete(findstart,base)
    endif
 endfunction
 
-function! s:HandleHxmlList(use_glob,args)
+function! vihxen#ProjectHxml()
+    if exists('g:vihxen_hxml')
+        unlet g:vihxen_hxml
+    endif
+    let hxmls = glob("**/*.hxml")
+    if len(hxmls) ==1
+        let base_hxml = hxmls[0]
+    else
+        if exists('g:tlib_inputlist_pct')
+            let base_hxml = tlib#Input#List('s', 'Select Hxml', hxmls) 
+        else
+            let hxmls_list = map(range(len(hxmls)),
+                '(v:var+1)." ".hxmls_list[v:var]')
+            let hxmls_list = ['Select Hxml'] + hxmls_list
+            let sel = inputlist(hxmls_list)
+            let base_hxml = hxmls_list[sel-1]
+    endif
+    if base_hxml !~ "^//"
+        let base_hxml = getcwd().'/'.base_hxml
+    endif
+    if !filereadable(g:vihxen_hxml)
+        echomsg "Project build file not valid, please create one."
+        return
+    endif
+    let g:vihxen_hxml = base_hxml
+    call s:SetCompiler()
+    return g:vihxen_hxml
+endfunction
+
+function! vihxen#DefaultHxml()
     if exists('b:vihxen_hxml')
         unlet b:vihxen_hxml
     endif
-    let choose_first = 1
-    if len(a:args) > 0
-        let prefer_hxml = a:args[0] 
-        if len(a:args) > 1 
-            let choose_first = a:args[1]
-        endif
-    else
-        let prefer_hxml = "build.hxml"
-    end
-    if a:use_glob
-        let hxmllist = findfile(prefer_hxml, ".;",-1)
-    else
-        let hxmllist = glob("**/".prefer_hxml)
+    let base_hxml = findfile(g:vihxen_prefer_hxml, ".;")
+    if base_hxml !~ "^/"
+        let base_hxml = getcwd() . '/' . base_hxml
     endif
-    "let hxmllist = split(hxmls,"\n")
-    let hxmlnames = map(range(len(hxmllist)),'(v:val+1)." ".hxmllist[v:val]')
-    if len(hxmllist) == 0
-        echomsg "no hxml found"
-        return ''
-    elseif (choose_first || len(hxmllist) == 1)
-        let b:vihxen_hxml = hxmllist[0]
-    else
-        let index = inputlist(["Select Hxml"] + hxmlnames)
-        let b:vihxen_hxml = hxmllist[index]
+    if !filereadable(base_hxml)
+        echomsg "Default build file not valid, please create one."
+        return
     endif
-
-    if b:vihxen_hxml !~ "^//"
-        let b:vihxen_hxml = getcwd() . '/' . b:vihxen_hxml
-    endif
-
-    if !filereadable(b:vihxen_hxml)
-        echomsg "Preferred build file not found, please create one."
-    endif
-
-    set omnifunc=vihxen#HaxeComplete
-    let build_command = "cd '".fnamemodify(b:vihxen_hxml,":p:h")."';"
-                \."haxe '".b:vihxen_hxml."' 2>&1"
-
-    "echomsg build_command
-    let &l:makeprg = build_command
-    if exists(":CompilerSet") != 2 " older Vim always used :setlocal
-        command -nargs=* CompilerSet setlocal <args>
-    endif
-    CompilerSet errorformat=%E%f:%l:\ characters\ %c-%*[0-9]\ :\ %m
-                \,%I%f:%l:\ %m
+    let b:vihxen_hxml = base_hxml
+    call s:SetCompiler()
     return b:vihxen_hxml
 endfunction
 
-function! vihxen#GlobHxml(...)
-   return s:HandleHxmlList(1, a:000)
-endfunction
+function! s:SetCompiler()
+    set omnifunc=vihxen#HaxeComplete
+    let s:vihxen_hxml = ''
+    if exists('g:vihxen_hxml')
+        let s:vihxen_hxml = g:vihxen_hxml
+    elseif exists('b:vihxen_hxml')
+        let s:vihxen_hxml = b:vihxen_hxml
+    endif
+    let build_command = "cd '".fnamemodify(s:vihxen_hxml,":p:h")."';"
+                \."haxe '".s:vihxen_hxml."' 2>&1; cd '".getcwd()."'"
 
-function! vihxen#RootHxml(...)
-   return s:HandleHxmlList(0, a:000)
+    let &l:makeprg = build_command
+    let &l:errorformat="%E%f:%l: characters %c-%*[0-9] : %m,%I%f:%l: %m"
 endfunction
-
-"function! vihxen#FindHxmlInWorkingDir()
-"endfunction
 
 function! vihxen#CompilerClassPaths()
    let complete_args = s:CurrentBlockHxml(b:vihxen_hxml)
