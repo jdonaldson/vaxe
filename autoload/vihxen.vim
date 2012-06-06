@@ -17,12 +17,12 @@ function! vihxen#ProjectHxml()
     if exists('g:vihxen_hxml')
         unlet g:vihxen_hxml
     endif
-    let hxmls = glob("**/*.hxml")
+    let hxmls = split(glob("**/*.hxml"),'\n')
     if len(hxmls) ==1
         let base_hxml = hxmls[0]
     else
         if exists('g:tlib_inputlist_pct')
-            let base_hxml = tlib#Input#List('s', 'Select Hxml', hxmls) 
+            let base_hxml = tlib#input#List('s', 'Select Hxml', hxmls) 
         else
             let hxmls_list = map(range(len(hxmls)),
                 '(v:var+1)." ".hxmls_list[v:var]')
@@ -33,11 +33,11 @@ function! vihxen#ProjectHxml()
     if base_hxml !~ "^//"
         let base_hxml = getcwd().'/'.base_hxml
     endif
+    let g:vihxen_hxml = base_hxml
     if !filereadable(g:vihxen_hxml)
         echomsg "Project build file not valid, please create one."
         return
     endif
-    let g:vihxen_hxml = base_hxml
     call s:SetCompiler()
     return g:vihxen_hxml
 endfunction
@@ -75,7 +75,7 @@ function! s:SetCompiler()
 endfunction
 
 function! vihxen#CompilerClassPaths()
-   let complete_args = s:CurrentBlockHxml(b:vihxen_hxml)
+   let complete_args = s:CurrentBlockHxml()
    let complete_args.= "\n"."-v"."\n"."--no-output"
    let complete_args = join(split(complete_args,"\n"),' ')
    let hxml_cd = fnamemodify(b:vihxen_hxml,":p:h")
@@ -96,7 +96,7 @@ function! vihxen#Ctags()
 endfunction
 
 function! s:CurrentBlockHxml(file_name)
-    let hxfile = join(readfile(b:vihxen_hxml),"\n")
+    let hxfile = join(readfile(a:file_name),"\n")
     let parts = split(hxfile,'--next')
     let complete = filter(parts, 'match(v:val, "^\s*#\s*vihxen")')
     if len(complete) == 0
@@ -119,17 +119,24 @@ function! s:DisplayCompletion()
     if  synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") == 'Comment'
         return []
     endif
-    let complete_args = s:CompletionHxml(expand("%:p")
+    let s:vihxen_hxml = ''
+    if exists('g:vihxen_hxml')
+        let s:vihxen_hxml = g:vihxen_hxml
+    elseif exists('b:vihxen_hxml')
+        let s:vihxen_hxml = b:vihxen_hxml
+    else
+        return []
+    endif
+    let complete_args = s:CompletionHxml(s:vihxen_hxml
                 \, (line2byte('.')+col('.')-2))
     let hxml_cd = fnamemodify(b:vihxen_hxml,":p:h")
     let hxml_sys = "cd\ ".hxml_cd."; haxe ".complete_args."\ 2>&1"
     let hxml_sys =  join(split(hxml_sys,"\n")," ")
-    "echomsg(hxml_sys)
+    echomsg(hxml_sys)
     silent exe ":w"
     let complete_output = system(hxml_sys)
     let output = []
-    "echomsg hxml_sys
-    "echomsg complete_output
+    echomsg complete_output
 python << endpython
 import vim, re, HTMLParser
 import xml.etree.ElementTree as ET
