@@ -1,5 +1,7 @@
 function! vihxen#OpenHxml()
-    if filereadable(b:vihxen_hxml)
+    if filereadable(g:vihxen_hxml)
+        exe ':edit '.g:vihxen_hxml
+    else if filereadable(b:vihxen_hxml)
         exe ':edit '.b:vihxen_hxml
     endif
 endfunction
@@ -17,29 +19,39 @@ function! vihxen#ProjectHxml()
     if exists('g:vihxen_hxml')
         unlet g:vihxen_hxml
     endif
+
     let hxmls = split(glob("**/*.hxml"),'\n')
-    if len(hxmls) ==1
+
+    if len(hxmls) == 0
+        echoerr "No hxml files found in current working directory"
+        return
+    elseif len(hxmls) ==1
         let base_hxml = hxmls[0]
     else
         if exists('g:tlib_inputlist_pct')
-            let base_hxml = tlib#input#List('s', 'Select Hxml', hxmls) 
+            let base_hxml = tlib#input#List('s', 'Select Hxml', hxmls)
         else
             let hxmls_list = map(range(len(hxmls)),
                 '(v:var+1)." ".hxmls_list[v:var]')
             let hxmls_list = ['Select Hxml'] + hxmls_list
             let sel = inputlist(hxmls_list)
             let base_hxml = hxmls_list[sel-1]
+        endif
     endif
+
     if base_hxml !~ "^//"
         let base_hxml = getcwd().'/'.base_hxml
     endif
+
     let g:vihxen_hxml = base_hxml
+
     if !filereadable(g:vihxen_hxml)
-        echomsg "Project build file not valid, please create one."
+        echoerr "Project build file not valid, please create one."
         return
     endif
+
     call s:SetCompiler()
-    return g:vihxen_hxml
+    return s:vihxen_hxml
 endfunction
 
 function! vihxen#DefaultHxml()
