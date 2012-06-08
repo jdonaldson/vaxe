@@ -153,7 +153,7 @@ function! s:DisplayCompletion()
     silent exe ":w"
     let complete_output = system(hxml_sys)
     let output = []
-    "echomsg complete_output
+    echomsg complete_output
 python << endpython
 import vim, re, HTMLParser
 import xml.etree.ElementTree as ET
@@ -173,6 +173,7 @@ if len(fields) > 0:
         word = x.attrib["n"]
         menu = x.find("t").text
         info = x.find("d").text
+        print("hooooo")
         menu = '' if menu is None else menu
         if info is None:
             info = ''
@@ -189,8 +190,9 @@ elif len(types) > 0:
     otype = types[0]
     h = HTMLParser.HTMLParser()
     word = ' '
-    abbr = h.unescape(otype.text).strip()
-    completes= [{'word':word,'abbr':info}]
+    info = h.unescape(otype.text).strip()
+    abbr = info
+    completes= [{'word':word,'info':info, 'abbr':abbr}]
 vim.command("let output = " + str(completes))
 endpython
     for o in output
