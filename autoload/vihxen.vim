@@ -1,8 +1,9 @@
 function! vihxen#OpenHxml()
-    if filereadable(g:vihxen_hxml)
-        exe ':edit '.g:vihxen_hxml
-    else if filereadable(b:vihxen_hxml)
-        exe ':edit '.b:vihxen_hxml
+    let vihxen_hxml = vihxen#CurrentBuild()
+    if filereadable(vihxen_hxml)
+        exe ':edit '.vihxen_hxml
+    else
+        echoerr 'build not readable: '.vihxen_hxml
     endif
 endfunction
 
@@ -51,7 +52,7 @@ function! vihxen#ProjectHxml()
     endif
 
     call s:SetCompiler()
-    return s:vihxen_hxml
+    return vihxen_hxml
 endfunction
 
 function! vihxen#DefaultHxml()
@@ -71,16 +72,21 @@ function! vihxen#DefaultHxml()
     return b:vihxen_hxml
 endfunction
 
+function! vihxen#CurrentBuild()
+    let vihxen_hxml = ''
+    if exists('g:vihxen_hxml')
+        let vihxen_hxml = g:vihxen_hxml
+    elseif exists('b:vihxen_hxml')
+        let vihxen_hxml = b:vihxen_hxml
+    endif
+    return vihxen_hxml
+endfunction
+
 function! s:SetCompiler()
     set omnifunc=vihxen#HaxeComplete
-    let s:vihxen_hxml = ''
-    if exists('g:vihxen_hxml')
-        let s:vihxen_hxml = g:vihxen_hxml
-    elseif exists('b:vihxen_hxml')
-        let s:vihxen_hxml = b:vihxen_hxml
-    endif
-    let build_command = "cd '".fnamemodify(s:vihxen_hxml,":p:h")."';"
-                \."haxe '".s:vihxen_hxml."' 2>&1; cd '".getcwd()."'"
+    let vihxen_hxml = vihxen#CurrentBuild()
+    let build_command = "cd '".fnamemodify(vihxen_hxml,":p:h")."';"
+                \."haxe '".vihxen_hxml."' 2>&1; cd '".getcwd()."'"
 
     let &l:makeprg = build_command
     let &l:errorformat="%E%f:%l: characters %c-%*[0-9] : %m,%I%f:%l: %m"
@@ -90,7 +96,8 @@ function! vihxen#CompilerClassPaths()
    let complete_args = s:CurrentBlockHxml()
    let complete_args.= "\n"."-v"."\n"."--no-output"
    let complete_args = join(split(complete_args,"\n"),' ')
-   let hxml_cd = fnamemodify(b:vihxen_hxml,":p:h")
+   let vihxen_hxml = vihxen#CurrentBuild()
+   let hxml_cd = fnamemodify(vihxen_hxml,":p:h")
    let hxml_sys = "cd\ ".hxml_cd."; haxe ".complete_args."\ 2>&1"
    let voutput = system(hxml_sys)
    let raw_path = split(voutput,"\n")[0]
@@ -102,13 +109,15 @@ endfunction
 
 function! vihxen#Ctags()
     let paths = join(vihxen#CompilerClassPaths(),' ')
-    let hxml_cd = fnamemodify(b:vihxen_hxml,":p:h")
+    let vihxen_hxml = vihxen#CurrentBuild()
+    let hxml_cd = fnamemodify(vihxen_hxml,":p:h")
     let hxml_sys = "cd " . hxml_cd . "; ctags -R . " . paths
     call system(hxml_sys)
 endfunction
 
-function! s:CurrentBlockHxml(file_name)
-    let hxfile = join(readfile(a:file_name),"\n")
+function! s:CurrentBlockHxml()
+    let vihxen_hxml = vihxen#CurrentBuild()
+    let hxfile = join(readfile(vihxen_hxml),"\n")
     let parts = split(hxfile,'--next')
     let complete = filter(parts, 'match(v:val, "^\s*#\s*vihxen")')
     if len(complete) == 0
@@ -123,7 +132,7 @@ function! s:CurrentBlockHxml(file_name)
 endfunction
 
 function! s:CompletionHxml(file_name, byte_count)
-    let stripped = s:CurrentBlockHxml(a:file_name)
+    let stripped = s:CurrentBlockHxml()
     return stripped."\n"."--display ".a:file_name.'@'.a:byte_count
 endfunction
 
@@ -131,13 +140,9 @@ function! s:DisplayCompletion()
     if  synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") == 'Comment'
         return []
     endif
-    let s:vihxen_hxml = ''
-    if exists('g:vihxen_hxml')
-        let s:vihxen_hxml = g:vihxen_hxml
-    elseif exists('b:vihxen_hxml')
-        let s:vihxen_hxml = b:vihxen_hxml
-    else
-        return []
+    let vihxen_hxml = vihxen#CurrentBuild()
+    if !filereadable(vihxen_hxml)
+        echoerr 'build file not readable: '.vihxen_hxml
     endif
     let complete_args = s:CompletionHxml(expand("%:p")
                 \, (line2byte('.')+col('.')-2))
