@@ -117,7 +117,7 @@ function! s:CurrentBlockHxml(file_name)
     let complete_string = complete[0]
     let parts = split(complete_string,"\n")
     let parts = map(parts, 'substitute(v:val,"#.*","","")')
-    let parts = map(parts, 'substitute(v:val,"\s*-(cmd|xml|v)\s*.*","","")')
+    let parts = map(parts, 'substitute(v:val,"\\s*-\\(cmd\\|xml\\|v\\)\\s*.*","","")')
     let complete_string = join(parts,"\n")
     return complete_string
 endfunction
@@ -139,7 +139,7 @@ function! s:DisplayCompletion()
     else
         return []
     endif
-    let complete_args = s:CompletionHxml(s:vihxen_hxml
+    let complete_args = s:CompletionHxml(expand("%:p")
                 \, (line2byte('.')+col('.')-2))
     let hxml_cd = fnamemodify(b:vihxen_hxml,":p:h")
     let hxml_sys = "cd\ ".hxml_cd."; haxe ".complete_args."\ 2>&1"
@@ -197,5 +197,4 @@ endpython
 
     return output
 endfunction
-
 
