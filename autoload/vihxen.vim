@@ -149,11 +149,11 @@ function! s:DisplayCompletion()
     let hxml_cd = fnamemodify(b:vihxen_hxml,":p:h")
     let hxml_sys = "cd\ ".hxml_cd."; haxe ".complete_args."\ 2>&1"
     let hxml_sys =  join(split(hxml_sys,"\n")," ")
-    echomsg(hxml_sys)
+    "echomsg(hxml_sys)
     silent exe ":w"
     let complete_output = system(hxml_sys)
     let output = []
-    echomsg complete_output
+    "echomsg complete_output
 python << endpython
 import vim, re, HTMLParser
 import xml.etree.ElementTree as ET
