@@ -1,6 +1,9 @@
 Vihxen is a vim bundle for [Haxe](http://www.haxe.org).  It provides support
 for syntax highlighting, indenting, compiling, and many more options.
 
+![Vihxen Screenshot](http://i.imgur.com/JFvze.png)
+(screenshot shows neocomplcache completion mode, vim-powerline, taglist, and monokai color theme)
+
 The recommended way to install vihxen is using a bundle management system such
 as [pathogen][] or
 [vundle][].
