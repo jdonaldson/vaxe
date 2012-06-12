@@ -47,11 +47,15 @@ in your `.vimrc`:
 
     let g:vihxen_preferred_hxml = "some_other_file_name.hxml"
 
-You can also search for a valid hxml file using a vim file glob:
-
-    :call vihxen#FindHxml("**/*.hxml")
-
 Once found, a variable `b:vihxen_hxml` will be set for the current buffer.
+In some cases, you may wish to override this behavior for certain files.  E.g.,
+perhaps you are working with a project that contains multiple build files. 
+In this case, you can also search for a valid hxml file in the working directory:
+
+    :call vihxen#ProjectHxml()
+
+This sets a `g:vihxen_hxml` variable that will override any buffer variable 
+that may be set.
 
 Vihxen will specify a custom
 [makeprg](http://vimdoc.sourceforge.net/htmldoc/options.html#'makeprg') using
@@ -164,13 +168,13 @@ Once enabled, Neocomplcache will automatically invoke Vihxen omnicompletion
 when you type a "." after a variable with fields, etc.
 
 # Acknowledgements
- * Marc Weber (marco-oweber@gmx.de) : Most of the syntax and snippets are based 
-off of his vim bundle. https://github.com/MarcWeber/vim-haxe
+* Marc Weber (marco-oweber@gmx.de) : Most of the syntax and snippets are based 
+off of his [vim bundle](https://github.com/MarcWeber/vim-haxe).
 
-* Darrick Wiebe (darrick at innatesofware.com) : He has a great indent script for
+* Darrick Wiebe (darrick at innatesofware.com) : He has a [great indent script](http://www.vim.org/scripts/script.php?script_id=3081) for
 javascript that worked fine for Haxe after minor modificiations. 
-http://www.vim.org/scripts/script.php?script_id=3081
 
-* Ganesh Gunasegaran(me at itsgg.com) : I based my hxml syntax file off of his
-version. http://lists.motion-twin.com/pipermail/haxe/2008-July/018220.html
+
+* Ganesh Gunasegaran(me at itsgg.com) : I based my hxml syntax file off of [his
+version](http://lists.motion-twin.com/pipermail/haxe/2008-July/018220.html).
 
