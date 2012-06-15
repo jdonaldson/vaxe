@@ -73,6 +73,7 @@ function s:IsInMultilineComment(lnum, col)
   return synIDattr(synID(a:lnum, a:col, 1), 'name') =~ s:syng_multiline
 endfunction
 
+
 " Find line above 'lnum' that isn't empty, in a comment, or in a string.
 function s:PrevNonBlankNonString(lnum)
   let in_block = 0
@@ -80,6 +81,7 @@ function s:PrevNonBlankNonString(lnum)
   while lnum > 0
     " Go in and out of blocks comments as necessary.
     " If the line isn't empty (with opt. comment) or in a string, end search.
+    " Also skip leading dots
     let line = getline(lnum)
     if line =~ '/\*'
       if in_block
@@ -89,7 +91,7 @@ function s:PrevNonBlankNonString(lnum)
       endif
     elseif !in_block && line =~ '\*/'
       let in_block = 1
-    elseif !in_block && line !~ '^\s*\%(//\).*$' && !(s:IsInStringOrComment(lnum, 1) && s:IsInStringOrComment(lnum, strlen(line)))
+    elseif !in_block && line !~ '^\s*\.' && line !~ '^\s*\%(//\).*$' && !(s:IsInStringOrComment(lnum, 1) && s:IsInStringOrComment(lnum, strlen(line)))
       break
     endif
     let lnum = prevnonblank(lnum - 1)
@@ -322,18 +324,10 @@ function GetHaxeIndent()
   endif
 
   " If the current line has a leading dot, it's part of a chained method.
-  " Use the indent of the previous leading dot, or indent from the start of 
-  " the chained method
-  echomsg line
-  echomsg v:lnum
-  if line =~ '^\s*\.'
-    let prev_idx = g:PrevNonBlankNonString(v:lnum-1)
-    let prev_line = getline(prev_idx)
-    if prev_line !~ '^\s*\.'
-      let ind = indent(prev_idx) + &sw 
-    else
-      let ind = indent(prev_idx)
-    endif
+  " Indent from the start of the chained method
+  if getline('.') =~ '^\s*\.'
+    let prev_idx = s:PrevNonBlankNonString(lnum)
+    let ind = indent(prev_idx) + &sw
   endif
 
   return ind
