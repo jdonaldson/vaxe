@@ -74,7 +74,7 @@ function s:IsInMultilineComment(lnum, col)
 endfunction
 
 " Find line above 'lnum' that isn't empty, in a comment, or in a string.
-function g:PrevNonBlankNonString(lnum)
+function s:PrevNonBlankNonString(lnum)
   let in_block = 0
   let lnum = prevnonblank(a:lnum)
   while lnum > 0
@@ -96,7 +96,6 @@ function g:PrevNonBlankNonString(lnum)
   endwhile
   return lnum
 endfunction
-
 
 " Find line above 'lnum' that started the continuation 'lnum' may be part of.
 function s:GetMSL(lnum, in_one_line_scope)
@@ -258,7 +257,7 @@ function GetHaxeIndent()
   " If the line is empty and the previous nonblank line was a multi-line
   " comment, use that comment's indent. Deduct one char to account for the
   " space in ' */'.
-  let nonblank_lnum = prevnonblank(v:lnum - 1) 
+  let nonblank_lnum = prevnonblank(v:lnum - 1)
   if line =~ '^\s*$' && s:IsInMultilineComment(nonblank_lnum, 1)
     return indent(nonblank_lnum) - 1
   endif
@@ -301,7 +300,6 @@ function GetHaxeIndent()
       call cursor(v:lnum, vcol)
     end
   endif
-
 
   " 3.4. Work on the MSL line. {{{2
   " --------------------------

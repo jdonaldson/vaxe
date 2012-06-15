@@ -1,17 +1,15 @@
 " Vim compiler file
 " Compiler:     haxe
 " Maintainer:   Justin Donaldson <jdonaldson@gmail.com>
-" Last Change:  2012 May 5
 
-if exists("current_compiler")
-  finish
-endif
-let current_compiler = "haxe"
-
-if exists(":CompilerSet") != 2		" older Vim always used :setlocal
-  command -nargs=* CompilerSet setlocal <args>
+" prefer build.hxml files
+if !exists('g:vihxen_prefer_hxml')
+    let g:vihxen_prefer_hxml = 'build.hxml'
 endif
 
-CompilerSet makeprg=haxe\ build.hxml
 
-CompilerSet errorformat=%E%f:%l:\ characters\ %c-\d\ :\ %m
+" select a build file if none is available
+if !exists("b:vihxen_hxml")
+    let b:vihxen_build = vihxen#DefaultHxml()
+endif
+

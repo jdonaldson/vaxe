@@ -1,3 +1,4 @@
+" General purpose variables, etc. that are useful in other plugins
 let g:tagbar_type_haxe = {
     \ 'ctagstype' : 'haxe',
     \ 'kinds'     : [
@@ -5,4 +6,5 @@ let g:tagbar_type_haxe = {
         \ 'v:variables',
         \ 'f:functions',
     \ ]
-	\ }
+        \ }
+

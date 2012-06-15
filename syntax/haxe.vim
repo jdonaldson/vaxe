@@ -1,5 +1,7 @@
-" This file contains both syntax files found on haxe.org
-" Probably they share much code. I haven't checked yet.
+" Vim syntax file
+" Author    : Justin Donaldson (jdonaldson@gmail.com)
+"  Based extensively on a version by Marc Weber (marco-oweber@gmx.de)
+" Language  : haxe
 
 if !exists('g:vim_haxe_syntax_scheme_nr')
   let g:vim_haxe_syntax_scheme_nr = 1
@@ -10,9 +12,6 @@ if g:vim_haxe_syntax_scheme_nr == 1
   " Language:     haxe
 
   " Please check :help haxe.vim for comments on some of the options available.
-
-  "set errorformat=%f\:%l\:\ characters\ %c-%*[^\ ]\ %m,%f\:%l\:\ %m
-  set errorformat=%f\:%l\:\ characters\ %c-%*[^\ ]\ %m,%f\:%l\:\ %m
 
   " Quit when a syntax file was already loaded
   if !exists("main_syntax")
@@ -37,34 +36,36 @@ if g:vim_haxe_syntax_scheme_nr == 1
   syn match haxeError "<<<\|=>\|<>\|||=\|&&=\|\*\/"
 
   " use separate name so that it can be deleted in haxecc.vim
-  syn match   haxeError2 "#\|=<"
+  "syn match   haxeError2 "#\|=<"
   HaxeHiLink haxeError2 haxeError
 
 
   " keyword definitions
   syn keyword haxeExternal	using import extern package
+
+  syn match haxeConditional     '#\(if\|else\|elseif\|end\)'
   syn keyword haxeConditional	if else switch
-  syn keyword haxeRepeat		while for do in
-  syn keyword haxeBoolean		true false
+  syn keyword haxeRepeat	while for do in
+  syn keyword haxeBoolean	true false
   syn keyword haxeConstant	null
-  syn keyword haxeTypedef		this super
-  syn keyword haxeOperator	new cast 
+  syn keyword haxeTypedef	this super
+  syn keyword haxeOperator	new cast
   syn keyword haxeType		Void Bool Int Float Dynamic
   syn keyword haxeStatement	return
-  syn keyword haxeStorageClass    function var final typedef enum
-  " syn keyword haxeStatic		
-  syn keyword haxeExceptions      throw try catch finally untyped
-  syn keyword haxeAssert		assert
-  syn keyword haxeMethodDecl      synchronized throws
-  syn keyword haxeClassDecl       extends implements interface
-  syn match   haxeOperator "\.\.\."
+  syn keyword haxeStorageClass  function var final typedef enum
+  " syn keyword haxeStatic
+  syn keyword haxeExceptions    throw try catch finally untyped
+  "syn keyword haxeAssert	assert
+  syn keyword haxeMethodDecl    synchronized throws
+  syn keyword haxeClassDecl     extends implements interface
+  syn match   haxeOperator      "\.\.\."
   " to differentiate the keyword class from MyClass.class we use a match here
-  syn match   haxeTypedef		"\.\s*\<class\>"ms=s+1
-  syn match   haxeClassDecl       "^class\>"
-  syn match   haxeClassDecl       "[^.]\s*\<class\>"ms=s+1
-  syn keyword haxeBranch		break continue nextgroup=haxeUserLabelRef skipwhite
-  syn match   haxeUserLabelRef    "\k\+" contained
-  syn keyword haxeScopeDecl       static public protected private abstract override  inline
+  syn match   haxeTypedef	"\.\s*\<class\>"ms=s+1
+  syn match   haxeClassDecl     "^class\>"
+  syn match   haxeClassDecl     "[^.]\s*\<class\>"ms=s+1
+  syn keyword haxeBranch	break continue nextgroup=haxeUserLabelRef skipwhite
+  syn match   haxeUserLabelRef  "\k\+" contained
+  syn keyword haxeScopeDecl     static public protected private abstract override inline
 
   " haxe.lang.*
   syn match haxeLangClass "\<System\>"
@@ -142,7 +143,7 @@ if g:vim_haxe_syntax_scheme_nr == 1
   syn region  haxeEreg		start=+\~\/+ end=+\/[gims]*+ contains=haxeEregEscape
 
   syn region  haxeString		start=+"+ end=+"+ contains=haxeSpecialChar,haxeSpecialError,@Spell
-  syn region  haxeSingleString  start=+'+ end=+'+ 
+  syn region  haxeSingleString  start=+'+ end=+'+
   " next line disabled, it can cause a crash for a long line
   "syn match   haxeStringError	  +"\([^"\\]\|\\.\)*$+
   syn match   haxeCharacter	 "'[^']*'" contains=haxeSpecialChar,haxeSpecialCharError
@@ -155,11 +156,11 @@ if g:vim_haxe_syntax_scheme_nr == 1
   syn match   haxeNumber		 "\<\d\+\([eE][-+]\=\d\+\)\=[fFdD]\>"
 
 
-  syn match haxeCondIf "^#if"
-  syn match haxeCondElse "^#else$"
-  syn match haxeCondElseif "^#elseif"
-  syn match haxeCondEnd "^#end"
-  "syn match haxeCondError "^#else.\+"
+  "syn match haxeCondIf "\<#if\>"
+  "syn match haxeCondElse "\b#else\b"
+  "syn match haxeCondElseif "\b#elseif\b"
+  "syn match haxeCondEnd "\b#end\b"
+  "syn match haxeCondError "\b#else\b"
 
   " unicode characters
   syn match   haxeSpecial "\\u\d\{4\}"
