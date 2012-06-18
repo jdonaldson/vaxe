@@ -21,9 +21,30 @@ INTRODUCTION                                    *vihxen*
 This plugin adds support for Haxe syntax, indenting, and compiling.  Also
 included is syntax and support for Hxml.
 
+Commands                                        *vihxen-commands*
+
+:vihxen#CompilerClassPaths
+                        Retrieve the class paths for the current build target
+
+:vihxen#Ctags           Generate a ctags file for the current build target
+
+:vihxen#CurrentBuild    Retrieve the directives for the current build
+
+:vihxen#DefaultHxml     Find the preferred build file recursively in the
+                        parents of the working directory
+
+:vihxen#HaxeComplete    The omnifunc for vihxen
+
+:vihxen#OpenHxml        Open the current build file specified with
+                        vihxen#DefaultHxml, or vihxen#ProjectHxml
+
+:vihxen#ProjectHxml     Find and select hxml files in the working directory.
+                        Selecting a file with this method will enter
+                        *vihxen-project-mode*.
+
 LICENSE                                         *vihxen-license*
 
-Copyright (C) 2012 Justin Donaldson <jdonaldson@gmail.com> 
+Copyright (C) 2012 Justin Donaldson <jdonaldson@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
