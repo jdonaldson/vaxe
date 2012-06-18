@@ -21,7 +21,36 @@ INTRODUCTION                                    *vihxen*
 This plugin adds support for Haxe syntax, indenting, and compiling.  Also
 included is syntax and support for Hxml.
 
-Commands                                        *vihxen-commands*
+Vihxen uses the Haxe compiler extensively to determine code completions, 
+and generate various metadata.  The compiler, in turn, uses sequences of 
+compiler directives in "hxml" files in order to specify build and output 
+options, similar to gnu makefiles.
+
+Vihxen has two different "build modes" that designate how to find the hxml
+file, as well as how to manage the output.
+
+BUILD MODES                                     *vihxen-build*
+
+Default                 This mode is used automatically any time a *.hx file 
+                        is opened.  It can be retriggered by calling 
+                        |vihxen#DefaultHxml|. Vihxen will search the project 
+                        path for the preferred file indicated by 
+                        |g:vihxen_prefer_hxml|.
+                        If it finds a preferred build file in the parent
+                        directories of the currently edited file, it will set
+                        a b:vihxen_hxml variable for the current buffer.
+                        It will cd to the preferred hxml directory, call the 
+                        compiler with the preferred hxml, and redirect errors 
+                        to standard out.
+
+Project                 This mode is used when |vihxen#ProjectHxml| is called.
+                        It will set a g:vihxen_hxml variable that will 
+                        override any b:vihxen_hxml variables set by the default
+                        method.  It will simply execute the haxe compiler 
+                        without changing directories, and redirect errors to
+                        standard out.
+
+COMMANDS                                        *vihxen-commands*
 
 :vihxen#CompilerClassPaths
                         Retrieve the class paths for the current build target
@@ -42,6 +71,10 @@ Commands                                        *vihxen-commands*
                         Selecting a file with this method will enter
                         *vihxen-project-mode*.
 
+
+SETTINGS                                        *vihxen-settings*
+g:vihxen_prefer_hxml    The preferred name for hxml files to search for in 
+                        default build mode. The default is "build.hxml"
 LICENSE                                         *vihxen-license*
 
 Copyright (C) 2012 Justin Donaldson <jdonaldson@gmail.com>
