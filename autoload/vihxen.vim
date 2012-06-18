@@ -52,7 +52,7 @@ function! vihxen#ProjectHxml()
     endif
 
     call s:SetCompiler()
-    return vihxen_hxml
+    return g:vihxen_hxml
 endfunction
 
 function! vihxen#DefaultHxml()
@@ -85,11 +85,19 @@ endfunction
 function! s:SetCompiler()
     set omnifunc=vihxen#HaxeComplete
     let vihxen_hxml = vihxen#CurrentBuild()
-    let build_command = "cd '".fnamemodify(vihxen_hxml,":p:h")."';"
-                \."haxe '".vihxen_hxml."' 2>&1; cd '".getcwd()."'"
+    if (exists("g:vihxen_hxml"))
+        let build_command = "haxe '".vihxen_hxml."' 2>&1"
+    else
+        " do not cd to different directory after command, it won't show quick
+        " fix
+        let build_command = "cd '".fnamemodify(vihxen_hxml,":p:h")."';"
+                    \."haxe '".vihxen_hxml."' 2>&1"
+    endif
 
     let &l:makeprg = build_command
-    let &l:errorformat="%E%f:%l: characters %c-%*[0-9] : %m,%I%f:%l: %m"
+    " only use simple info message for catching traces (%I%m), haxe doesn't
+    " output the full file path in the trace output
+    let &l:errorformat="%E%f:%l: characters %c-%*[0-9] : %m,%I%m"
 endfunction
 
 function! vihxen#CompilerClassPaths()
