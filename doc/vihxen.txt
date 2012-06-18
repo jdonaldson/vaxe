@@ -1,4 +1,4 @@
-*vihxen.txt*                                              For Vim version 7.3
+*vihxen.txt* A plugin for working with the Haxe language. For Vim version 7.3
 
 =============================================================================
 Author:  Justin Donaldson <jdonaldson@gmail.com>              *vihxen-author*
@@ -31,9 +31,10 @@ file, as well as how to manage the output.
 
 BUILD MODES                                     *vihxen-build*
 
-Default                 This mode is used automatically any time a *.hx file 
+Default                                         *vihxen-default-mode* 
+                        This mode is used automatically any time a *.hx file 
                         is opened.  It can be retriggered by calling 
-                        |vihxen#DefaultHxml|. Vihxen will search the project 
+                        vihxen#DefaultHxml. Vihxen will search the project 
                         path for the preferred file indicated by 
                         |g:vihxen_prefer_hxml|.
                         If it finds a preferred build file in the parent
@@ -43,7 +44,8 @@ Default                 This mode is used automatically any time a *.hx file
                         compiler with the preferred hxml, and redirect errors 
                         to standard out.
 
-Project                 This mode is used when |vihxen#ProjectHxml| is called.
+Project                                         *vihxen-project-mode* 
+                        This mode is used when |vihxen#ProjectHxml| is called.
                         It will set a g:vihxen_hxml variable that will 
                         override any b:vihxen_hxml variables set by the default
                         method.  It will simply execute the haxe compiler 
@@ -69,7 +71,7 @@ COMMANDS                                        *vihxen-commands*
 
 :vihxen#ProjectHxml     Find and select hxml files in the working directory.
                         Selecting a file with this method will enter
-                        *vihxen-project-mode*.
+                        |vihxen-project-mode|.
 
 
 SETTINGS                                        *vihxen-settings*
