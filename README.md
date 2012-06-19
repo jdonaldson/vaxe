@@ -1,3 +1,4 @@
+![Vihxen Logo](http://i.imgur.com/P8lHX.png)
 Vihxen is a vim bundle for [Haxe](http://www.haxe.org).  It provides support
 for syntax highlighting, indenting, compiling, and many more options.  Vihxen
 has "vimdoc" documentation, so check that for in depth details.  This page will
