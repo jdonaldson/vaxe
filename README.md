@@ -158,3 +158,5 @@ off of his [vim bundle](https://github.com/MarcWeber/vim-haxe).
 * Ganesh Gunasegaran(me at itsgg.com) : I based my hxml syntax file off of [his
 version](http://lists.motion-twin.com/pipermail/haxe/2008-July/018220.html).
 
+* Laurence Taylor (polysemantic at gmail): I based my ctags description of of [his mailing list post]
+(http://haxe.org/forum/thread/3395#nabble-td3443583)
