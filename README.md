@@ -1,4 +1,4 @@
-![Vihxen Logo](http://i.imgur.com/JLqZG.png)
+![Vihxen Logo](http://i.imgur.com/JqKli.png)
 --------------------------------------------------------------------------------
 Vihxen is a vim bundle for [Haxe](http://www.haxe.org).  It provides support
 for syntax highlighting, indenting, compiling, and many more options.  Vihxen
