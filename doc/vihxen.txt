@@ -7,7 +7,7 @@ License: WTFPL (see |vihxen-license|)
 CONTENTS                                        *vihxen-contents*
 
 |vihxen-introduction|                   Introduction and Feature Summary
-|vihxen-commands|                       Commands
+|vihxen-functions|                      Functions
 |vihxen-settings|                       Settings
 |compiler-vihxen|                       Compiler
 
@@ -18,8 +18,11 @@ CONTENTS                                        *vihxen-contents*
 INTRODUCTION                                    *vihxen*
                                                 *vihxen-introduction*
 
-This plugin adds support for Haxe syntax, indenting, and compiling.  Also
-included is syntax and support for Hxml.
+This plugin adds basic support for Haxe syntax, indenting, and compiling.  In 
+addition, it provides functions and features for advanced vim features such as
+|omnifunc|, |makeprg|, and |ctags|, as well as supporting useful bundles such 
+as |taglist|, |neocomplcache|, |snipmate|, and |powerline|. Also included is 
+syntax and support for Hxml.
 
 Vihxen uses the Haxe compiler extensively to determine code completions, 
 and generate various metadata.  The compiler, in turn, uses sequences of 
@@ -27,7 +30,17 @@ compiler directives in "hxml" files in order to specify build and output
 options, similar to gnu makefiles.
 
 Vihxen has two different "build modes" that designate how to find the hxml
-file, as well as how to manage the output.
+file, as well as how to set up the |makeprg|.  If you're working with simple 
+projects, then the default mode will work just fine.  If you have a complex 
+project structure with many different sub-builds, then you may want to consider
+using |vihxen-project-mode|.  You can also set project mode by setting the 
+g:vihxen_hxml variable manually. This is useful if you want to set a special 
+hxml for all files in a given directory:
+
+:autocmd BufNewFile,BufRead /project/* let g:vihxen_build = /project/build.hxml
+
+Keep in mind that the project mode will persist throughout your entire session.
+If you wish to exit project mode, simply unset the g:vihxen_hxml variable.
 
 BUILD MODES                                     *vihxen-build*
 
@@ -40,6 +53,7 @@ Default                                         *vihxen-default-mode*
                         If it finds a preferred build file in the parent
                         directories of the currently edited file, it will set
                         a b:vihxen_hxml variable for the current buffer.
+                        It sets a |makeprg| that has the following behavior: 
                         It will cd to the preferred hxml directory, call the 
                         compiler with the preferred hxml, and redirect errors 
                         to standard out.
@@ -48,35 +62,51 @@ Project                                         *vihxen-project-mode*
                         This mode is used when |vihxen#ProjectHxml| is called.
                         It will set a g:vihxen_hxml variable that will 
                         override any b:vihxen_hxml variables set by the default
-                        method.  It will simply execute the haxe compiler 
-                        without changing directories, and redirect errors to
-                        standard out.
+                        method.  It also sets a |makeprg| that simply executes
+                        the haxe compiler in the working directory, 
+                        and redirects errors to standard out.
 
-COMMANDS                                        *vihxen-commands*
+Functions                                        *vihxen-functions*
 
-:vihxen#CompilerClassPaths
-                        Retrieve the class paths for the current build target
+vihxen#CompilerClassPaths
+                        Retrieve the class paths for the current build target.
 
-:vihxen#Ctags           Generate a ctags file for the current build target
+vihxen#Ctags            Generate a ctags file for the current build target.
+                        This function will use the compiler class paths for the
+                        current build, which will include all standard 
+                        libraries, as well as libraries from included haxelibs.
+                        Vihxen also provides a tag description file that can 
+                        be used with |taglist| if it is installed.
 
-:vihxen#CurrentBuild    Retrieve the directives for the current build
+vihxen#CurrentBuild     Returns the current active project build file if it 
+                        is specified, else it will return the default build 
+                        file name if it exists.
 
-:vihxen#DefaultHxml     Find the preferred build file recursively in the
-                        parents of the working directory
+vihxen#DefaultHxml      Find the preferred build file recursively in the
+                        parents of the working directory. This function is 
+                        called automatically whenever any hx file is opened.
 
-:vihxen#HaxeComplete    The omnifunc for vihxen
+vihxen#HaxeComplete     The |omnifunc| provided for vihxen.
 
-:vihxen#OpenHxml        Open the current build file specified with
-                        vihxen#DefaultHxml, or vihxen#ProjectHxml
+vihxen#OpenHxml         Open the current build file specified with
+                        vihxen#DefaultHxml, or vihxen#ProjectHxml.
 
-:vihxen#ProjectHxml     Find and select hxml files in the working directory.
+vihxen#ProjectHxml      Find and select hxml files in the working directory.
                         Selecting a file with this method will enter
-                        |vihxen-project-mode|.
+                        |vihxen-project-mode|.  If you have installed |tlib|,
+                        then it will use |tlib#input#List| to select hxml 
+                        candidates.
 
 
 SETTINGS                                        *vihxen-settings*
+
 g:vihxen_prefer_hxml    The preferred name for hxml files to search for in 
                         default build mode. The default is "build.hxml"
+
+g:vihxen_hxml           A variable that indicates the |vihxen-project-mode| 
+                        build file.  It will override the |vihxen-default-mode|
+                        setting if present.
+
 LICENSE                                         *vihxen-license*
 
 Copyright (C) 2012 Justin Donaldson <jdonaldson@gmail.com>
