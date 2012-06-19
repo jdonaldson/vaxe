@@ -1,5 +1,8 @@
 Vihxen is a vim bundle for [Haxe](http://www.haxe.org).  It provides support
 for syntax highlighting, indenting, compiling, and many more options.
+Vihxen has "vimdoc" documentation, so check that for in depth details.  
+This page will describe some of the special or optional features that Vihxen 
+supports.
 
 ![Vihxen Screenshot](http://i.imgur.com/JFvze.png)
 (screenshot shows neocomplcache completion mode, vim-powerline, taglist, and monokai color theme)
@@ -30,6 +33,7 @@ To update:
 To update, just run `:BundleInstall!`
 
 [pathogen]:https://github.com/tpope/vim-pathogen
+
 [vundle]:https://github.com/gmarik/vundle
 
 # Compiling Haxe Projects with Vihxen
@@ -39,23 +43,9 @@ Vihxen supports [hxml build files](http://haxe.org/doc/compiler), which provide
 all of the arguments for the compiler, similar to a  [make
 file](http://en.wikipedia.org/wiki/Make_(software).
 
-
-Vihxen will attempt to find a suitable hxml file by looking in the current
-working directory, and checking each parent folder for a `build.hxml` file.
-You can change the name of the preferred build file name by setting a variable
-in your `.vimrc`:
-
-    let g:vihxen_preferred_hxml = "some_other_file_name.hxml"
-
-Once found, a variable `b:vihxen_hxml` will be set for the current buffer.
-In some cases, you may wish to override this behavior for certain files.  E.g.,
-perhaps you are working with a project that contains multiple build files. 
-In this case, you can also search for a valid hxml file in the working directory:
-
-    :call vihxen#ProjectHxml()
-
-This sets a `g:vihxen_hxml` variable that will override any buffer variable 
-that may be set.
+Vihxen will automatically try to determine the appropriate hxml file you are 
+using.  It will also let you easily override this with a specific file
+(see vim docs for more details).
 
 Vihxen will specify a custom
 [makeprg](http://vimdoc.sourceforge.net/htmldoc/options.html#'makeprg') using
@@ -81,7 +71,7 @@ the start of a field, submodule, or class access, or after the first
 parentheses of a function invocation. See the [haxe
 documentation](http://haxe.org/manual/completion) for more details.
 
-### Dealing with multiple completion targets
+### Active Targets: Dealing with --next 
 
 In some cases, an hxml file may specify multiple targets via a `--next`
 directive.  Vihxen will use the first target it finds in order to generate
@@ -133,14 +123,6 @@ Haxe.  Put these lines in your `.ctags` file in your home directory:
     --regex-haxe=/^[ \t]*typedef[ \t]+([A-Za-z0-9_]+)/\1/t,typedef/
     --regex-haxe=/^[ \t]*enum[ \t]+([A-Za-z0-9_]+)/\1/t,typedef/
 
-
-Vihxen has a special function `vihxen#Ctags()` that will generate tags for the
-current compilation target.  This function uses the same "Dealing with
-multiple completion targets" method to determine an "active" target. For this
-to work, it is necessary to have a hxml file specified (b:vihxen_hxml).  This
-function will call `ctags -R` on all of the class paths currently used by the
-haxe compiler for the given target, including any paths set for haxelib
-libraries.  Remember to regenerate your tags if you change your target.
 
 ## Taglist
 
