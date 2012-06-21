@@ -133,6 +133,9 @@ SETTINGS                                        *vihxen-settings*
 *g:vihxen_hxml*           A variable that indicates the |vihxen-project-mode|
                         build file.  It will override the |vihxen-default-mode|
                         setting if present.
+*g:vihxen_prevent_completion_bufwrite_events*
+                        Vihxen uses the compiler to make completions.  This can
+                        happen frequently, and causes the buffer to be written.
 
 LICENSE                                         *vihxen-license*
 

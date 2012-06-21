@@ -12,8 +12,8 @@ let g:tagbar_type_haxe = {
     \ ]
         \ }
 
-" ignore buffer write events triggered by completions
-if !exists("g:vihxen_ignore_completion_events")
-    let g:vihxen_ignore_completion_events = 1
+" prevent buffer write events triggered by completions
+if !exists("g:vihxen_prevent_completion_bufwrite_events")
+    let g:vihxen_prevent_completion_bufwrite_events = 1
 endif
 
