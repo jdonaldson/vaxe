@@ -136,6 +136,7 @@ SETTINGS                                        *vihxen-settings*
 *g:vihxen_prevent_completion_bufwrite_events*
                         Vihxen uses the compiler to make completions.  This can
                         happen frequently, and causes the buffer to be written.
+                        The default is "1" which prevents events.
 
 LICENSE                                         *vihxen-license*
 
