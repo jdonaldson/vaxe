@@ -17,3 +17,8 @@ if !exists("g:vihxen_prevent_completion_bufwrite_events")
     let g:vihxen_prevent_completion_bufwrite_events = 1
 endif
 
+" prefer build.hxml files
+if !exists('g:vihxen_prefer_hxml')
+    let g:vihxen_prefer_hxml = 'build.hxml'
+endif
+
