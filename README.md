@@ -7,7 +7,7 @@ describe some of the special or optional features that Vihxen supports, in
 addition to recommended configuration settings.
 
 ![Vihxen Screenshot](http://i.imgur.com/JFvze.png) (screenshot shows
-neocomplcache completion mode, vim-powerline, taglist, and monokai color theme)
+neocomplcache completion mode, vim-powerline, tagbar, and monokai color theme)
 
 The recommended way to install vihxen is using a bundle management system such
 as [pathogen][] or
@@ -126,12 +126,12 @@ Haxe.  Put these lines in your `.ctags` file in your home directory:
     --regex-haxe=/^[ \t]*enum[ \t]+([A-Za-z0-9_]+)/\1/t,typedef/
 
 
-## Taglist
+## Tagbar
 
 Using the ctags lines above, the
-[Taglist](https://github.com/vim-scripts/taglist.vim) bundle can display a nice
+[Tagbar](http://majutsushi.github.com/tagbar/) bundle can display a nice
 overview of the classes, methods, and variables in your current haxe file.  You
-do not need to call `vihxen#Ctags()` in order to use Taglist, it works
+do not need to call `vihxen#Ctags()` in order to use Tagbar, it works
 automatically, but only for the current Vihxen buffer.
 
 ## Neocomplcache

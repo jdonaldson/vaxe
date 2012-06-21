@@ -21,7 +21,7 @@ INTRODUCTION                                    *vihxen*
 This plugin adds basic support for Haxe syntax, indenting, and compiling.  In
 addition, it provides functions and features for advanced vim features such as
 |omnifunc|, |makeprg|, and |ctags|, as well as supporting useful bundles such
-as |taglist|, |neocomplcache|, |snipmate|, and |powerline|. Also included is
+as |tagbar|, |neocomplcache|, |snipmate|, and |powerline|. Also included is
 syntax and support for Hxml.
 
 Vihxen uses the Haxe compiler extensively to determine code completions, and
@@ -80,7 +80,7 @@ Functions                                        *vihxen-functions*
                         current build, which will include all standard
                         libraries, as well as libraries from included haxelibs.
                         Vihxen also provides a tag description file that can
-                        be used with |taglist| if it is installed.
+                        be used with |tagbar| if it is installed.
 
 *vihxen#CurrentBuild*     Returns the current active project build file if it
                         is specified, else it will return the default build
