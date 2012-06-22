@@ -1,2 +1,2 @@
 compiler haxe
-setlocal omnifunc=vihxen#HaxeComplete
+setlocal omnifunc=vaxe#HaxeComplete

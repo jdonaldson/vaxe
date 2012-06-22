@@ -1,1 +1,1 @@
-let b:vihxen_build = expand('%')
+let b:vaxe_build = expand('%')

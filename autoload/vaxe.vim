@@ -1,14 +1,14 @@
-function! vihxen#OpenHxml()
-    let vihxen_hxml = vihxen#CurrentBuild()
-    if filereadable(vihxen_hxml)
-        exe ':edit '.vihxen_hxml
+function! vaxe#OpenHxml()
+    let vaxe_hxml = vaxe#CurrentBuild()
+    if filereadable(vaxe_hxml)
+        exe ':edit '.vaxe_hxml
     else
-        echoerr 'build not readable: '.vihxen_hxml
+        echoerr 'build not readable: '.vaxe_hxml
     endif
 endfunction
 
 
-function! vihxen#HaxeComplete(findstart,base)
+function! vaxe#HaxeComplete(findstart,base)
    if a:findstart
        return col('.')
    else
@@ -16,9 +16,9 @@ function! vihxen#HaxeComplete(findstart,base)
    endif
 endfunction
 
-function! vihxen#ProjectHxml()
-    if exists('g:vihxen_hxml')
-        unlet g:vihxen_hxml
+function! vaxe#ProjectHxml()
+    if exists('g:vaxe_hxml')
+        unlet g:vaxe_hxml
     endif
 
     let hxmls = split(glob("**/*.hxml"),'\n')
@@ -44,22 +44,22 @@ function! vihxen#ProjectHxml()
         let base_hxml = getcwd().'/'.base_hxml
     endif
 
-    let g:vihxen_hxml = base_hxml
+    let g:vaxe_hxml = base_hxml
 
-    if !filereadable(g:vihxen_hxml)
+    if !filereadable(g:vaxe_hxml)
         echoerr "Project build file not valid, please create one."
         return
     endif
 
     call s:SetCompiler()
-    return g:vihxen_hxml
+    return g:vaxe_hxml
 endfunction
 
-function! vihxen#DefaultHxml()
-    if exists('b:vihxen_hxml')
-        unlet b:vihxen_hxml
+function! vaxe#DefaultHxml()
+    if exists('b:vaxe_hxml')
+        unlet b:vaxe_hxml
     endif
-    let base_hxml = findfile(g:vihxen_prefer_hxml, ".;")
+    let base_hxml = findfile(g:vaxe_prefer_hxml, ".;")
     if base_hxml !~ "^/"
         let base_hxml = getcwd() . '/' . base_hxml
     endif
@@ -67,30 +67,30 @@ function! vihxen#DefaultHxml()
         echomsg "Default build file not valid, please create one."
         return
     endif
-    let b:vihxen_hxml = base_hxml
+    let b:vaxe_hxml = base_hxml
     call s:SetCompiler()
-    return b:vihxen_hxml
+    return b:vaxe_hxml
 endfunction
 
-function! vihxen#CurrentBuild()
-    let vihxen_hxml = ''
-    if exists('g:vihxen_hxml')
-        let vihxen_hxml = g:vihxen_hxml
-    elseif exists('b:vihxen_hxml')
-        let vihxen_hxml = b:vihxen_hxml
+function! vaxe#CurrentBuild()
+    let vaxe_hxml = ''
+    if exists('g:vaxe_hxml')
+        let vaxe_hxml = g:vaxe_hxml
+    elseif exists('b:vaxe_hxml')
+        let vaxe_hxml = b:vaxe_hxml
     endif
-    return vihxen_hxml
+    return vaxe_hxml
 endfunction
 
 function! s:SetCompiler()
-    let vihxen_hxml = vihxen#CurrentBuild()
-    if (exists("g:vihxen_hxml"))
-        let build_command = "haxe '".vihxen_hxml."' 2>&1"
+    let vaxe_hxml = vaxe#CurrentBuild()
+    if (exists("g:vaxe_hxml"))
+        let build_command = "haxe '".vaxe_hxml."' 2>&1"
     else
         " do not cd to different directory after command, it won't show quick
         " fix
-        let build_command = "cd '".fnamemodify(vihxen_hxml,":p:h")."';"
-                    \."haxe '".vihxen_hxml."' 2>&1"
+        let build_command = "cd '".fnamemodify(vaxe_hxml,":p:h")."';"
+                    \."haxe '".vaxe_hxml."' 2>&1"
     endif
 
     let &l:makeprg = build_command
@@ -98,12 +98,12 @@ function! s:SetCompiler()
     " output the full file path in the trace output
 endfunction
 
-function! vihxen#CompilerClassPaths()
+function! vaxe#CompilerClassPaths()
    let complete_args = s:CurrentBlockHxml()
    let complete_args.= "\n"."-v"."\n"."--no-output"
    let complete_args = join(split(complete_args,"\n"),' ')
-   let vihxen_hxml = vihxen#CurrentBuild()
-   let hxml_cd = fnamemodify(vihxen_hxml,":p:h")
+   let vaxe_hxml = vaxe#CurrentBuild()
+   let hxml_cd = fnamemodify(vaxe_hxml,":p:h")
    let hxml_sys = "cd\ ".hxml_cd."; haxe ".complete_args."\ 2>&1"
    let voutput = system(hxml_sys)
    let raw_path = split(voutput,"\n")[0]
@@ -113,19 +113,19 @@ function! vihxen#CompilerClassPaths()
    return paths
 endfunction
 
-function! vihxen#Ctags()
-    let paths = join(vihxen#CompilerClassPaths(),' ')
-    let vihxen_hxml = vihxen#CurrentBuild()
-    let hxml_cd = fnamemodify(vihxen_hxml,":p:h")
+function! vaxe#Ctags()
+    let paths = join(vaxe#CompilerClassPaths(),' ')
+    let vaxe_hxml = vaxe#CurrentBuild()
+    let hxml_cd = fnamemodify(vaxe_hxml,":p:h")
     let hxml_sys = "cd " . hxml_cd . "; ctags -R . " . paths
     call system(hxml_sys)
 endfunction
 
 function! s:CurrentBlockHxml()
-    let vihxen_hxml = vihxen#CurrentBuild()
-    let hxfile = join(readfile(vihxen_hxml),"\n")
+    let vaxe_hxml = vaxe#CurrentBuild()
+    let hxfile = join(readfile(vaxe_hxml),"\n")
     let parts = split(hxfile,'--next')
-    let complete = filter(parts, 'match(v:val, "^\s*#\s*vihxen")')
+    let complete = filter(parts, 'match(v:val, "^\s*#\s*vaxe")')
     if len(complete) == 0
         let complete = parts
     endif
@@ -146,18 +146,18 @@ function! s:DisplayCompletion()
     if  synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") == 'Comment'
         return []
     endif
-    let vihxen_hxml = vihxen#CurrentBuild()
-    if !filereadable(vihxen_hxml)
-        echoerr 'build file not readable: '.vihxen_hxml
+    let vaxe_hxml = vaxe#CurrentBuild()
+    if !filereadable(vaxe_hxml)
+        echoerr 'build file not readable: '.vaxe_hxml
     endif
     let complete_args = s:CompletionHxml(expand("%:p")
                 \, (line2byte('.')+col('.')-2))
-    let hxml_cd = fnamemodify(b:vihxen_hxml,":p:h")
+    let hxml_cd = fnamemodify(b:vaxe_hxml,":p:h")
     let hxml_sys = "cd\ ".hxml_cd."; haxe ".complete_args."\ 2>&1"
     let hxml_sys =  join(split(hxml_sys,"\n")," ")
     "echomsg(hxml_sys)
     " ignore the write requests generated by completions
-    if (g:vihxen_prevent_completion_bufwrite_events)
+    if (g:vaxe_prevent_completion_bufwrite_events)
         let events = "BufWritePost,BufWritePre,BufWriteCmd"
         let old_ignore = &l:eventignore
         if (&l:eventignore)

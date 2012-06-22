@@ -1,15 +1,13 @@
-![Vihxen Logo](http://i.imgur.com/JqKli.png)
---------------------------------------------------------------------------------
-Vihxen is a vim bundle for [Haxe](http://www.haxe.org).  It provides support
-for syntax highlighting, indenting, compiling, and many more options.  Vihxen
+Vaxe is a vim bundle for [Haxe](http://www.haxe.org).  It provides support
+for syntax highlighting, indenting, compiling, and many more options.  vaxe
 has "vimdoc" documentation, so check that for in depth details.  This page will
-describe some of the special or optional features that Vihxen supports, in
+describe some of the special or optional features that vaxe supports, in
 addition to recommended configuration settings.
 
-![Vihxen Screenshot](http://i.imgur.com/JFvze.png) (screenshot shows
+![Vaxe Screenshot](http://i.imgur.com/JFvze.png) (screenshot shows
 neocomplcache completion mode, vim-powerline, tagbar, and monokai color theme)
 
-The recommended way to install vihxen is using a bundle management system such
+The recommended way to install vaxe is using a bundle management system such
 as [pathogen][] or
 [vundle][].
 
@@ -17,19 +15,19 @@ as [pathogen][] or
 
 1. Install pathogen using the [instructions][pathogen].
 2. Create/cd into `~/.vim/bundle/`
-3. Make a clone of the vihxen repo:
-    git clone https://github.com/jdonaldson/vihxen.git
+3. Make a clone of the vaxe repo:
+    git clone https://github.com/jdonaldson/vaxe.git
 
 To update:
 
-1. cd into `~/.vim/bundle/vihxen/`
+1. cd into `~/.vim/bundle/vaxe/`
 2. git pull
 
 # Install with Vundle
 
 1. Install vundle using the [instructions][vundle]
-2. Add vihxen to your bundle list in `.vimrc`:
-    Bundle 'jdonaldson/vihxen'
+2. Add vaxe to your bundle list in `.vimrc`:
+    Bundle 'jdonaldson/vaxe'
 3. Run :BundleInstall
 
 To update, just run `:BundleInstall!`
@@ -38,23 +36,23 @@ To update, just run `:BundleInstall!`
 
 [vundle]:https://github.com/gmarik/vundle
 
-# Compiling Haxe Projects with Vihxen
+# Compiling Haxe Projects with vaxe
 
 ## HXML File Support
-Vihxen supports [hxml build files](http://haxe.org/doc/compiler), which provide
+Vaxe supports [hxml build files](http://haxe.org/doc/compiler), which provide
 all of the arguments for the compiler, similar to a  [make
 file](http://en.wikipedia.org/wiki/Make_(software).
 
-Vihxen will automatically try to determine the appropriate hxml file you are 
+Vaxe will automatically try to determine the appropriate hxml file you are 
 using.  It will also let you easily override this with a specific file
 (see vim docs for more details).
 
-Vihxen will specify a custom
+Vaxe will specify a custom
 [makeprg](http://vimdoc.sourceforge.net/htmldoc/options.html#'makeprg') using
 the given hxml file. The makeprg will cd to the directory containing the hxml,
 execute the haxe compiler with the hxml file, and pipe output to stdout.
 
-Vihxen will also specify an
+Vaxe will also specify an
 [errorformat](http://vimdoc.sourceforge.net/htmldoc/options.html#'errorformat'),
 so that errors and trace messages show up in the
 [quickfix](http://vimdoc.sourceforge.net/htmldoc/quickfix.html#quickfix)
@@ -62,7 +60,7 @@ window.
 
 ## Omni-completions
 
-Vihxen provides an
+Vaxe provides an
 [omnicompletion](http://vimdoc.sourceforge.net/htmldoc/version7.html#new-omni-completion)
 function that can use the haxe compiler in order to [display field
 completions](http://haxe.org/manual/completion).  Visual Studio users will
@@ -76,19 +74,19 @@ documentation](http://haxe.org/manual/completion) for more details.
 ### Active Targets: Dealing with --next 
 
 In some cases, an hxml file may specify multiple targets via a `--next`
-directive.  Vihxen will use the first target it finds in order to generate
+directive.  Vaxe will use the first target it finds in order to generate
 completions.  It is possible to specify a different target by
 inserting a line like this into your hxml:
 
-    # vihxen
+    # vaxe
 
-If vihxen finds that line, it will use that target to generate completions and
-perform other miscellaneous tasks.  The target that Vihxen uses is called the
+If Vaxe finds that line, it will use that target to generate completions and
+perform other miscellaneous tasks.  The target that Vaxe uses is called the
 "active" target here.
 
 # Recommended Plugins/Additions
 
-Vihxen will work fine on its own, but it is designed to integrate cleanly with
+Vaxe will work fine on its own, but it is designed to integrate cleanly with
 a number of other bundles and plugins. Once again, it is recommended to use
 pathogen or vundle to manage installation and updates.
 
@@ -131,8 +129,8 @@ Haxe.  Put these lines in your `.ctags` file in your home directory:
 Using the ctags lines above, the
 [Tagbar](http://majutsushi.github.com/tagbar/) bundle can display a nice
 overview of the classes, methods, and variables in your current haxe file.  You
-do not need to call `vihxen#Ctags()` in order to use Tagbar, it works
-automatically, but only for the current Vihxen buffer.
+do not need to call `vaxe#Ctags()` in order to use Tagbar, it works
+automatically, but only for the current vaxe buffer.
 
 ## Neocomplcache
 
@@ -148,7 +146,7 @@ completions, you will need to add this to your `.vimrc`:
     endif
     let g:neocomplcache_omni_patterns.haxe = '\v([\]''"]|\w)(\.|\()'
 
-Once enabled, Neocomplcache will automatically invoke Vihxen omnicompletion
+Once enabled, Neocomplcache will automatically invoke vaxe omnicompletion
 when you type a "." after a variable with fields, etc.
 
 # Acknowledgements
