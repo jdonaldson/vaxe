@@ -8,8 +8,7 @@ addition to recommended configuration settings.
 neocomplcache completion mode, vim-powerline, tagbar, and monokai color theme)
 
 The recommended way to install vaxe is using a bundle management system such
-as [pathogen][] or
-[vundle][].
+as [pathogen][], [vundle][], or [vam][].
 
 # Install with Pathogen
 
@@ -97,7 +96,7 @@ perform other miscellaneous tasks.  The target that Vaxe uses is called the
 
 Vaxe will work fine on its own, but it is designed to integrate cleanly with
 a number of other bundles and plugins. Once again, it is recommended to use
-pathogen or vundle to manage installation and updates.
+pathogen, vundle, or vam to manage installation and updates.
 
 ## Powerline
 
