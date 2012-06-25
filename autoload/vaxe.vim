@@ -172,7 +172,7 @@ function! s:DisplayCompletion()
     endif
     let complete_output = system(hxml_sys)
     let output = []
-    echomsg complete_output
+    "echomsg complete_output
 python << endpython
 import vim, re, HTMLParser
 import xml.etree.ElementTree as ET
