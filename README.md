@@ -26,15 +26,24 @@ To update:
 # Install with Vundle
 
 1. Install vundle using the [instructions][vundle]
-2. Add vaxe to your bundle list in `.vimrc`:
+2. Add vaxe to your bundle list in `.vimrc` and re-source it:
     Bundle 'jdonaldson/vaxe'
 3. Run :BundleInstall
 
 To update, just run `:BundleInstall!`
 
+# Install with VAM
+
+1. Install VAM using the [instructions][vam]
+2. Add vaxe to the list of your activated bundles and re-source it:
+    call vam#ActivateAddons(['github:jdonaldson/vaxe'])
+
+
 [pathogen]:https://github.com/tpope/vim-pathogen
 
 [vundle]:https://github.com/gmarik/vundle
+
+[vam]:https://github.com/MarcWeber/vim-addon-manager
 
 # Compiling Haxe Projects with vaxe
 
@@ -122,7 +131,7 @@ Haxe.  Put these lines in your `.ctags` file in your home directory:
     --regex-haxe=/^[ \t]*(extern[ \t]+)?interface[ \t]+([A-Za-z0-9_]+)/\2/i,interface/
     --regex-haxe=/^[ \t]*typedef[ \t]+([A-Za-z0-9_]+)/\1/t,typedef/
     --regex-haxe=/^[ \t]*enum[ \t]+([A-Za-z0-9_]+)/\1/t,typedef/
-
+    --regex-haxe=/^[ \t]*+([A-Za-z0-9_]+)(;|\([^)]*:[^)]*\))/\1/t,enum_field/
 
 ## Tagbar
 
