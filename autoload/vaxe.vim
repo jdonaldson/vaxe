@@ -196,9 +196,10 @@ if len(fields) > 0:
         if info is None:
             info = ''
         else:
+            # get rid of leading/trailing ws/nl
             info = info.strip()
-            info = re.sub(r'\t', '', info)
-            info = info.split("\n")
+            # split and collapse extra whitespace
+            info = [re.sub(r'\s+',' ',s.strip()) for s in info.split('\n')]
         abbr = word
         kind = 'v'
         if  menu == '': kind = 'm'
@@ -219,7 +220,7 @@ endpython
         let tag = ''
         if has_key(o,'menu') && has_key(o,'info')
             let o['info'] = join(o['info'],"\n")
-            let o['info'] = o['info'] . "\n" . o['menu']
+            let o['info'] = o['info'] . "\n>> " . o['menu']
         endif
     endfor
 
