@@ -114,11 +114,23 @@ function! vaxe#CompilerClassPaths()
 endfunction
 
 function! vaxe#Ctags()
-    let paths = join(vaxe#CompilerClassPaths(),' ')
-    let vaxe_hxml = vaxe#CurrentBuild()
-    let hxml_cd = fnamemodify(vaxe_hxml,":p:h")
-    let hxml_sys = "cd " . hxml_cd . "; ctags -R . " . paths
-    call system(hxml_sys)
+    let paths = vaxe#CompilerClassPaths()
+
+    if (len(paths) > 0)
+        " the last path is the base std dir, we want to treat it differently
+        call  remove(paths, len(paths)-1)
+        " strip off the _std directory, so we can just get the base dir for
+        " the target
+        let paths = map(paths, 'substitute(v:val, "_std/$", "","g")')
+        let pathstr = join( paths,' ')
+        let vaxe_hxml = vaxe#CurrentBuild()
+        " get the hxml name so we can cd to its directory
+        " TODO: this probably needs to be user specified
+        let hxml_cd = fnamemodify(vaxe_hxml,":p:h")
+        " call ctags recursively on the directories 
+        let hxml_sys = "cd " . hxml_cd . "; ctags -R . " . pathstr
+        call system(hxml_sys)
+    endif
 endfunction
 
 function! s:CurrentBlockHxml()
@@ -146,6 +158,7 @@ function! s:DisplayCompletion()
     if  synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") == 'Comment'
         return []
     endif
+    
     let vaxe_hxml = vaxe#CurrentBuild()
     if !filereadable(vaxe_hxml)
         echoerr 'build file not readable: '.vaxe_hxml
@@ -223,7 +236,15 @@ endpython
             let o['info'] = o['info'] . "\n>> " . o['menu']
         endif
     endfor
+    " There was no good compiler completion.  Complete a Type
+    if len(output) == 0
+        "let classes = taglist('Float')
+        let val = expand("<cword>")
+        let classes = filter(taglist('^'.val), 'v:val["kind"] == "c" || v:val["kind"] == "t"')
 
+        let output = map(classes,'{"word":v:val["name"], "menu":v:val["filename"]}')
+    endif  
+    echomsg 'hi'
     return output
 endfunction
 
