@@ -197,6 +197,8 @@ if len(fields) > 0:
             info = ''
         else:
             info = info.strip()
+            info = re.sub(r'\t', '', info)
+            info = info.split("\n")
         abbr = word
         kind = 'v'
         if  menu == '': kind = 'm'
@@ -208,7 +210,7 @@ elif len(types) > 0:
     otype = types[0]
     h = HTMLParser.HTMLParser()
     word = ' '
-    info = h.unescape(otype.text).strip()
+    info = [h.unescape(otype.text).strip()]
     abbr = info
     completes= [{'word':word,'info':info, 'abbr':abbr}]
 vim.command("let output = " + str(completes))
@@ -216,6 +218,7 @@ endpython
     for o in output
         let tag = ''
         if has_key(o,'menu') && has_key(o,'info')
+            let o['info'] = join(o['info'],"\n")
             let o['info'] = o['info'] . "\n" . o['menu']
         endif
     endfor
