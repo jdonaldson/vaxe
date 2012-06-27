@@ -118,14 +118,15 @@ function! vaxe#Ctags()
     let paths = vaxe#CompilerClassPaths()
 
     if (len(paths) > 0)
-        " the last path is the base std dir, we want to treat it differently
+        " the last path is the base std dir, We want to treat it differently
         let std =  remove(paths, len(paths)-1)
-        " strip off the _std directory, so we can just get the base dir for
-        " the target
-        let paths = map(paths, 'substitute(v:val, "_std/$", "","g")')
-        " specify all of the util directories in the stdlib, and any base
-        " classes, but none of the target specific directories
-        let paths = paths + [std.'haxe/', std.'sys/', std.'tools/', std.'*.hx']
+        " the second to last path is the target std dir. We need to alter it.
+        let std_target =  remove(paths, len(paths)-1)
+        " strip off the target's _std override dir
+        let std_target = substitute(std_target, "_std/$", "","g")
+        " specify all of the util directories in the base std, and any base
+        " classes.  Include the target specific directories in std_target.
+        let paths = paths + [std_target] + [std.'haxe/', std.'sys/', std.'tools/', std.'*.hx']
         let pathstr = join( paths,' ')
         let vaxe_hxml = vaxe#CurrentBuild()
         " get the hxml name so we can cd to its directory
@@ -213,7 +214,7 @@ if len(fields) > 0:
         info = x.find("d").text
         menu = '' if menu is None else menu
         if info is None:
-            info = ''
+            info = ['']
         else:
             # get rid of leading/trailing ws/nl
             info = info.strip()
@@ -244,13 +245,31 @@ endpython
     endfor
     " There was no good compiler completion.  Complete a Type
     if len(output) == 0
-        "let classes = taglist('Float')
-        let val = expand("<cword>")
-        let classes = filter(taglist('^'.val), 'v:val["kind"] == "c" || v:val["kind"] == "t"')
-
-        let output = map(classes,'{"word":v:val["name"], "menu":v:val["filename"]}')
+        let classes = []
+        let line2col =getline('.')[0:col('.')]
+        let partial_word = ''
+        let obj = copy(l:)
+        function! obj.EML(regex)
+            let matches = matchlist(self.line2col, a:regex)
+            echomsg join(matches,' ')
+            if len(matches) > 0
+               let self.partial_word = matches[1]
+            end
+            return len(matches)
+        endfunction
+        if obj.EML("new\\s*\\(\w*\\)$") 
+            let classes = filter(taglist('^'.partial_word), 'v:val["kind"] == "c"') 
+            echomsg "constructor"
+        elseif obj.EML(":\\s*\\(\w*\\)$")
+            let classes = filter(taglist('^'.partial_word), 'v:val["kind"] == "c" || v:val["kind"] == "t" || v:val["kind"] == "i"')
+        elseif obj.EML("import\\s*\\(\w*\\)$")
+            let classes = filter(taglist('^'.partial_word), 'v:val["kind"] == "p"') 
+        else
+            echomsg partial_word
+            echomsg "***".line2col."***"
+        endif
+        let output = map(classes,'{"word":substitute(v:val["name"],"^".partial_word,"","g"), "menu":v:val["filename"]}')
     endif  
-    echomsg 'hi'
     return output
 endfunction
 
