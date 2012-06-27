@@ -64,8 +64,8 @@ function! vaxe#ImportClass()
        if importline == 0
            let importline = search("^\\s*package")
        endif
+       call cursor(oldpos[1], oldpos[2])
        let fixed = substitute(getline('.'), package.'\.', '','g')
-       call cursor(oldpos[0], oldpos[1])
        call setline(line('.'), fixed)
        call append(importline,['import '.package.'.'.class.';']) 
        call cursor(oldpos[1]+1, oldpos[2])
