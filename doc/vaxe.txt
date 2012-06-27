@@ -109,6 +109,29 @@ Functions                                        *vaxe-functions*
                             map <leader>ph : call vaxe#ProjectHxml()<CR>
                         <
 
+*vaxe#ImportClass*      Calling this function on a given line will try to 
+                        import any classes that are given for the line.  E.g. 
+                        for this line:
+                        >
+                            var l = new haxe.FastList<Int>();
+                        <
+                        vaxe#ImportClass() will try to find the FastList 
+                        definition, and import it:
+                        >
+                            import haxe.FastList;
+                            ...
+                            var l = new FastList<Int>();
+                        <
+                        If you're missing the initial package prefix, vaxe 
+                        will try to find package definitions for the given 
+                        class name using ctags.  So, if ctags are generated,
+                        it is also possible to resolve the import for this 
+                        line:
+                        >
+                            var l = new FastList<Int>();
+                        >
+                            
+
 ACTIVE TARGET                                      *omnifunc-active-target*
 
 In some cases, an hxml file may specify multiple targets via a "--next"
