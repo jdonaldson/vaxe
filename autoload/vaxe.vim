@@ -1,3 +1,4 @@
+" Simple utility function to open the hxml file that vaxe is using.
 function! vaxe#OpenHxml()
     let vaxe_hxml = vaxe#CurrentBuild()
     if filereadable(vaxe_hxml)
@@ -7,6 +8,16 @@ function! vaxe#OpenHxml()
     endif
 endfunction
 
+" Utility function that tries to 'do the right thing' in order to import a 
+" given class. Call it on a given line in order to import a class definition
+" at that line.  E.g. 
+" var l = new haxe.FastList<Int>()
+" becomes
+" import haxe.FastList;
+" ...
+" var l = new FastList();
+" You can also call this without a package prefix, and vaxe will try to look
+" up packages that contain the (e.g. FastList) class name.
 function! vaxe#ImportClass()
    let match_parts = matchlist(getline('.'), '\(\l\+\.\)*\(\u\w*\)')
    if len(match_parts)
@@ -72,6 +83,7 @@ function! vaxe#ImportClass()
    endif
 endfunction
 
+" A function suitable for omnifunc
 function! vaxe#HaxeComplete(findstart,base)
    if a:findstart
        return col('.')
@@ -80,6 +92,9 @@ function! vaxe#HaxeComplete(findstart,base)
    endif
 endfunction
 
+" A function that will search for valid hxml in the current working directory 
+"  and allow the user to select the right candidate.  The selection will
+"  enable 'project mode' for vaxe.
 function! vaxe#ProjectHxml()
     if exists('g:vaxe_hxml')
         unlet g:vaxe_hxml
@@ -119,6 +134,8 @@ function! vaxe#ProjectHxml()
     return g:vaxe_hxml
 endfunction
 
+" A function that runs whenever a haxe file is opened.  It tries to quickly
+" find a default named hxml in the parent directories (typically build.hxml).
 function! vaxe#DefaultHxml()
     if exists('b:vaxe_hxml')
         unlet b:vaxe_hxml
@@ -137,6 +154,7 @@ function! vaxe#DefaultHxml()
     return b:vaxe_hxml
 endfunction
 
+" Returns the hxml file that should be used for compilation or completion
 function! vaxe#CurrentBuild()
     let vaxe_hxml = ''
     if exists('g:vaxe_hxml')
@@ -147,6 +165,7 @@ function! vaxe#CurrentBuild()
     return vaxe_hxml
 endfunction
 
+" Sets the makeprg 
 function! s:SetCompiler()
     let vaxe_hxml = vaxe#CurrentBuild()
     if (exists("g:vaxe_hxml"))
@@ -163,6 +182,7 @@ function! s:SetCompiler()
     " output the full file path in the trace output
 endfunction
 
+" returns a list of compiler class paths
 function! vaxe#CompilerClassPaths()
    let complete_args = s:CurrentBlockHxml()
    let complete_args.= "\n"."-v"."\n"."--no-output"
@@ -178,6 +198,7 @@ function! vaxe#CompilerClassPaths()
    return paths
 endfunction
 
+" Calls ctags on the list of compiler class paths
 function! vaxe#Ctags()
     let paths = vaxe#CompilerClassPaths()
 
@@ -220,11 +241,13 @@ function! s:CurrentBlockHxml()
     return complete_string
 endfunction
 
+" Returns hxml that is suitable for making a --display completion call
 function! s:CompletionHxml(file_name, byte_count)
     let stripped = s:CurrentBlockHxml()
     return stripped."\n"."--display ".a:file_name.'@'.a:byte_count
 endfunction
 
+" The main completion function that invokes the compiler, etc.
 function! s:DisplayCompletion()
     if  synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") == 'Comment'
         return []
