@@ -64,6 +64,7 @@ function! vaxe#DefaultHxml()
         let base_hxml = getcwd() . '/' . base_hxml
     endif
     if !filereadable(base_hxml)
+        redraw
         echomsg "Default build file not valid, please create one."
         return
     endif
