@@ -7,6 +7,53 @@ function! vaxe#OpenHxml()
     endif
 endfunction
 
+function! vaxe#ImportClass()
+   let match_parts = matchlist(getline('.'), '\(\l\+\.\)*\(\u\w*\)')
+
+   if len(match_parts)
+       let package = match_parts[1]
+       let class = match_parts[2]
+       let file_packages = {}
+       let file_classes = {} 
+
+       for val in taglist(".")
+           if val['kind'] == 'p'
+               let file_packages[val['filename']] = val['name']
+           elseif val['kind'] == 'c' || val['kind'] == 't' || val['kind'] == 'i'
+               if val['name'] == class
+                   let file_classes[val['filename']] = val['name']
+               endif
+           endif
+       endfor
+
+       let packages = []
+
+       for file in keys(file_classes)
+           if has_key(file_packages, file)
+               let packages = packages + [file_packages[file]]
+           endif
+       endfor
+
+       if len(packages) == 0
+           redraw
+           echomsg "No packages to import"
+       endif
+
+       if len(packages) > 1
+           let selected = inputlist(packages)
+       else
+           let selected = packages[0]
+       endif
+
+       let importline = search("^\\s*import")
+       if importline == 0
+           let importline = search("^\\s*package")
+       endif
+       let fixed = substitute(getline('.'), package.'\.', '','g')
+       call setline(line('.'), fixed)
+       call append(importline,['import '.selected.'.'.class]) 
+   endif
+endfunction
 
 function! vaxe#HaxeComplete(findstart,base)
    if a:findstart
