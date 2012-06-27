@@ -132,6 +132,21 @@ Haxe.  Put these lines in your `.ctags` file in your home directory:
     --regex-haxe=/^[ \t]*enum[ \t]+([A-Za-z0-9_]+)/\1/t,typedef/
     --regex-haxe=/^[ \t]*+([A-Za-z0-9_]+)(;|\([^)]*:[^)]*\))/\1/t,enum_field/
 
+Vaxe can generate a set of tags specific to the given build by running:
+    vaxe#Ctags()
+This will feed the paths used by the compiler into ctags.  Only the relevant 
+paths for the current target will be used.  
+
+Other utilities, like vaxe#ImportClass() can then use this tag information in
+order to programmatically import classes.  E.g. calling vaxe#ImportClass on 
+this line:
+    var l = new FastList<Int>();
+will generate:
+    import haxe.FastList;
+    ...
+    var l = new FastList<Int>();
+
+
 ## Tagbar
 
 Using the ctags lines above, the
