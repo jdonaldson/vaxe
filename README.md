@@ -140,8 +140,11 @@ paths for the current target will be used.
 Other utilities, like vaxe#ImportClass() can then use this tag information in
 order to programmatically import classes.  E.g. calling vaxe#ImportClass on 
 this line:
+
     var l = new FastList<Int>();
+
 will generate:
+
     import haxe.FastList;
     ...
     var l = new FastList<Int>();
