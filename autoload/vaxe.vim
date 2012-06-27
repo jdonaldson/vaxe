@@ -118,17 +118,22 @@ function! vaxe#Ctags()
 
     if (len(paths) > 0)
         " the last path is the base std dir, we want to treat it differently
-        call  remove(paths, len(paths)-1)
+        let std =  remove(paths, len(paths)-1)
         " strip off the _std directory, so we can just get the base dir for
         " the target
         let paths = map(paths, 'substitute(v:val, "_std/$", "","g")')
+        " specify all of the util directories in the stdlib, and any base
+        " classes, but none of the target specific directories
+        let paths = paths + [std.'haxe/', std.'sys/', std.'tools/', std.'*.hx']
         let pathstr = join( paths,' ')
         let vaxe_hxml = vaxe#CurrentBuild()
         " get the hxml name so we can cd to its directory
         " TODO: this probably needs to be user specified
         let hxml_cd = fnamemodify(vaxe_hxml,":p:h")
         " call ctags recursively on the directories 
-        let hxml_sys = "cd " . hxml_cd . "; ctags -R . " . pathstr
+        let hxml_sys = " cd " . hxml_cd . ";"
+                    \." ctags --languages=haxe  --exclude=_std  -R " . pathstr. ";"
+        echomsg hxml_sys
         call system(hxml_sys)
     endif
 endfunction
