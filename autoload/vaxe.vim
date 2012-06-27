@@ -8,9 +8,9 @@ function! vaxe#OpenHxml()
     endif
 endfunction
 
-" Utility function that tries to 'do the right thing' in order to import a 
+" Utility function that tries to 'do the right thing' in order to import a
 " given class. Call it on a given line in order to import a class definition
-" at that line.  E.g. 
+" at that line.  E.g.
 " var l = new haxe.FastList<Int>()
 " becomes
 " import haxe.FastList;
@@ -26,7 +26,7 @@ function! vaxe#ImportClass()
        let package = substitute(package, "\.$",'','g')
        let class = match_parts[2]
        let file_packages = {}
-       let file_classes = {} 
+       let file_classes = {}
 
        if package == ''
            for val in taglist(".")
@@ -48,7 +48,7 @@ function! vaxe#ImportClass()
            endfor
 
            if len(packages) == 0
-               echomsg "No packages to import"
+               echomsg "No packages found in ctags"
                return
            endif
 
@@ -62,7 +62,7 @@ function! vaxe#ImportClass()
            echomsg "No package found for class"
            return
        endif
-       let oldpos = getpos('.') 
+       let oldpos = getpos('.')
 
 
        if search("^\\s*import\\s*".package."\.".class) > 0
@@ -78,7 +78,7 @@ function! vaxe#ImportClass()
        call cursor(oldpos[1], oldpos[2])
        let fixed = substitute(getline('.'), package.'\.', '','g')
        call setline(line('.'), fixed)
-       call append(importline,['import '.package.'.'.class.';']) 
+       call append(importline,['import '.package.'.'.class.';'])
        call cursor(oldpos[1]+1, oldpos[2])
    endif
 endfunction
@@ -92,7 +92,7 @@ function! vaxe#HaxeComplete(findstart,base)
    endif
 endfunction
 
-" A function that will search for valid hxml in the current working directory 
+" A function that will search for valid hxml in the current working directory
 "  and allow the user to select the right candidate.  The selection will
 "  enable 'project mode' for vaxe.
 function! vaxe#ProjectHxml()
@@ -165,7 +165,7 @@ function! vaxe#CurrentBuild()
     return vaxe_hxml
 endfunction
 
-" Sets the makeprg 
+" Sets the makeprg
 function! s:SetCompiler()
     let vaxe_hxml = vaxe#CurrentBuild()
     if (exists("g:vaxe_hxml"))
@@ -195,6 +195,10 @@ function! vaxe#CompilerClassPaths()
    let raw_path = substitute(raw_path, "Classpath :", "","")
    let paths = split(raw_path,';')
    let paths = filter(paths,'v:val != "/" && v:val != ""')
+   if len(paths) == 1
+       echoerr "The compiler exited with an error: ". paths[0]
+       return []
+   endif
    return paths
 endfunction
 
