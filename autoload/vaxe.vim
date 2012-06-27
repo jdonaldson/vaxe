@@ -132,7 +132,7 @@ function! vaxe#Ctags()
         " get the hxml name so we can cd to its directory
         " TODO: this probably needs to be user specified
         let hxml_cd = fnamemodify(vaxe_hxml,":p:h")
-        " call ctags recursively on the directories 
+        " call ctags recursively on the directories
         let hxml_sys = " cd " . hxml_cd . ";"
                     \." ctags --languages=haxe  --exclude=_std  -R " . pathstr. ";"
         "echomsg hxml_sys
@@ -165,7 +165,7 @@ function! s:DisplayCompletion()
     if  synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") == 'Comment'
         return []
     endif
-    
+
     let vaxe_hxml = vaxe#CurrentBuild()
     if !filereadable(vaxe_hxml)
         echoerr 'build file not readable: '.vaxe_hxml
@@ -232,14 +232,16 @@ elif len(types) > 0:
     h = HTMLParser.HTMLParser()
     word = ' '
     info = [h.unescape(otype.text).strip()]
-    abbr = info
+    abbr = info[0]
     completes= [{'word':word,'info':info, 'abbr':abbr}]
 vim.command("let output = " + str(completes))
 endpython
     for o in output
         let tag = ''
-        if has_key(o,'menu') && has_key(o,'info')
+        if has_key(o,'info')
             let o['info'] = join(o['info'],"\n")
+        endif
+        if has_key(o,'menu')
             let o['info'] = o['info'] . "\n>> " . o['menu']
         endif
     endfor
@@ -257,19 +259,27 @@ endpython
             end
             return len(matches)
         endfunction
-        if obj.EML("new\\s*\\(\w*\\)$") 
-            let classes = filter(taglist('^'.partial_word), 'v:val["kind"] == "c"') 
+        if obj.EML("new\\s*\\(\w*\\)$")
+            let classes = filter(taglist('^'.partial_word),
+                        \'v:val["kind"] == "c"')
             echomsg "constructor"
         elseif obj.EML(":\\s*\\(\w*\\)$")
-            let classes = filter(taglist('^'.partial_word), 'v:val["kind"] == "c" || v:val["kind"] == "t" || v:val["kind"] == "i"')
+            let classes = filter(taglist('^'.partial_word),
+                        \'v:val["kind"] == "c" '
+                        \.'|| v:val["kind"] == "t" '
+                        \.'|| v:val["kind"] == "i"')
         elseif obj.EML("import\\s*\\(\w*\\)$")
-            let classes = filter(taglist('^'.partial_word), 'v:val["kind"] == "p"') 
+            let classes = filter(taglist('^'.partial_word),
+                        \'v:val["kind"] == "p"')
         else
-            echomsg partial_word
-            echomsg "***".line2col."***"
+            "echomsg partial_word
+            "echomsg "***".line2col."***"
         endif
-        let output = map(classes,'{"word":substitute(v:val["name"],"^".partial_word,"","g"), "menu":v:val["filename"]}')
-    endif  
+        let output = map(classes,
+                    \'{"word":substitute(v:val["name"],"^".partial_word,"","g")'
+                    \.', "abbr":v:val["name"]'
+                    \.', "menu":v:val["filename"]}')
+    endif
     return output
 endfunction
 
