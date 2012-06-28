@@ -229,6 +229,8 @@ function! vaxe#Ctags()
     endif
 endfunction
 
+" Generate inline compiler declarations for the given target from the relevant
+" build hxml
 function! s:CurrentBlockHxml()
     let vaxe_hxml = vaxe#CurrentBuild()
     let hxfile = join(readfile(vaxe_hxml),"\n")
