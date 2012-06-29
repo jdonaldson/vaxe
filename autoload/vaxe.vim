@@ -1,3 +1,21 @@
+
+" Utility function that lets users select from a list.  If list is length 1,
+" then that item is returned.  Uses tlib#inpu#List if available.
+function! s:InputList(items, label)
+  if len(a:items) == 1
+    return a:items[0]
+  endif
+
+  if exists("loaded_tlib")
+      return tlib#input#List("s", a:label, a:items)
+  else
+      let items_list = map(range(len(a:items)),'(v:var+1)." ".hxmls_list[v:var]')
+      let items_list = [a:label] + items_list
+      let sel = inputlist(items_list)
+      return hxmls_list[sel-1]
+  endif
+endfunction
+
 " Simple utility function to open the hxml file that vaxe is using.
 function! vaxe#OpenHxml()
     let vaxe_hxml = vaxe#CurrentBuild()
@@ -54,7 +72,7 @@ function! vaxe#ImportClass()
 
            let package = packages[0]
            if len(packages) > 1
-               let package = inputlist(packages)
+               let package = s:InputList("Select package", packages)
            endif
        endif
 
@@ -105,18 +123,8 @@ function! vaxe#ProjectHxml()
     if len(hxmls) == 0
         echoerr "No hxml files found in current working directory"
         return
-    elseif len(hxmls) ==1
-        let base_hxml = hxmls[0]
     else
-        if exists('g:tlib_inputlist_pct')
-            let base_hxml = tlib#input#List('s', 'Select Hxml', hxmls)
-        else
-            let hxmls_list = map(range(len(hxmls)),
-                '(v:var+1)." ".hxmls_list[v:var]')
-            let hxmls_list = ['Select Hxml'] + hxmls_list
-            let sel = inputlist(hxmls_list)
-            let base_hxml = hxmls_list[sel-1]
-        endif
+        let base_hxml = s:InputList("Select Hxml", hxmls)
     endif
 
     if base_hxml !~ "^//"
