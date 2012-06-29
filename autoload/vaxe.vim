@@ -1,7 +1,7 @@
 
 " Utility function that lets users select from a list.  If list is length 1,
 " then that item is returned.  Uses tlib#inpu#List if available.
-function! s:InputList(items, label)
+function! s:InputList(label, items)
   if len(a:items) == 1
     return a:items[0]
   endif
@@ -9,10 +9,15 @@ function! s:InputList(items, label)
   if exists("loaded_tlib")
       return tlib#input#List("s", a:label, a:items)
   else
-      let items_list = map(range(len(a:items)),'(v:var+1)." ".hxmls_list[v:var]')
+      let items_list = map(range(len(a:items)),'(v:val+1)." ".a:items[v:val]')
       let items_list = [a:label] + items_list
       let sel = inputlist(items_list)
-      return hxmls_list[sel-1]
+      " 0 is the label.  If that is returned, just use the first item in the
+      " list instead
+      if sel == 0
+          sel = 1
+      endif
+      return a:items[sel-1]
   endif
 endfunction
 
