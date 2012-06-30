@@ -21,6 +21,15 @@ function! s:InputList(label, items)
   endif
 endfunction
 
+" Utility function that returns a list of unique values in the list argument.
+function! s:UniqueList(items)
+    let d = {}
+    for v in a:items
+        let d[v] = 1
+    endfor
+    return keys(d)
+endfunction
+
 " Simple utility function to open the hxml file that vaxe is using.
 function! vaxe#OpenHxml()
     let vaxe_hxml = vaxe#CurrentBuild()
@@ -212,7 +221,8 @@ function! vaxe#CompilerClassPaths()
        echoerr "The compiler exited with an error: ". paths[0]
        return []
    endif
-   return paths
+   let unique_paths = s:UniqueList(paths)
+   return unique_paths
 endfunction
 
 " Calls ctags on the list of compiler class paths
@@ -220,24 +230,32 @@ function! vaxe#Ctags()
     let paths = vaxe#CompilerClassPaths()
 
     if (len(paths) > 0)
-        " the last path is the base std dir, We want to treat it differently
-        let std =  remove(paths, len(paths)-1)
-        " the second to last path is the target std dir. We need to alter it.
-        let std_target =  remove(paths, len(paths)-1)
-        " strip off the target's _std override dir
-        let std_target = substitute(std_target, "_std/$", "","g")
-        " specify all of the util directories in the base std, and any base
-        " classes.  Include the target specific directories in std_target.
-        let paths = paths + [std_target] + [std.'haxe/', std.'sys/', std.'tools/', std.'*.hx']
-        let pathstr = join( paths,' ')
+        let fixed_paths = []
+        for p in paths
+            if p =~ "/std/$"
+                "this is the target std dir. We need to alter use it to add some
+                "global std utility paths, and avoid the target paths.
+                let fixed_paths = fixed_paths + [p.'haxe/', p.'sys/', p.'tools/', p.'*.hx']
+            elseif p =~ "/_std/$"
+                "this is the selected target paths, we can exclude the _std path
+                "that includes target specific implementations of std classes.
+                let p = substitute(p, "_std/$", "","g")
+                let fixed_paths = fixed_paths + [p]
+            else
+                "this is a normal path (haxelib, or via -cp)
+                let fixed_paths = fixed_paths + [p]
+            endif
+        endfor
+
+        let pathstr = join( fixed_paths,' ')
         let vaxe_hxml = vaxe#CurrentBuild()
         " get the hxml name so we can cd to its directory
         " TODO: this probably needs to be user specified
         let hxml_cd = fnamemodify(vaxe_hxml,":p:h")
         " call ctags recursively on the directories
         let hxml_sys = " cd " . hxml_cd . ";"
-                    \." ctags --languages=haxe  --exclude=_std  -R " . pathstr. ";"
-        "echomsg hxml_sys
+                    \." ctags --languages=haxe -R " . pathstr. ";"
+        echomsg hxml_sys
         call system(hxml_sys)
     endif
 endfunction
