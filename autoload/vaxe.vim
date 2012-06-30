@@ -254,7 +254,7 @@ function! vaxe#Ctags()
         let hxml_cd = fnamemodify(vaxe_hxml,":p:h")
         " call ctags recursively on the directories
         let hxml_sys = " cd " . hxml_cd . ";"
-                    \." ctags --languages=haxe -R " . pathstr. ";"
+                    \." ctags --languages=haxe --exclude=_std -R " . pathstr. ";"
         echomsg hxml_sys
         call system(hxml_sys)
     endif
