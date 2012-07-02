@@ -5,8 +5,7 @@ function! s:InputList(label, items)
   if len(a:items) == 1
     return a:items[0]
   endif
-
-  if exists("loaded_tlib")
+  if exists("g:loaded_tlib")
       return tlib#input#List("s", a:label, a:items)
   else
       let items_list = map(range(len(a:items)),'(v:val+1)." ".a:items[v:val]')
