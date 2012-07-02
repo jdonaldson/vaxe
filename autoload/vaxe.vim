@@ -246,6 +246,10 @@ function! vaxe#Ctags()
                 "that includes target specific implementations of std classes.
                 let p = substitute(p, "_std/$", "","g")
                 let fixed_paths = fixed_paths + [p]
+            elseif p =~ "^\./$"
+                "this is an alt representation of the working dir, we don't
+                "need it
+                continue
             else
                 "this is a normal path (haxelib, or via -cp)
                 let fixed_paths = fixed_paths + [p]
