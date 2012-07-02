@@ -159,9 +159,14 @@ endfunction
 " A function that runs whenever a haxe file is opened.  It tries to quickly
 " find a default named hxml in the parent directories (typically build.hxml).
 function! vaxe#DefaultHxml()
+    " unlet any existing hxml variables
     if exists('b:vaxe_hxml')
         unlet b:vaxe_hxml
     endif
+    if exists('g:vaxe_hxml')
+        unlet g:vaxe_hxml
+    endif
+
     let base_hxml = findfile(g:vaxe_prefer_hxml, ".;")
     if base_hxml !~ "^/"
         let base_hxml = getcwd() . '/' . base_hxml

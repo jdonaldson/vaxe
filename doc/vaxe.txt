@@ -7,6 +7,7 @@ License: WTFPL (see |vaxe-license|)
 CONTENTS                                        *vaxe-contents*
 
 |vaxe-introduction|                   Introduction and Feature Summary
+|vaxe-commands|                       Commands
 |vaxe-functions|                      Functions
 |vaxe-settings|                       Settings
 |compiler-vaxe|                       Compiler
@@ -42,7 +43,8 @@ hxml for all files in a given directory:
 <
 
 Keep in mind that the project mode will persist throughout your entire session.
-If you wish to exit project mode, simply unset the g:vaxe_hxml variable.
+If you wish to exit project mode, use the DefaultHxml command, or 
+vaxe#DefaultHxml function.
 
 BUILD MODES                                     *vaxe-build*
 
@@ -70,7 +72,15 @@ Project                                         *vaxe-project-mode*
                         assumes that you will keep the same working directory
                         throughout your vim session.
 
-Functions                                        *vaxe-functions*
+COMMANDS                                         *vaxe-commands*
+
+|DefaultHXML|           Call the |vaxe#DefaultHxml| function
+
+|ProjectHXML|           Call the |vaxe#ProjectHxml| function
+
+|HaxeCtags|             Call the |vaxe#Ctags| function
+
+FUNCTIONS                                        *vaxe-functions*
 
 *vaxe#CompilerClassPaths*
                           Retrieve the class paths for the current build target.
