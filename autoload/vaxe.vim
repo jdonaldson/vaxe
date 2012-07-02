@@ -260,7 +260,7 @@ function! vaxe#Ctags()
         " call ctags recursively on the directories
         let hxml_sys = " cd " . hxml_cd . ";"
                     \." ctags --languages=haxe --exclude=_std -R " . pathstr. ";"
-        echomsg hxml_sys
+        "echomsg hxml_sys
         call system(hxml_sys)
     endif
 endfunction
