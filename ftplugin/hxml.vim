@@ -1,1 +1,2 @@
-let b:vaxe_build = expand('%')
+compiler haxe
+call vaxe#DefaultHxml(expand("%"))

@@ -126,26 +126,29 @@ endfunction
 " A function that will search for valid hxml in the current working directory
 "  and allow the user to select the right candidate.  The selection will
 "  enable 'project mode' for vaxe.
-function! vaxe#ProjectHxml()
+function! vaxe#ProjectHxml(...)
     if exists('g:vaxe_hxml')
         unlet g:vaxe_hxml
     endif
 
-    let hxmls = split(glob("**/*.hxml"),'\n')
-
-    if len(hxmls) == 0
-        echoerr "No hxml files found in current working directory"
-        return
+    if a:0 > 0
+        let g:vaxe_hxml = a:1
     else
-        let base_hxml = s:InputList("Select Hxml", hxmls)
+        let hxmls = split(glob("**/*.hxml"),'\n')
+
+        if len(hxmls) == 0
+            echoerr "No hxml files found in current working directory"
+            return
+        else
+            let base_hxml = s:InputList("Select Hxml", hxmls)
+        endif
+
+        if base_hxml !~ "^//"
+            let base_hxml = getcwd().'/'.base_hxml
+        endif
+
+        let g:vaxe_hxml = base_hxml
     endif
-
-    if base_hxml !~ "^//"
-        let base_hxml = getcwd().'/'.base_hxml
-    endif
-
-    let g:vaxe_hxml = base_hxml
-
     if !filereadable(g:vaxe_hxml)
         echoerr "Project build file not valid, please create one."
         return
@@ -157,7 +160,7 @@ endfunction
 
 " A function that runs whenever a haxe file is opened.  It tries to quickly
 " find a default named hxml in the parent directories (typically build.hxml).
-function! vaxe#DefaultHxml()
+function! vaxe#DefaultHxml(...)
     " unlet any existing hxml variables
     if exists('b:vaxe_hxml')
         unlet b:vaxe_hxml
@@ -165,17 +168,20 @@ function! vaxe#DefaultHxml()
     if exists('g:vaxe_hxml')
         unlet g:vaxe_hxml
     endif
-
-    let base_hxml = findfile(g:vaxe_prefer_hxml, ".;")
-    if base_hxml !~ "^/"
-        let base_hxml = getcwd() . '/' . base_hxml
+    if a:0 > 0
+        let b:vaxe_hxml = a:1
+    else
+        let base_hxml = findfile(g:vaxe_prefer_hxml, ".;")
+        if base_hxml !~ "^/"
+            let base_hxml = getcwd() . '/' . base_hxml
+        endif
+        if !filereadable(base_hxml)
+            redraw
+            echomsg "Default build file not valid, please create one."
+            return
+        endif
+        let b:vaxe_hxml = base_hxml
     endif
-    if !filereadable(base_hxml)
-        redraw
-        echomsg "Default build file not valid, please create one."
-        return
-    endif
-    let b:vaxe_hxml = base_hxml
     call s:SetCompiler()
     return b:vaxe_hxml
 endfunction
