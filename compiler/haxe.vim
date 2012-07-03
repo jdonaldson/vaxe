@@ -10,5 +10,10 @@ if !exists("b:vaxe_hxml")
     let b:vaxe_build = vaxe#DefaultHxml()
 endif
 
-let &l:errorformat="%E%f:%l: characters %c-%*[0-9] : %m,%I%m"
+" errorformat captures error with character range, with lines, or a general
+" output on standard out
+
+let &l:errorformat="%E%f:%l: characters %c-%*[0-9] : %m
+            \,%E%f:%l: lines %*[0-9]-%*[0-9] : %m
+            \,%I%m"
 
