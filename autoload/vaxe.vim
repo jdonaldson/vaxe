@@ -168,7 +168,7 @@ function! vaxe#DefaultHxml(...)
     if exists('g:vaxe_hxml')
         unlet g:vaxe_hxml
     endif
-    if a:0 > 0
+    if a:0 > 0 && a:1 != ''
         let b:vaxe_hxml = a:1
     else
         let base_hxml = findfile(g:vaxe_prefer_hxml, ".;")
