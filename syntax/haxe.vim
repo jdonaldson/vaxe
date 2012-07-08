@@ -65,7 +65,7 @@ if g:vim_haxe_syntax_scheme_nr == 1
   syn match   haxeClassDecl     "[^.]\s*\<class\>"ms=s+1
   syn keyword haxeBranch	break continue nextgroup=haxeUserLabelRef skipwhite
   syn match   haxeUserLabelRef  "\k\+" contained
-  syn keyword haxeScopeDecl     static public protected private abstract override inline
+  syn keyword haxeScopeDecl     static public dynamic protected private abstract override inline
 
   " haxe.lang.*
   syn match haxeLangClass "\<System\>"
@@ -178,7 +178,7 @@ if g:vim_haxe_syntax_scheme_nr == 1
       " two things:
       "   1. class names are always capitalized (ie: Button)
       "   2. method names are never capitalized (except constructors, of course)
-      syn region haxeFuncDef start=+^\s\+\(\(public\|protected\|private\|static\|abstract\|override\|final\|native\|synchronized\)\s\+\)*\(\(void\|boolean\|char\|byte\|short\|int\|long\|float\|double\|\([A-Za-z_][A-Za-z0-9_$]*\.\)*[A-Z][A-Za-z0-9_$]*\)\(\[\]\)*\s\+[a-z][A-Za-z0-9_$]*\|[A-Z][A-Za-z0-9_$]*\)\s*(+ end=+)+ contains=haxeScopeDecl,haxeType,haxeStorageClass,haxeComment,haxeLineComment,@haxeClasses
+      syn region haxeFuncDef start=+^\s\+\(\(public\|protected\|private\|static\|abstract\|dynamic\|override\|final\|native\|synchronized\)\s\+\)*\(\(void\|boolean\|char\|byte\|short\|int\|long\|float\|double\|\([A-Za-z_][A-Za-z0-9_$]*\.\)*[A-Z][A-Za-z0-9_$]*\)\(\[\]\)*\s\+[a-z][A-Za-z0-9_$]*\|[A-Z][A-Za-z0-9_$]*\)\s*(+ end=+)+ contains=haxeScopeDecl,haxeType,haxeStorageClass,haxeComment,haxeLineComment,@haxeClasses
     endif
     syn match  haxeBraces  "[{}]"
     syn cluster haxeTop add=haxeFuncDef,haxeBraces
