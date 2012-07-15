@@ -221,6 +221,23 @@ function! s:SetCompiler()
     let &l:makeprg = build_command
     " only use simple info message for catching traces (%I%m), haxe doesn't
     " output the full file path in the trace output
+
+    let lines = readfile(vaxe_hxml)
+    let abspath = filter(lines,'match(v:val,"^\s*-D\s*absolute_path")')
+
+    " if -D absolute_path is specified, then traces contain path information,
+    " and errorfmt can use the file/folder location
+    if (len(abspath))
+        echomsg 'hi'
+        let &l:errorformat="%E%f:%l: characters %c-%*[0-9] : %m
+                    \,%E%f:%l: lines %*[0-9]-%*[0-9] : %m
+                    \,%I%f:%l: %m"
+                    "\,%I%m"
+    else
+        let &l:errorformat="%E%f:%l: characters %c-%*[0-9] : %m
+                    \,%E%f:%l: lines %*[0-9]-%*[0-9] : %m
+                    \,%I%m"
+    endif
 endfunction
 
 " returns a list of compiler class paths

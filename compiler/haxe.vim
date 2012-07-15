@@ -5,15 +5,9 @@
 
 
 " select a build file if none is available
-" this function sets the makeprg
+" this function sets the makeprg and errorformat
 if !exists("b:vaxe_hxml")
     call vaxe#AutomaticHxml()
 endif
 
-" errorformat captures error with character range, with lines, or a general
-" output on standard out
-
-let &l:errorformat="%E%f:%l: characters %c-%*[0-9] : %m
-            \,%E%f:%l: lines %*[0-9]-%*[0-9] : %m
-            \,%I%m"
 
