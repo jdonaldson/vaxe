@@ -7,7 +7,7 @@
 " select a build file if none is available
 " this function sets the makeprg
 if !exists("b:vaxe_hxml")
-    let b:vaxe_build = vaxe#DefaultHxml()
+    call vaxe#AutomaticHxml()
 endif
 
 " errorformat captures error with character range, with lines, or a general
