@@ -131,7 +131,7 @@ function! vaxe#ProjectHxml(...)
         unlet g:vaxe_hxml
     endif
 
-    if a:0 > 0
+    if a:0 > 0 && a:1 != ''
         let g:vaxe_hxml = a:1
     else
         let hxmls = split(glob("**/*.hxml"),'\n')
