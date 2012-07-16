@@ -158,16 +158,25 @@ function! vaxe#ProjectHxml(...)
     return g:vaxe_hxml
 endfunction
 
-" A function that runs whenever a haxe file is opened.  It tries to quickly
-" find a default named hxml in the parent directories (typically build.hxml).
+" A function that runs on a hx filetype load.  It will set the default hxml
+" path if the project hxml is not set.
+function! vaxe#AutomaticHxml()
+    if exists('g:vaxe_hxml')
+        return
+    endif
+    call vaxe#DefaultHxml()
+endfunction
+
+" A function that sets the default hxml located in the parent directories of
+" the current buffer.
 function! vaxe#DefaultHxml(...)
     " unlet any existing hxml variables
     if exists('b:vaxe_hxml')
         unlet b:vaxe_hxml
     endif
-    if exists('g:vaxe_hxml')
-        unlet g:vaxe_hxml
-    endif
+    "if exists('g:vaxe_hxml')
+    "    unlet g:vaxe_hxml
+    "endif
     if a:0 > 0 && a:1 != ''
         let b:vaxe_hxml = a:1
     else
@@ -183,8 +192,8 @@ function! vaxe#DefaultHxml(...)
         let b:vaxe_hxml = base_hxml
     endif
     call s:SetCompiler()
-    return b:vaxe_hxml
 endfunction
+
 
 " Returns the hxml file that should be used for compilation or completion
 function! vaxe#CurrentBuild()
@@ -212,6 +221,22 @@ function! s:SetCompiler()
     let &l:makeprg = build_command
     " only use simple info message for catching traces (%I%m), haxe doesn't
     " output the full file path in the trace output
+
+    let lines = readfile(vaxe_hxml)
+    let abspath = filter(lines,'match(v:val,"^\s*-D\s*absolute_path")')
+
+    " if -D absolute_path is specified, then traces contain path information,
+    " and errorfmt can use the file/folder location
+    if (len(abspath))
+        let &l:errorformat="%E%f:%l: characters %c-%*[0-9] : %m
+                    \,%E%f:%l: lines %*[0-9]-%*[0-9] : %m
+                    \,%I%f:%l: %m"
+                    "\,%I%m"
+    else
+        let &l:errorformat="%E%f:%l: characters %c-%*[0-9] : %m
+                    \,%E%f:%l: lines %*[0-9]-%*[0-9] : %m
+                    \,%I%m"
+    endif
 endfunction
 
 " returns a list of compiler class paths
@@ -348,7 +373,6 @@ import HTMLParser
 complete_output = vim.eval("complete_output")
 if complete_output is None: complete_output = ''
 completes = []
-#print(complete_output)
 # wrap in a tag to prevent parsing errors
 root= ET.XML("<output>"+complete_output+"</output>")
 fields = root.findall("list/i")
@@ -372,7 +396,7 @@ if len(fields) > 0:
         if  menu == '': kind = 'm'
         elif re.search("\->", menu): kind = 'f' # if it has a ->
         return {  'word': word, 'info': info, 'kind': kind
-                \,'menu': menu, 'abbr': abbr }
+                \,'menu': menu, 'abbr': abbr, 'dup':1 }
     completes = map(fieldxml2completion, fields)
 elif len(types) > 0:
     otype = types[0]
@@ -380,7 +404,7 @@ elif len(types) > 0:
     word = ' '
     info = [h.unescape(otype.text).strip()]
     abbr = info[0]
-    completes= [{'word':word,'info':info, 'abbr':abbr}]
+    completes= [{'word':word,'info':info, 'abbr':abbr, 'dup':1}]
 vim.command("let output = " + str(completes))
 endpython
     for o in output
@@ -400,7 +424,7 @@ endpython
         let obj = copy(l:)
         function! obj.EML(regex)
             let matches = matchlist(self.line2col, a:regex)
-            echomsg join(matches,' ')
+            "echomsg join(matches,' ')
             if len(matches) > 0
                let self.partial_word = matches[1]
             end
@@ -409,7 +433,7 @@ endpython
         if obj.EML("new\\s*\\(\w*\\)$")
             let classes = filter(taglist('^'.partial_word),
                         \'v:val["kind"] == "c"')
-            echomsg "constructor"
+            "echomsg "constructor"
         elseif obj.EML(":\\s*\\(\w*\\)$")
             let classes = filter(taglist('^'.partial_word),
                         \'v:val["kind"] == "c" '
