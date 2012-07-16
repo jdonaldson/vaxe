@@ -76,11 +76,13 @@ Project                                         *vaxe-project-mode*
 
 COMMANDS                                         *vaxe-commands*
 
-|DefaultHXML|           Call the |vaxe#DefaultHxml| function.  Accepts a single 
-                        argument that will specify the hxml to use.
+|DefaultHXML|           Call the |vaxe#DefaultHxml| function.  Accepts an 
+                        optional single argument that will specify the hxml to 
+                        use.
 
-|ProjectHXML|           Call the |vaxe#ProjectHxml| function. Accepts a single 
-                        argument that will specify the hxml to use.
+|ProjectHXML|           Call the |vaxe#ProjectHxml| function. Accepts an 
+                        optional single argument that will specify the hxml to
+                        use.
 
 
 |HaxeCtags|             Call the |vaxe#Ctags| function
@@ -179,6 +181,13 @@ SETTINGS                                        *vaxe-settings*
                         vaxe uses the compiler to make completions.  This can
                         happen frequently, and causes the buffer to be written.
                         The default is "1" which prevents events.
+
+MISC                                            *vaxe-misc*
+
+Vaxe will change the errrorformat syntax if it finds "-D absolute_path" in the
+current hxml.  This -D compiler switch adds the full path for files in trace 
+output, making it possible to jump to trace declarations in the quickfix 
+window.  
 
 LICENSE                                         *vaxe-license*
 
