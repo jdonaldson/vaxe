@@ -228,7 +228,6 @@ function! s:SetCompiler()
     " if -D absolute_path is specified, then traces contain path information,
     " and errorfmt can use the file/folder location
     if (len(abspath))
-        echomsg 'hi'
         let &l:errorformat="%E%f:%l: characters %c-%*[0-9] : %m
                     \,%E%f:%l: lines %*[0-9]-%*[0-9] : %m
                     \,%I%f:%l: %m"
@@ -425,7 +424,7 @@ endpython
         let obj = copy(l:)
         function! obj.EML(regex)
             let matches = matchlist(self.line2col, a:regex)
-            echomsg join(matches,' ')
+            "echomsg join(matches,' ')
             if len(matches) > 0
                let self.partial_word = matches[1]
             end
@@ -434,7 +433,7 @@ endpython
         if obj.EML("new\\s*\\(\w*\\)$")
             let classes = filter(taglist('^'.partial_word),
                         \'v:val["kind"] == "c"')
-            echomsg "constructor"
+            "echomsg "constructor"
         elseif obj.EML(":\\s*\\(\w*\\)$")
             let classes = filter(taglist('^'.partial_word),
                         \'v:val["kind"] == "c" '
