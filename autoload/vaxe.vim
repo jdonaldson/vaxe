@@ -223,14 +223,15 @@ function! s:SetCompiler()
     " output the full file path in the trace output
 
     let lines = readfile(vaxe_hxml)
-    let abspath = filter(lines,'match(v:val,"^\s*-D\s*absolute_path")')
+    let abspath = filter(lines,'matchstr(v:val,"^\s*-D\s*absolute_path")')
 
     let &l:errorformat="%I%f:%l: characters %c-%*[0-9] : Warning : %m
                     \,%E%f:%l: characters %c-%*[0-9] : %m
                     \,%E%f:%l: lines %*[0-9]-%*[0-9] : %m"
     " if -D absolute_path is specified, then traces contain path information,
     " and errorfmt can use the file/folder location
-    if (len(abspath))
+    "echomsg join(abspath,',')
+    if (len(abspath)> 0)
         let &l:errorformat .= ",%I%f:%l: %m"
     endif
     " general catch all regex that will grab misc stdout
