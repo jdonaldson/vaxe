@@ -224,7 +224,7 @@ function! s:SetCompiler()
 
 
     let lines = readfile(vaxe_hxml)
-    echomsg join(lines,',')
+    "echomsg join(lines,',')
     let abspath = filter(lines,'v:val =~ "\\s*-D\\s*absolute_path"')
 
     let &l:errorformat="%I%f:%l: characters %c-%*[0-9] : Warning : %m
@@ -232,7 +232,7 @@ function! s:SetCompiler()
                     \,%E%f:%l: lines %*[0-9]-%*[0-9] : %m"
     " if -D absolute_path is specified, then traces contain path information,
     " and errorfmt can use the file/folder location
-    echomsg join(abspath,',')
+    "echomsg join(abspath,',')
     if (len(abspath)> 0)
         let &l:errorformat .= ",%I%f:%l: %m"
     endif
