@@ -22,3 +22,7 @@ if !exists('g:vaxe_prefer_hxml')
     let g:vaxe_prefer_hxml = 'build.hxml'
 endif
 
+" disable logging
+if !exists('g:vaxe_logging')
+    let g:vaxe_logging = 0
+endif

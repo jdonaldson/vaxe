@@ -20,6 +20,13 @@ function! s:InputList(label, items)
   endif
 endfunction
 
+" Utility logging function
+function! s:Log(str)
+    if g:vaxe_logging
+        echomsg a:str
+    endif
+endfunction
+
 " Utility function that returns a list of unique values in the list argument.
 function! s:UniqueList(items)
     let d = {}
@@ -209,6 +216,7 @@ endfunction
 " Sets the makeprg
 function! s:SetCompiler()
     let vaxe_hxml = vaxe#CurrentBuild()
+    call s:Log("vaxe_hxml: ".vaxe_hxml)
     if (exists("g:vaxe_hxml"))
         let build_command = "haxe '".vaxe_hxml."' 2>&1"
     else
@@ -224,7 +232,6 @@ function! s:SetCompiler()
 
 
     let lines = readfile(vaxe_hxml)
-    "echomsg join(lines,',')
     let abspath = filter(lines,'v:val =~ "\\s*-D\\s*absolute_path"')
 
     let &l:errorformat="%I%f:%l: characters %c-%*[0-9] : Warning : %m
