@@ -12,10 +12,17 @@ if !exists("main_syntax")
   let main_syntax='hxml'
 endif
 
+" Simple TODO/comment handling
+syntax keyword hxmlTODO contained TODO FIXME XXX NOTE
+syntax match hxmlComment "#.*$" contains=hxmlTODO
+
+" basic flags
 syntax match hxmlType "-as3"
 syntax match hxmlType "-cmd"
 syntax match hxmlType "-cp"
 syntax match hxmlType "-cpp"
+syntax match hxmlType "-java"
+syntax match hxmlType "-cs"
 syntax match hxmlType "-D"
 syntax match hxmlType "-debug"
 syntax match hxmlType "-help"
@@ -34,6 +41,8 @@ syntax match hxmlType "-swf9"
 syntax match hxmlType "-v"
 syntax match hxmlType "-x"
 syntax match hxmlType "-xml"
+
+" advanced flags
 syntax match hxmlStatement "--connect"
 syntax match hxmlStatement "--cwd"
 syntax match hxmlStatement "--dead-code-elimination"
