@@ -13,8 +13,8 @@ if !exists("main_syntax")
 endif
 
 " Simple TODO/comment handling
-syntax keyword hxmlTODO contained TODO FIXME XXX NOTE
-syntax match hxmlComment "#.*$" contains=hxmlTODO
+syntax keyword hxmlTodo contained TODO FIXME XXX NOTE
+syntax match hxmlComment "#.*$" contains=hxmlTodo
 
 " basic flags
 syntax match hxmlType "-as3"
@@ -69,4 +69,5 @@ syntax match hxmlStatement "--wait"
 " Highlight them
 highlight link hxmlType Type
 highlight link hxmlStatement Statement
-
+highlight link hxmlComment Comment
+highlight link hxmlTodo Todo
