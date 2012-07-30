@@ -1,4 +1,7 @@
 
+" Utility variable that stores the directory that this script resides in
+let s:plugin_path = escape(expand('<sfile>:p:h'), '\')
+
 " Utility function that lets users select from a list.  If list is length 1,
 " then that item is returned.  Uses tlib#inpu#List if available.
 function! s:InputList(label, items)
@@ -36,7 +39,7 @@ function! s:UniqueList(items)
     return keys(d)
 endfunction
 
-" Simple utility function to open the hxml file that vaxe is using.
+" Utility function to open the hxml file that vaxe is using.
 function! vaxe#OpenHxml()
     let vaxe_hxml = vaxe#CurrentBuild()
     if filereadable(vaxe_hxml)
@@ -308,7 +311,7 @@ function! vaxe#Ctags()
 endfunction
 
 " Generate inline compiler declarations for the given target from the relevant
-" build hxml
+" build hxml.  Remove any flags that generate unnecessary output or activity.
 function! s:CurrentBlockHxml()
     let vaxe_hxml = vaxe#CurrentBuild()
     let hxfile = join(readfile(vaxe_hxml),"\n")
@@ -327,6 +330,7 @@ endfunction
 
 " Returns hxml that is suitable for making a --display completion call
 function! s:CompletionHxml(file_name, byte_count)
+    " the stripped down haxe compiler command (no -cmd, etc.)
     let stripped = s:CurrentBlockHxml()
     return stripped."\n"."--display ".a:file_name.'@'.a:byte_count
 endfunction
@@ -373,48 +377,11 @@ function! s:DisplayCompletion()
     endif
     let output = []
     "echomsg complete_output
-python << endpython
-import vim, re, HTMLParser
-import xml.etree.ElementTree as ET
-import HTMLParser
 
-complete_output = vim.eval("complete_output")
-if complete_output is None: complete_output = ''
-completes = []
-# wrap in a tag to prevent parsing errors
-root= ET.XML("<output>"+complete_output+"</output>")
-fields = root.findall("list/i")
-types = root.findall("type")
-completes = []
-if len(fields) > 0:
-    def fieldxml2completion(x):
-        word = x.attrib["n"]
-        menu = x.find("t").text
-        info = x.find("d").text
-        menu = '' if menu is None else menu
-        if info is None:
-            info = ['']
-        else:
-            # get rid of leading/trailing ws/nl
-            info = info.strip()
-            # split and collapse extra whitespace
-            info = [re.sub(r'\s+',' ',s.strip()) for s in info.split('\n')]
-        abbr = word
-        kind = 'v'
-        if  menu == '': kind = 'm'
-        elif re.search("\->", menu): kind = 'f' # if it has a ->
-        return {  'word': word, 'info': info, 'kind': kind
-                \,'menu': menu, 'abbr': abbr, 'dup':1 }
-    completes = map(fieldxml2completion, fields)
-elif len(types) > 0:
-    otype = types[0]
-    h = HTMLParser.HTMLParser()
-    word = ' '
-    info = [h.unescape(otype.text).strip()]
-    abbr = info[0]
-    completes= [{'word':word,'info':info, 'abbr':abbr, 'dup':1}]
-vim.command("let output = " + str(completes))
-endpython
+    " execute the python completion script in autoload/vaxe.py
+    exe 'pyfile '.s:plugin_path.'/vaxe.py'
+    py complete('complete_output','output')
+
     for o in output
         let tag = ''
         if has_key(o,'info')
@@ -424,12 +391,15 @@ endpython
             let o['info'] = o['info'] . "\n>> " . o['menu']
         endif
     endfor
-    " There was no good compiler completion.  Complete a Type
+    " There was no compiler completion.  Complete a Type
     if len(output) == 0
         let classes = []
         let line2col =getline('.')[0:col('.')]
         let partial_word = ''
         let obj = copy(l:)
+
+        " shortcut function that matches a regex and sets a partial word
+        " variable
         function! obj.EML(regex)
             let matches = matchlist(self.line2col, a:regex)
             "echomsg join(matches,' ')
