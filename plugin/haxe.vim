@@ -7,6 +7,7 @@ let g:tagbar_type_haxe = {
     \ 'ctagstype' : 'haxe',
     \ 'kinds'     : [
         \ 'c:classes',
+        \ 't:typedefs',
         \ 'v:variables',
         \ 'f:functions',
     \ ]
