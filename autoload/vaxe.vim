@@ -2,6 +2,12 @@
 " Utility variable that stores the directory that this script resides in
 let s:plugin_path = escape(expand('<sfile>:p:h'), '\')
 
+let s:slash = '/'
+if has('win32') || has('win64')
+    let s:slash = '\'
+endif
+
+
 " Utility function that lets users select from a list.  If list is length 1,
 " then that item is returned.  Uses tlib#inpu#List if available.
 function! s:InputList(label, items)
@@ -154,7 +160,7 @@ function! vaxe#ProjectHxml(...)
         endif
 
         if base_hxml !~ "^//"
-            let base_hxml = getcwd().'/'.base_hxml
+            let base_hxml = getcwd() . s:slash . base_hxml
         endif
 
         let g:vaxe_hxml = base_hxml
@@ -192,7 +198,7 @@ function! vaxe#DefaultHxml(...)
     else
         let base_hxml = findfile(g:vaxe_prefer_hxml, ".;")
         if base_hxml !~ "^/"
-            let base_hxml = getcwd() . '/' . base_hxml
+            let base_hxml = getcwd() . s:slash . base_hxml
         endif
         if !filereadable(base_hxml)
             redraw
@@ -217,18 +223,18 @@ function! vaxe#CurrentBuild()
 endfunction
 
 " Sets the makeprg
+
 function! s:SetCompiler()
     let vaxe_hxml = vaxe#CurrentBuild()
     call s:Log("vaxe_hxml: ".vaxe_hxml)
     if (exists("g:vaxe_hxml"))
-        let build_command = "haxe '".vaxe_hxml."' 2>&1"
+        let build_command = "haxe \"".vaxe_hxml."\" 2>&1"
     else
         " do not cd to different directory after command, it won't show quick
         " fix
-        let build_command = "cd '".fnamemodify(vaxe_hxml,":p:h")."';"
-                    \."haxe '".vaxe_hxml."' 2>&1"
+        let build_command = "cd \"".fnamemodify(vaxe_hxml,":p:h")."\" &&"
+                    \."haxe \"".vaxe_hxml."\" 2>&1"
     endif
-
     let &l:makeprg = build_command
     " only use simple info message for catching traces (%I%m), haxe doesn't
     " output the full file path in the trace output
@@ -348,7 +354,7 @@ function! s:DisplayCompletion()
     endif
     let complete_args = s:CompletionHxml(expand("%:p")
                 \, (line2byte('.')+col('.')-2))
-    let hxml_cd = "cd\ ".fnamemodify(vaxe_hxml,":p:h"). ";"
+    let hxml_cd = "cd\ \"".fnamemodify(vaxe_hxml,":p:h"). "\"&&"
     if exists("g:vaxe_hxml")
         let hxml_cd = ''
     endif
