@@ -338,7 +338,7 @@ endfunction
 function! s:CompletionHxml(file_name, byte_count)
     " the stripped down haxe compiler command (no -cmd, etc.)
     let stripped = s:CurrentBlockHxml()
-    return stripped."\n"."--display ".a:file_name.'@'.a:byte_count
+    return stripped."\n"."--display \"".a:file_name.'@'.a:byte_count."\""
 endfunction
 
 " The main completion function that invokes the compiler, etc.
