@@ -51,7 +51,7 @@ Vaxe supports [hxml build files](http://haxe.org/doc/compiler), which provide
 all of the arguments for the compiler, similar to a  [make
 file](http://en.wikipedia.org/wiki/Make_(software).
 
-Vaxe will automatically try to determine the appropriate hxml file you are 
+Vaxe will automatically try to determine the appropriate hxml file you are
 using.  It will also let you easily override this with a specific file
 (see vim docs for more details).
 
@@ -79,14 +79,14 @@ the start of a field, submodule, or class access, or after the first
 parentheses of a function invocation. See the [haxe
 documentation](http://haxe.org/manual/completion) for more details.
 
-### Active Targets: Dealing with --next 
+### Active Targets: Dealing with --next
 
 In some cases, an hxml file may specify multiple targets via a `--next`
 directive.  Vaxe will use the first target it finds in order to generate
 completions.  It is possible to specify a different target by
 inserting a line like this into your hxml:
 
-    # vaxe
+    # display completions
 
 If Vaxe finds that line, it will use that target to generate completions and
 perform other miscellaneous tasks.  The target that Vaxe uses is called the
@@ -133,11 +133,11 @@ Haxe.  Put these lines in your `.ctags` file in your home directory:
 
 Vaxe can generate a set of tags specific to the given build by running:
     vaxe#Ctags()
-This will feed the paths used by the compiler into ctags.  Only the relevant 
-paths for the current target will be used.  
+This will feed the paths used by the compiler into ctags.  Only the relevant
+paths for the current target will be used.
 
 Other utilities, like vaxe#ImportClass() can then use this tag information in
-order to programmatically import classes.  E.g. calling vaxe#ImportClass on 
+order to programmatically import classes.  E.g. calling vaxe#ImportClass on
 this line:
 
     var l = new FastList<Int>();
@@ -175,7 +175,7 @@ Once enabled, Neocomplcache will automatically invoke vaxe omnicompletion
 when you type a "." after a variable with fields, etc.
 
 # Acknowledgements
-* Marc Weber (marco-oweber@gmx.de) : Most of the syntax and snippets are based 
+* Marc Weber (marco-oweber@gmx.de) : Most of the syntax and snippets are based
 off of his [vim bundle](https://github.com/MarcWeber/vim-haxe).
 
 * Ganesh Gunasegaran(me at itsgg.com) : I based my hxml syntax file off of [his

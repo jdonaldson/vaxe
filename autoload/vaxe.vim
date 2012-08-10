@@ -322,7 +322,7 @@ function! s:CurrentBlockHxml()
     let vaxe_hxml = vaxe#CurrentBuild()
     let hxfile = join(readfile(vaxe_hxml),"\n")
     let parts = split(hxfile,'--next')
-    let complete = filter(parts, 'match(v:val, "^\s*#\s*vaxe")')
+    let complete = filter(parts, 'v:val =~ "#\\s*display completions"')
     if len(complete) == 0
         let complete = parts
     endif
