@@ -321,11 +321,17 @@ endfunction
 function! s:CurrentBlockHxml()
     let vaxe_hxml = vaxe#CurrentBuild()
     let hxfile = join(readfile(vaxe_hxml),"\n")
-    let parts = split(hxfile,'--next')
-    let complete = filter(parts, 'v:val =~ "#\\s*display completions"')
+    let parts = split(hxfile, '--next')
+
+    if len(parts) == 0
+        let parts = [hxfile]
+    endif
+
+    let complete = filter(copy(parts), 'v:val =~ "#\\s*display completions"')
     if len(complete) == 0
         let complete = parts
     endif
+
     let complete_string = complete[0]
     let parts = split(complete_string,"\n")
     let parts = map(parts, 'substitute(v:val,"#.*","","")')
