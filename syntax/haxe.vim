@@ -43,6 +43,8 @@ if g:vim_haxe_syntax_scheme_nr == 1
   " keyword definitions
   syn keyword haxeExternal	using import extern package
 
+  syn match haxeMeta            '@\w+'
+  syn match haxeMacro           '@:\(macro\|keep\|expose\)'
   syn match haxeConditional     '#\(if\|else\|elseif\|end\)'
   syn keyword haxeConditional	if else switch
   syn keyword haxeRepeat	while for do in
@@ -210,57 +212,59 @@ if g:vim_haxe_syntax_scheme_nr == 1
     HaxeHiLink haxeFuncDef		Function
     HaxeHiLink haxeBraces		Function
     HaxeHiLink haxeBranch		Conditional
-    HaxeHiLink haxeUserLabelRef	haxeUserLabel
+    HaxeHiLink haxeUserLabelRef	        haxeUserLabel
     HaxeHiLink haxeLabel		Label
     HaxeHiLink haxeUserLabel		Label
-    HaxeHiLink haxeConditional	Conditional
+    HaxeHiLink haxeConditional	        Conditional
     HaxeHiLink haxeRepeat		Repeat
     HaxeHiLink haxeExceptions		Exception
     HaxeHiLink haxeAssert		Statement
-    HaxeHiLink haxeStatic MoreMsg
-    HaxeHiLink haxeStorageClass	StorageClass
+    HaxeHiLink haxeStatic               MoreMsg
+    HaxeHiLink haxeStorageClass 	StorageClass
     HaxeHiLink haxeMethodDecl		haxeStorageClass
     HaxeHiLink haxeClassDecl		haxeStorageClass
     HaxeHiLink haxeScopeDecl		haxeStorageClass
     HaxeHiLink haxeBoolean		Boolean
     HaxeHiLink haxeSpecial		Special
-    HaxeHiLink haxeSpecialError	Error
+    HaxeHiLink haxeSpecialError	        Error
     HaxeHiLink haxeSpecialCharError	Error
     HaxeHiLink haxeString		String
-    HaxeHiLink haxeSingleString	String
-    HaxeHiLink haxeEreg Special
-    HaxeHiLink haxeEregEscape Special
+    HaxeHiLink haxeSingleString	        String
+    HaxeHiLink haxeEreg                 Special
+    HaxeHiLink haxeEregEscape           Special
     HaxeHiLink haxeCharacter		Character
-    HaxeHiLink haxeSpecialChar	SpecialChar
+    HaxeHiLink haxeSpecialChar	        SpecialChar
     HaxeHiLink haxeNumber		Number
     HaxeHiLink haxeError		Error
-    HaxeHiLink haxeStringError	Error
+    HaxeHiLink haxeStringError	        Error
     HaxeHiLink haxeStatement		Statement
     HaxeHiLink haxeOperator		Operator
     HaxeHiLink haxeComment		Comment
     HaxeHiLink haxeDocComment		Comment
-    HaxeHiLink haxeLineComment	Comment
+    HaxeHiLink haxeLineComment	        Comment
     HaxeHiLink haxeConstant		Constant
     HaxeHiLink haxeTypedef		Typedef
-    HaxeHiLink haxeTodo		Todo
+    HaxeHiLink haxeTodo		        Todo
 
-    HaxeHiLink haxeCommentTitle	SpecialComment
+    HaxeHiLink haxeCommentTitle	        SpecialComment
     HaxeHiLink haxeDocTags		Special
     HaxeHiLink haxeDocParam		Function
-    HaxeHiLink haxeCommentStar	haxeComment
+    HaxeHiLink haxeCommentStar	        haxeComment
 
-    HaxeHiLink haxeType		Type
+    HaxeHiLink haxeType		        Type
     HaxeHiLink haxeExternal		Include
 
     HaxeHiLink htmlComment		Special
-    HaxeHiLink htmlCommentPart	Special
+    HaxeHiLink htmlCommentPart	        Special
     HaxeHiLink haxeSpaceError		Error
 
-    HaxeHiLink haxeCondIf Macro
-    HaxeHiLink haxeCondElse Macro
-    HaxeHiLink haxeCondElseIf Macro
-    HaxeHiLink haxeCondEnd Macro
-    HaxeHiLink haxeCondError Error
+    HaxeHiLink haxeMeta                 StorageClass
+    HaxeHiLink haxeMacro                Macro
+    HaxeHiLink haxeCondIf               Macro
+    HaxeHiLink haxeCondElse             Macro
+    HaxeHiLink haxeCondElseIf           Macro
+    HaxeHiLink haxeCondEnd              Macro
+    HaxeHiLink haxeCondError            Error
   endif
 
   delcommand HaxeHiLink
