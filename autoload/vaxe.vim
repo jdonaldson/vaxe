@@ -135,7 +135,7 @@ function! vaxe#HaxeComplete(findstart,base)
    if a:findstart
        return col('.')
    else
-       return s:DisplayCompletion()
+       return s:DisplayCompletion(a:base)
    endif
 endfunction
 
@@ -348,15 +348,14 @@ function! s:CompletionHxml(file_name, byte_count)
 endfunction
 
 " The main completion function that invokes the compiler, etc.
-function! s:DisplayCompletion()
+function! s:DisplayCompletion(base)
     if  synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") == 'Comment'
         return []
     endif
 
     let vaxe_hxml = vaxe#CurrentBuild()
     if !filereadable(vaxe_hxml)
-        echoerr 'No completion Possible. Build file not readable: '.vaxe_hxml
-        return []
+        return [{"word" : "", "abbr" : "Compiler error: ", "menu": "No valid build file", "empty" : 1}]
     endif
     let complete_args = s:CompletionHxml(expand("%:p")
                 \, (line2byte('.')+col('.')-2))
@@ -383,9 +382,11 @@ function! s:DisplayCompletion()
     endif
     let complete_output = system(hxml_sys)
     " quick and dirty check for error
-    if complete_output =~"\\u\\l*\.hx:\\d\\+"
-        echoerr complete_output
-        return []
+    let tag = complete_output[1:4]
+    if tag != "type" && tag != "list"
+        let error = complete_output[:len(complete_output)-2]
+        cexpr error
+        return [{"word" : "", "abbr" : "Compiler error: ", "menu":error, "empty" : 1}]
     endif
     let output = []
     call s:Log(complete_output)
@@ -436,6 +437,7 @@ function! s:DisplayCompletion()
             "echomsg partial_word
             "echomsg "***".line2col."***"
         endif
+
         let output = map(classes,
                     \'{"word":substitute(v:val["name"],"^".partial_word,"","g")'
                     \.', "abbr":v:val["name"]'
