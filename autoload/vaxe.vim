@@ -406,7 +406,7 @@ function! s:DisplayCompletion(base)
             let o['info'] = join(o['info'],"\n")
         endif
         if has_key(o,'menu')
-            let o['info'] = o['info'] . "\n>> " . o['menu']
+            let o['info'] = o['info'] . "\n  " . o['menu']
         endif
     endfor
 
