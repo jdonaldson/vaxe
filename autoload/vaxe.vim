@@ -195,9 +195,7 @@ function! vaxe#DefaultHxml(...)
     if exists('b:vaxe_hxml')
         unlet b:vaxe_hxml
     endif
-    "if exists('g:vaxe_hxml')
-    "    unlet g:vaxe_hxml
-    "endif
+
     if a:0 > 0 && a:1 != ''
         let b:vaxe_hxml = a:1
     else
@@ -205,14 +203,22 @@ function! vaxe#DefaultHxml(...)
         if base_hxml !~ "^/"
             let base_hxml = getcwd() . s:slash . base_hxml
         endif
-        if !filereadable(base_hxml)
-            redraw
-            echomsg "Default build file not valid, please create one."
-            return
-        endif
         let b:vaxe_hxml = base_hxml
-        let g:vaxe_working_directory = fnamemodify(base_hxml, ":p:h")
     endif
+    if !filereadable(b:vaxe_hxml) 
+        if b:vaxe_hxml == expand("%")
+            " hxml has been opened, but not written yet 
+            augroup temp_hxml
+                autocmd BufWritePost <buffer> call vaxe#DefaultHxml(expand("%"))| autocmd! temp_hxml
+            augroup END
+        else
+            redraw
+            echomsg "Default build file not valid: " . b:vaxe_hxml
+        endif
+        return
+    endif
+
+    let g:vaxe_working_directory = fnamemodify(b:vaxe_hxml, ":p:h")
     call s:SetCompiler()
 endfunction
 
@@ -237,7 +243,7 @@ function! s:SetCompiler()
                 \."haxe \"".vaxe_hxml."\" 2>&1"
 
     let &l:makeprg = build_command
-
+   
     let lines = readfile(vaxe_hxml)
     let abspath = filter(lines,'v:val =~ "\\s*-D\\s*absolute_path"')
 
