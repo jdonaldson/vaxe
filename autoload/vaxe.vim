@@ -153,7 +153,7 @@ function! vaxe#ProjectHxml(...)
     let g:vaxe_working_directory = getcwd()
 
     if a:0 > 0 && a:1 != ''
-        let g:vaxe_hxml = a:1
+        let g:vaxe_hxml = expand(a:1,':p')
     else
         let hxmls = split(glob("**/*.hxml"),'\n')
 
