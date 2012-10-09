@@ -148,8 +148,9 @@ endfunction
 function! vaxe#ProjectHxml(...)
     if exists('g:vaxe_hxml')
         unlet g:vaxe_hxml
-        unlet g:vaxe_working_directory
     endif
+
+    let g:vaxe_working_directory = getcwd()
 
     if a:0 > 0 && a:1 != ''
         let g:vaxe_hxml = a:1
@@ -168,13 +169,11 @@ function! vaxe#ProjectHxml(...)
         endif
 
         let g:vaxe_hxml = base_hxml
-        let g:vaxe_working_directory = getcwd()
     endif
     if !filereadable(g:vaxe_hxml)
         echoerr "Project build file not valid, please create one."
         return
     endif
-
     call s:SetCompiler()
     return g:vaxe_hxml
 endfunction
@@ -183,9 +182,10 @@ endfunction
 " path if the project hxml is not set.
 function! vaxe#AutomaticHxml()
     if exists('g:vaxe_hxml')
-        return
+        call vaxe#ProjectHxml(g:vaxe_hxml)
+    else
+        call vaxe#DefaultHxml()
     endif
-    call vaxe#DefaultHxml()
 endfunction
 
 " A function that sets the default hxml located in the parent directories of
@@ -205,9 +205,9 @@ function! vaxe#DefaultHxml(...)
         endif
         let b:vaxe_hxml = base_hxml
     endif
-    if !filereadable(b:vaxe_hxml) 
+    if !filereadable(b:vaxe_hxml)
         if b:vaxe_hxml == expand("%")
-            " hxml has been opened, but not written yet 
+            " hxml has been opened, but not written yet
             augroup temp_hxml
                 autocmd BufWritePost <buffer> call vaxe#DefaultHxml(expand("%"))| autocmd! temp_hxml
             augroup END
@@ -242,8 +242,9 @@ function! s:SetCompiler()
     let build_command = "cd \"" . g:vaxe_working_directory ."\" &&"
                 \."haxe \"".vaxe_hxml."\" 2>&1"
 
+    echomsg "*" . build_command . "*"
     let &l:makeprg = build_command
-   
+
     let lines = readfile(vaxe_hxml)
     let abspath = filter(lines,'v:val =~ "\\s*-D\\s*absolute_path"')
 
