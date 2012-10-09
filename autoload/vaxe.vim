@@ -242,7 +242,6 @@ function! s:SetCompiler()
     let build_command = "cd \"" . g:vaxe_working_directory ."\" &&"
                 \."haxe \"".vaxe_hxml."\" 2>&1"
 
-    echomsg "*" . build_command . "*"
     let &l:makeprg = build_command
 
     let lines = readfile(vaxe_hxml)
