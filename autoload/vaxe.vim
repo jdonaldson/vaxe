@@ -339,7 +339,7 @@ function! s:CurrentBlockHxml()
     let complete_string = complete[0]
     let parts = split(complete_string,"\n")
     let parts = map(parts, 'substitute(v:val,"#.*","","")')
-    let parts = map(parts, 'substitute(v:val,"\\s*-\\(cmd\\|xml\\|v\\)\\s*.*","","")')
+    let parts = map(parts, 'substitute(v:val,"^\\s*-\\(cmd\\|xml\\|v\\)\\s*.*","","")')
     let complete_string = join(parts,"\n")
     return complete_string
 endfunction
