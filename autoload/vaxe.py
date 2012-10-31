@@ -1,5 +1,6 @@
 import vim, re, HTMLParser
 import xml.etree.ElementTree as ET
+import json
 
 # This is the python portion of the completion script.  Call it with the *name*
 # of the input vimscript variable, "complete_output_var".  This should contain
@@ -47,4 +48,4 @@ def complete(complete_output_var, output_var):
         abbr = info[0]
         completes= [{'word':word,'info':info, 'abbr':abbr, 'dup':1}]
 
-    vim.command("let "+output_var+" = " + str(completes))
+    vim.command("let "+output_var+" = " + json.dumps(completes))
