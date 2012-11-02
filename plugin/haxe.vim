@@ -3,6 +3,10 @@ if exists("g:loaded_vaxe_plugin")
 endif
 let g:loaded_vaxe_plugin = 1
 
+command -nargs=? -complete=file DefaultHxml call vaxe#DefaultHxml(<q-args>)
+command -nargs=? -complete=file ProjectHxml call vaxe#ProjectHxml(<q-args>)
+command -buffer HaxeCtags call vaxe#Ctags()
+
 let g:tagbar_type_haxe = {
     \ 'ctagstype' : 'haxe',
     \ 'kinds'     : [
@@ -27,3 +31,4 @@ endif
 if !exists('g:vaxe_logging')
     let g:vaxe_logging = 0
 endif
+
