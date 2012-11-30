@@ -205,6 +205,7 @@ function! vaxe#DefaultHxml(...)
         endif
         let b:vaxe_hxml = base_hxml
     endif
+
     if !filereadable(b:vaxe_hxml)
         if b:vaxe_hxml == expand("%")
             " hxml has been opened, but not written yet
@@ -219,6 +220,11 @@ function! vaxe#DefaultHxml(...)
     endif
 
     let g:vaxe_working_directory = fnamemodify(b:vaxe_hxml, ":p:h")
+
+    " set quickfix to jump to working directory before populating list
+    autocmd QuickFixCmdPre <buffer>  exe 'cd ' . g:vaxe_working_directory
+    autocmd QuickFixCmdPost <buffer>  cd -
+
     call s:SetCompiler()
 endfunction
 
