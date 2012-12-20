@@ -3,32 +3,50 @@
 #  Based extensively on a version by Marc Weber (marco-oweber@gmx.de)
 # Language  : hxml
 
-
 snippet resource
 	-resource ${1:file}${2:@name(optional)}
-
-snippet target_neko
-	-neko $1.n
-	-main ${1:Index}
-snippet target_flash
-	-swf9 <++>.swf -swf-version=10
-	-main ${1:Index}
-snippet away3d
-	-swf-version 10
-	-swf9 Main.swf
-	-main <+class+>
-	-resource assets/earth.jpg@earth
-snippet target_php
-	-main ${1:Index}
-	--php-front index.php
-	--remap neko:php
+snippet neko
+	-main ${1:Main}
+	-neko ${2:bin/}$1.n
+snippet flash9
+	-main ${1:Main}
+	-swf9 ${2:bin/}$1.v9.swf
+snippet flash
+	-main ${1:Main}
+	-swf ${2:bin/}$1.swf
+snippet php
+	-main ${1:Main}
 	-php php
-snippet target_js
-	-main Main
-	-cp ${1:dir}
-	--js-namespace ${2:hxroot}
-	-js ${3:js-haxe.js}
-snippet target_cpp
-	-main ${1:Index}
-	--remap neko:cpp
+snippet js
+	-main ${1:Main}
+	-js $2$1.js
+snippet cpp
+	-main ${1:Main}
 	-cpp cpp
+snippet remap
+	--remap ${1:neko}:$2
+
+snippet all
+	-main ${1:Main}
+	-neko ${2:bin/}$1.n
+	${3:}
+	--next
+	-main $1
+	-swf9 $2$1.v9.swf
+	$3
+	--next
+	-main $1
+	-swf $2$1.v8.swf
+	$3
+	--next
+	-main $1
+	-php php
+	$3
+	--next
+	-main $1
+	-js $2$1.js
+	$3
+	--next
+	-main $1
+	-cpp cpp
+	$3
