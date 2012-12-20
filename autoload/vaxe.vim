@@ -367,9 +367,12 @@ function! s:DisplayCompletion(base)
     if !filereadable(vaxe_hxml)
        return [{"word" : "", "abbr" : "Compiler error: ", "menu": "No valid build file", "empty" : 1}]
     endif
-
-    let complete_args = s:CompletionHxml(expand("%:p")
-                \, (line2byte('.')+col('.')-2))
+    let offset = line2byte('.') + col('.')  -2
+    " handle the BOM
+    if &bomb
+        let offset += 3
+    endif
+    let complete_args = s:CompletionHxml(expand("%:p"), offset)
     let hxml_cd = "cd\ \"".fnamemodify(vaxe_hxml,":p:h"). "\"&&"
     if exists("g:vaxe_hxml")
         let hxml_cd = ''
