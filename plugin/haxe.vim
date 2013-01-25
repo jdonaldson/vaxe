@@ -7,6 +7,7 @@ command -nargs=? -complete=file DefaultHxml call vaxe#DefaultHxml(<q-args>)
 command -nargs=? -complete=file ProjectHxml call vaxe#ProjectHxml(<q-args>)
 command -buffer HaxeCtags call vaxe#Ctags()
 
+autocmd FileType haxe setlocal commentstring=//%s
 let g:tagbar_type_haxe = {
     \ 'ctagstype' : 'haxe',
     \ 'kinds'     : [
