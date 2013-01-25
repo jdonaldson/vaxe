@@ -34,19 +34,27 @@ Vaxe has two different "build modes" that designate how to find the hxml
 file, as well as how to set up the |makeprg|.  If you're working with simple
 projects, then the default mode will work just fine.  If you have a complex
 project structure with many different sub-builds, then you may want to consider
-using |vaxe-project-mode|.  You can set up an autocommand to set the project 
+using |vaxe-project-mode|.  You can set up an autocommand to set the project
 hxml:
 
 >
-:autocmd BufNewFile,BufRead /project/* vaxe#ProjectMode("/project/project.hxml") 
+:autocmd BufNewFile,BufRead /project/* vaxe#ProjectMode("/project/project.hxml")
 <
 
 Keep in mind that the project mode will persist throughout your entire session.
-If you wish to exit project mode, use the DefaultHxml command, or 
-vaxe#DefaultHxml function.  Also, the quickfix list and related compiler 
+If you wish to exit project mode, use the DefaultHxml command, or
+vaxe#DefaultHxml function.  Also, the quickfix list and related compiler
 information will always be in relation to the working directory at compilation
-time.  It is a good idea to keep an hxml file in the root of your working 
+time.  It is a good idea to keep an hxml file in the root of your working
 directory, and use vaxe to invoke the compiler there.
+
+If you need to change the name of the hxml file often, it may be a good idea
+to print the name of the build file in your statusline, to remind you which
+file is being used for "make" and completions:
+
+>
+:autocmd BufNewFile,BufRead *.hx set statusline+=\ build:\ %{vaxe#CurrentBuild()}
+<
 
 BUILD MODES                                     *vaxe-build*
 
@@ -76,11 +84,11 @@ Project                                         *vaxe-project-mode*
 
 COMMANDS                                         *vaxe-commands*
 
-|DefaultHXML|           Call the |vaxe#DefaultHxml| function.  Accepts an 
-                        optional single argument that will specify the hxml to 
+|DefaultHXML|           Call the |vaxe#DefaultHxml| function.  Accepts an
+                        optional single argument that will specify the hxml to
                         use.
 
-|ProjectHXML|           Call the |vaxe#ProjectHxml| function. Accepts an 
+|ProjectHXML|           Call the |vaxe#ProjectHxml| function. Accepts an
                         optional single argument that will specify the hxml to
                         use.
 
@@ -101,14 +109,14 @@ FUNCTIONS                                        *vaxe-functions*
 
 *vaxe#CurrentBuild*     Returns the current active project build file if it
                         is specified, else it will return the default build
-                        file name if it exists. Accepts a single argument that 
+                        file name if it exists. Accepts a single argument that
                         will specify the hxml to use.
 
 
 *vaxe#DefaultHxml*      Find the preferred build file recursively in the
                         parents of the working directory. This function is
                         called automatically whenever any hx file is opened.
-                        Accepts a single argument that will specify the hxml 
+                        Accepts a single argument that will specify the hxml
                         to use.
 
 *vaxe#HaxeComplete*     The |omnifunc| provided for vaxe.
@@ -130,28 +138,28 @@ FUNCTIONS                                        *vaxe-functions*
                             map <leader>ph : call vaxe#ProjectHxml()<CR>
                         <
 
-*vaxe#ImportClass*      Calling this function on a given line will try to 
-                        import any classes that are given for the line.  E.g. 
+*vaxe#ImportClass*      Calling this function on a given line will try to
+                        import any classes that are given for the line.  E.g.
                         for this line:
                         >
                             var l = new haxe.FastList<Int>();
                         <
-                        vaxe#ImportClass() will try to find the FastList 
+                        vaxe#ImportClass() will try to find the FastList
                         definition, and import it:
                         >
                             import haxe.FastList;
                             ...
                             var l = new FastList<Int>();
                         <
-                        If you're missing the initial package prefix, vaxe 
-                        will try to find package definitions for the given 
+                        If you're missing the initial package prefix, vaxe
+                        will try to find package definitions for the given
                         class name using ctags.  So, if ctags are generated,
-                        it is also possible to resolve the import for this 
+                        it is also possible to resolve the import for this
                         line:
                         >
                             var l = new FastList<Int>();
                         >
-                            
+
 
 ACTIVE TARGET                                      *omnifunc-active-target*
 
@@ -185,9 +193,9 @@ SETTINGS                                        *vaxe-settings*
 MISC                                            *vaxe-misc*
 
 Vaxe will change the errrorformat syntax if it finds "-D absolute_path" in the
-current hxml.  This -D compiler switch adds the full path for files in trace 
-output, making it possible to jump to trace declarations in the quickfix 
-window.  
+current hxml.  This -D compiler switch adds the full path for files in trace
+output, making it possible to jump to trace declarations in the quickfix
+window.
 
 LICENSE                                         *vaxe-license*
 
