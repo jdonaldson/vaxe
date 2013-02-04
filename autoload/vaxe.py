@@ -7,8 +7,9 @@ import json
 # the output from the --display compiler directive.  The output is given in
 # "output_var", which is likewise the name of the vimscript variable to write.
 # This variable contains a dictionary formatted appropriately for an omnifunc.
-def complete(complete_output_var, output_var):
+def complete(complete_output_var, output_var, base_var):
     complete_output = vim.eval(complete_output_var)
+    base = vim.eval(base_var)
     if complete_output is None: complete_output = ''
     completes = []
 
@@ -48,4 +49,6 @@ def complete(complete_output_var, output_var):
         abbr = info[0]
         completes= [{'word':word,'info':info, 'abbr':abbr, 'dup':1}]
 
-    vim.command("let "+output_var+" = " + json.dumps(completes))
+    completes = [c for c in completes if re.search("^" + base, c['word'])]
+    vim.command("let " + output_var + " = " + json.dumps(completes))
+
