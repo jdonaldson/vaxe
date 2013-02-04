@@ -136,7 +136,14 @@ endfunction
 " A function suitable for omnifunc
 function! vaxe#HaxeComplete(findstart,base)
    if a:findstart
-       return col('.')
+       let line = getline('.')
+       let period = strridx(line, '.')
+       let paren = strridx(line, '(')
+       if (period == paren)
+           return -1;
+       endif
+       let basecol = max([period,paren]) + 1
+       return basecol
    else
        return s:DisplayCompletion(a:base)
    endif
@@ -413,7 +420,7 @@ function! s:DisplayCompletion(base)
 
     " execute the python completion script in autoload/vaxe.py
     exe 'pyfile '.s:plugin_path.'/vaxe.py'
-    py complete('complete_output','output')
+    py complete('complete_output','output', 'a:base')
 
     for o in output
         let tag = ''
