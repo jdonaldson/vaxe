@@ -88,14 +88,20 @@ Project                                         *vaxe-project-mode*
                         throughout your vim session.
 
 NME Project                                      *vaxe-nme-mode*
-                        This mode is used when |vaxe#ProjectNmml| is called.
+                        This mode is used when |vaxe#ProjectNmml| is called,
+                        or if an nmml file is detected on startup.
                         It will set a g:vaxe_nmml variable that will
                         override any b:vaxe_nmml variables set by the default
                         method.  It also sets a |makeprg| that simply executes
                         the nme command in the working directory,
                         and redirects errors to standard out.  Nme mode
                         assumes that you will keep the same working directory
-                        throughout your vim session.
+                        throughout your vim session.  When this mode is active,
+                        an hxml file is generated that contains information
+                        used for completions.  It will be named the same as
+                        the selectd nmml file, and be located in the same
+                        directory, but will have an hxml extension.
+
 
 COMMANDS                                         *vaxe-commands*
 
