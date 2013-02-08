@@ -322,15 +322,21 @@ endfunction
 " Sets the makeprg
 
 function! s:SetCompiler()
-    let vaxe_hxml = vaxe#CurrentBuild()
-    call s:Log("vaxe_hxml: ".vaxe_hxml)
-    let build_command = "cd \"" . g:vaxe_working_directory ."\" &&"
-                \."haxe \"".vaxe_hxml."\" 2>&1"
+    if exists("b:vaxe_nmml")
+        let build_command = "cd \"" . g:vaxe_working_directory . "\" &&"
+                    \."nme test ". g:vaxe_nme_target . " 2>&1"
+        let abspath = ''
+    else
+        let vaxe_hxml = vaxe#CurrentBuild()
+        call s:Log("vaxe_hxml: ".vaxe_hxml)
+        let build_command = "cd \"" . g:vaxe_working_directory ."\" &&"
+                    \."haxe \"".vaxe_hxml."\" 2>&1"
+        let lines = readfile(vaxe_hxml)
+        let abspath = filter(lines,'v:val =~ "\\s*-D\\s*absolute_path"')
+    endif
 
     let &l:makeprg = build_command
 
-    let lines = readfile(vaxe_hxml)
-    let abspath = filter(lines,'v:val =~ "\\s*-D\\s*absolute_path"')
 
     let &l:errorformat="%I%f:%l: characters %c-%*[0-9] : Warning : %m
                     \,%E%f:%l: characters %c-%*[0-9] : %m
