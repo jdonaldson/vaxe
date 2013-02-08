@@ -67,10 +67,10 @@ so that errors and trace messages show up in the
 window.
 
 ## NME Project Support
-![Nme](http://i.imgur.com/aTZV9y9.png)
+![Nme](http://i.imgur.com/rc8vLi2.png)
 
 Vaxe also supports NME workflows.  If an Nmml project is found, Vaxe will
-use it for builds and completions.
+use it for builds and completions.  
 
 ## Omni-completions
 
