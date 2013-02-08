@@ -149,6 +149,48 @@ function! vaxe#HaxeComplete(findstart,base)
    endif
 endfunction
 
+function! vaxe#NmeTarget(...)
+    g:vaxe_nme_target = ''
+    if a:0 > 0 && a:1 != ''
+        let g:vaxe_nme_target = a:1
+    else
+        let g:vaxe_nme_target = s:InputList("Select Target", s:nmml_targets)
+        let g:vaxe_nme_target = split(g:vaxe_nme_target, ":")[0]
+    endif
+endfunction
+
+
+function! vaxe#ProjectNmml(...)
+    if exists('g:vaxe_nmml')
+        unlet g:vaxe_nmml
+    endif
+    let g:vaxe_working_directory = getcwd()
+
+    if a:0 > 0 && a:1 != ''
+        let g:vaxe_nmml = expand(a:1,':p')
+    else
+        let nmmls = split(glob("**/*.nmml"),'\n')
+
+        if len(nmmls) == 0
+            echoerr "No nmml files found in current working directory"
+            return
+        else
+            let base_nmml = s:InputList("Select Nmml", nmmls)
+        endif
+
+        if base_nmml !~ "^//"
+            let base_nmml = getcwd() . s:slash . base_nmml
+        endif
+
+        let g:vaxe_nmml = base_nmml
+    endif
+    if !filereadable(g:vaxe_nmml)
+        echoerr "Project nmml file not valid, please create one."
+        return
+    endif
+    call s:SetCompiler()
+    return g:vaxe_nmml
+endfunction
 " A function that will search for valid hxml in the current working directory
 "  and allow the user to select the right candidate.  The selection will
 "  enable 'project mode' for vaxe.
