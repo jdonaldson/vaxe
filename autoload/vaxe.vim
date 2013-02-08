@@ -276,7 +276,7 @@ function! vaxe#DefaultHxml(...)
     endif
 
     if exists("b:vaxe_nmml")
-        let base_hxml = base_nmml.".completions.hxml"
+        let base_hxml = base_nmml.".hxml"
 
         if !strlen(g:vaxe_nme_target)
             call vaxe#NmeTarget()
