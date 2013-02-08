@@ -66,8 +66,8 @@ so that errors and trace messages show up in the
 [quickfix](http://vimdoc.sourceforge.net/htmldoc/quickfix.html#quickfix)
 window.
 
-## NME Project Suppor
-[Nme](http://i.imgur.com/aTZV9y9.png)
+## NME Project Support
+![Nme](http://i.imgur.com/aTZV9y9.png)
 
 Vaxe also supports NME workflows.  If an Nmml project is found, Vaxe will
 use it for builds and completions.
