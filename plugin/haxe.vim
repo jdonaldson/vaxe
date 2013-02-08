@@ -34,3 +34,11 @@ if !exists('g:vaxe_logging')
     let g:vaxe_logging = 0
 endif
 
+if !exists("g:vaxe_nme_target")
+    let g:vaxe_nme_target  = ""
+endif
+
+if !exists("g:vaxe_nme_completion_target")
+    let g:vaxe_nme_completion  = "flash"
+endif
+
