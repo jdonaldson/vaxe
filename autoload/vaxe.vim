@@ -230,12 +230,15 @@ endfunction
 " A function that runs on a hx filetype load.  It will set the default hxml
 " path if the project hxml is not set.
 function! vaxe#AutomaticHxml()
-    if exists('g:vaxe_hxml')
+    if exists ("g:vaxe_nmml")
+        call vaxe#ProjectNmml(g:vaxe_nmml)
+    elseif exists('g:vaxe_hxml')
         call vaxe#ProjectHxml(g:vaxe_hxml)
     else
         call vaxe#DefaultHxml()
     endif
 endfunction
+
 
 " A function that sets the default hxml located in the parent directories of
 " the current buffer.
