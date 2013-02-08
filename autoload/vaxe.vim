@@ -287,7 +287,9 @@ function! vaxe#DefaultHxml(...)
             call system("nme display " . g:vaxe_nme_target . " > '" . base_hxml . "'")
             call system("nme build " . g:vaxe_nme_target)
         endif
-        let g:vaxe_nmml = base_hxml
+        let g:vaxe_nmml = b:vaxe_nmml
+        let b:vaxe_hxml = base_hxml
+
     endif
 
     if !filereadable(b:vaxe_hxml)
