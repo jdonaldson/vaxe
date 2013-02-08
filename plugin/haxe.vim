@@ -6,6 +6,7 @@ let g:loaded_vaxe_plugin = 1
 command -nargs=? -complete=file DefaultHxml call vaxe#DefaultHxml(<q-args>)
 command -nargs=? -complete=file ProjectHxml call vaxe#ProjectHxml(<q-args>)
 command -nargs=? -complete=file ProjectNmml call vaxe#ProjectNmml(<q-args>)
+command -nargs=? -complete=file NmeTarget call vaxe#NmeTarget(<q-args>)
 command -buffer HaxeCtags call vaxe#Ctags()
 
 autocmd FileType haxe setlocal commentstring=//%s

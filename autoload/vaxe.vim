@@ -149,7 +149,7 @@ function! vaxe#HaxeComplete(findstart,base)
    endif
 endfunction
 
-function! vaxe#NmeTarget(...)
+function! s:NmeTarget(...)
     let g:vaxe_nme_target = ''
     if a:0 > 0 && a:1 != ''
         let g:vaxe_nme_target = a:1
@@ -157,6 +157,11 @@ function! vaxe#NmeTarget(...)
         let g:vaxe_nme_target = s:InputList("Select Target", s:nmml_targets)
         let g:vaxe_nme_target = split(g:vaxe_nme_target, ":")[0]
     endif
+endfunction
+
+function! vaxe#NmeTarget(...)
+    call s:NmeTarget(a:1)
+    call s:SetCompiler()
 endfunction
 
 
@@ -280,7 +285,7 @@ function! vaxe#DefaultHxml(...)
         let base_hxml = b:vaxe_nmml.".hxml"
 
         if !strlen(g:vaxe_nme_target)
-            call vaxe#NmeTarget()
+            call s:NmeTarget()
         endif
 
         if !filereadable(base_hxml)
