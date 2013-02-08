@@ -70,7 +70,8 @@ window.
 ![Nme](http://i.imgur.com/rc8vLi2.png)
 
 Vaxe also supports NME workflows.  If an Nmml project is found, Vaxe will
-use it for builds and completions.  
+use it for builds and completions. You can specify a default target if you only 
+work with one platform.
 
 ## Omni-completions
 
