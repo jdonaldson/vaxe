@@ -289,6 +289,7 @@ function! vaxe#DefaultHxml(...)
         endif
         let g:vaxe_nmml = b:vaxe_nmml
         let b:vaxe_hxml = base_hxml
+        let g:vaxe_hxml = b:vaxe_hxml
 
     endif
 
