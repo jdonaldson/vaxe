@@ -274,11 +274,13 @@ function! vaxe#DefaultHxml(...)
         if base_hxml !~ "^/"
             let base_hxml = getcwd() . s:slash . base_hxml
         endif
-        if base_nmml !~ "^/"
-            let base_nmml = getcwd() . s:slash . base_nmml
+        if (base_nmml != '')
+            if base_nmml !~ "^/"
+                let base_nmml = getcwd() . s:slash . base_nmml
+            endif
+            let b:vaxe_nmml = base_nmml
         endif
         let b:vaxe_hxml = base_hxml
-        let b:vaxe_nmml = base_nmml
     endif
 
     if exists("b:vaxe_nmml")
