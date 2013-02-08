@@ -248,14 +248,41 @@ function! vaxe#DefaultHxml(...)
         unlet b:vaxe_hxml
     endif
 
+    if exists('b:vaxe_nmml')
+        unlet b:vaxe_nmml
+    endif
+
     if a:0 > 0 && a:1 != ''
-        let b:vaxe_hxml = a:1
+        if matchstr(a:1,'\.hxml$' )
+            let b:vaxe_hxml = a:1
+        elseif matchstr(a:1,'\.nmml$' )
+            let b:vaxe_nmml = a:1
+        endif
     else
+        let base_nmml = globpath(getcwd(), "**/*.nmml")
         let base_hxml = findfile(g:vaxe_prefer_hxml, ".;")
         if base_hxml !~ "^/"
             let base_hxml = getcwd() . s:slash . base_hxml
         endif
+        if base_nmml !~ "^/"
+            let base_hxml = getcwd() . s:slash . base_hxml
+        endif
         let b:vaxe_hxml = base_hxml
+        let b:vaxe_nmml = base_nmml
+    endif
+
+    if exists("b:vaxe_nmml")
+        let base_hxml = base_nmml.".completions.hxml"
+
+        if !strlen(g:vaxe_nme_target)
+            call vaxe#NmeTarget()
+        endif
+
+        if !filereadable(base_hxml)
+            call system("nme display " . g:vaxe_nme_target . " > '" . base_hxml . "'")
+            call system("nme build " . g:vaxe_nme_target)
+        endif
+        let g:vaxe_nmml = base_hxml
     endif
 
     if !filereadable(b:vaxe_hxml)
