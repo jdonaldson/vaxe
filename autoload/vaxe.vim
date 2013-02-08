@@ -327,28 +327,24 @@ function! vaxe#CurrentBuild()
 endfunction
 
 " Sets the makeprg
-
 function! s:SetCompiler()
     if exists("b:vaxe_nmml")
-        let build_command = "cd \"" . g:vaxe_working_directory . "\" &&"
+        let build_command = "cd \"" . g:vaxe_working_directory . "\" && "
                     \."nme test ". g:vaxe_nme_target . " 2>&1"
         let abspath = ''
-
     else
         let vaxe_hxml = vaxe#CurrentBuild()
-        call s:Log("vaxe_hxml: ".vaxe_hxml)
+        call s:Log("vaxe_hxml: " . vaxe_hxml)
         let build_command = "cd \"" . g:vaxe_working_directory ."\" &&"
-                    \."haxe \"".vaxe_hxml."\" 2>&1"
+                    \. "haxe \"" . vaxe_hxml . "\" 2>&1"
         let lines = readfile(vaxe_hxml)
-        let abspath = filter(lines,'v:val =~ "\\s*-D\\s*absolute_path"')
+        let abspath = filter(lines, 'v:val =~ "\\s*-D\\s*absolute_path"')
     endif
 
     let &l:makeprg = build_command
-
-
     let &l:errorformat="%I%f:%l: characters %c-%*[0-9] : Warning : %m
-                    \,%E%f:%l: characters %c-%*[0-9] : %m
-                    \,%E%f:%l: lines %*[0-9]-%*[0-9] : %m"
+                \,%E%f:%l: characters %c-%*[0-9] : %m
+                \,%E%f:%l: lines %*[0-9]-%*[0-9] : %m"
 
     " if -D absolute_path is specified, then traces contain path information,
     " and errorfmt can use the file/folder location
