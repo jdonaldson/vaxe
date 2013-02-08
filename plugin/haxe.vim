@@ -16,8 +16,8 @@ let g:tagbar_type_haxe = {
         \ 't:typedefs',
         \ 'v:variables',
         \ 'f:functions',
-    \ ]
-        \ }
+        \ ]
+    \ }
 
 " prevent buffer write events triggered by completions
 if !exists("g:vaxe_prevent_completion_bufwrite_events")
