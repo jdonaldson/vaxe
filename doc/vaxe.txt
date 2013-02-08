@@ -61,9 +61,14 @@ BUILD MODES                                     *vaxe-build*
 Default                                         *vaxe-default-mode*
                         This mode is used automatically any time a *.hx file
                         is opened.  It can be retriggered by calling
-                        |vaxe#DefaultHxml|. vaxe will search the project
+                        |vaxe#DefaultHxml|. Vaxe will search the project
                         path for the preferred file indicated by
-                        |g:vaxe_prefer_hxml|.
+                        |g:vaxe_prefer_hxml|, as well as searching for any
+                        nmml files.
+
+                        If it finds an nmml file, it will use that by default.
+                        see |vaxe-nme-mode| for more details.
+
                         If it finds a preferred build file in the parent
                         directories of the currently edited file, it will set
                         a b:vaxe_hxml variable for the current buffer.
@@ -82,14 +87,28 @@ Project                                         *vaxe-project-mode*
                         assumes that you will keep the same working directory
                         throughout your vim session.
 
+NME Project                                      *vaxe-nme-mode*
+                        This mode is used when |vaxe#ProjectNmml| is called.
+                        It will set a g:vaxe_nmml variable that will
+                        override any b:vaxe_nmml variables set by the default
+                        method.  It also sets a |makeprg| that simply executes
+                        the nme command in the working directory,
+                        and redirects errors to standard out.  Nme mode
+                        assumes that you will keep the same working directory
+                        throughout your vim session.
+
 COMMANDS                                         *vaxe-commands*
 
 |DefaultHXML|           Call the |vaxe#DefaultHxml| function.  Accepts an
-                        optional single argument that will specify the hxml to
-                        use.
+                        optional single argument that will specify the hxml or
+                        nmml to use.
 
 |ProjectHXML|           Call the |vaxe#ProjectHxml| function. Accepts an
                         optional single argument that will specify the hxml to
+                        use.
+
+|ProjectNmml|           Call the |vaxe#ProjectNmml| function.  Accepts an
+                        optional single argument that will specify the nmml to
                         use.
 
 
@@ -136,6 +155,16 @@ FUNCTIONS                                        *vaxe-functions*
                         map it to a leader action:
                         >
                             map <leader>ph : call vaxe#ProjectHxml()<CR>
+                        <
+
+*vaxe#ProjectNmml*      Find and select nmml files in the working directory.
+                        Selecting a file with this method will enter
+                        |vaxe-nme-mode|.  If you have installed |tlib|,
+                        then it will use |tlib#input#List| to select hxml
+                        candidates. If you call this often, it makes sense to
+                        map it to a leader action:
+                        >
+                            map <leader>pn : call vaxe#ProjectNmml()<CR>
                         <
 
 *vaxe#ImportClass*      Calling this function on a given line will try to
@@ -185,10 +214,15 @@ SETTINGS                                        *vaxe-settings*
 *g:vaxe_hxml*           A variable that indicates the |vaxe-project-mode|
                         build file.  It will override the |vaxe-default-mode|
                         setting if present.
+
 *g:vaxe_prevent_completion_bufwrite_events*
                         vaxe uses the compiler to make completions.  This can
                         happen frequently, and causes the buffer to be written.
                         The default is "1" which prevents events.
+
+*g:vaxe_nme_target*
+                        In |vaxe-nme-mode|, vaxe will use this target for
+                        builds and to generate completions.
 
 MISC                                            *vaxe-misc*
 
