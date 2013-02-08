@@ -552,3 +552,31 @@ function! s:DisplayCompletion(base)
     return output
 endfunction
 
+let s:nmml_targets = [ "android : Create Google Android applications"
+            \, "android -arm7 : Compile for arm-7a and arm5"
+            \, "android -arm7-only : Compile for arm-7a for testing"
+            \, "blackberry : Create BlackBerry applications"
+            \, "blackberry -simulator : Build/test for the device simulator"
+            \, "flash : Create SWF applications for Adobe Flash Player"
+            \, "html5 : Create HTML5 canvas applications"
+            \, "html5 -minify : Minify output using the Google Closure compiler"
+            \, "html5 -minify -yui : Minify output using the YUI compressor"
+            \, "ios : Create Apple iOS applications"
+            \, "ios -simulator : Build/test for the device simulator"
+            \, "ios -simulator -ipad : Build/test for the iPad Simulator"
+            \, "linux : Create Linux applications"
+            \, "linux -64 : Compile for 64-bit instead of 32-bit"
+            \, "linux -neko : Build with Neko instead of C++"
+            \, "mac : Create Apple Mac OS X applications"
+            \, "mac -neko : Build with Neko instead of C++"
+            \, "webos : Create HP webOS applications"
+            \, "windows : Create Microsoft Windows applications"
+            \, "windows -neko : Build with Neko instead of C++" ]
+
+
+  " -D : Specify a define to use when processing other commands
+  " -debug : Use debug configuration instead of release
+  " -verbose : Print additional information (when available)
+  " -clean : Add a "clean" action before running the current command
+  " (display) -hxml : Print HXML information for the project
+  " (display) -nmml : Print NMML information for the project
