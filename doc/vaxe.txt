@@ -117,6 +117,9 @@ COMMANDS                                         *vaxe-commands*
                         optional single argument that will specify the nmml to
                         use.
 
+|NmeTarget|             Call the |vaxe#NmeTarget| function.  It accepts an
+                        optional single argument that will specify the target
+                        to use.
 
 |HaxeCtags|             Call the |vaxe#Ctags| function
 
@@ -172,6 +175,10 @@ FUNCTIONS                                        *vaxe-functions*
                         >
                             map <leader>pn : call vaxe#ProjectNmml()<CR>
                         <
+
+*vaxe#NmeTarget*
+                        Calling this function will select a new nme target to
+                        use for builds and completions.
 
 *vaxe#ImportClass*      Calling this function on a given line will try to
                         import any classes that are given for the line.  E.g.
