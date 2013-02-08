@@ -222,7 +222,30 @@ SETTINGS                                        *vaxe-settings*
 
 *g:vaxe_nme_target*
                         In |vaxe-nme-mode|, vaxe will use this target for
-                        builds and to generate completions.
+                        builds and to generate completions.  Check the results
+                        from "nme help" for more details
+                        The following options are available:
+
+                        android
+                        android -arm7
+                        android -arm7-only
+                        blackberry
+                        blackberry -simulator
+                        flash
+                        html5
+                        html5 -minify
+                        html5 -minify -yui
+                        ios
+                        ios -simulator
+                        ios -simulator -ipad
+                        linux
+                        linux -64
+                        linux -neko
+                        mac
+                        mac -neko
+                        webos
+                        windows
+                        windows -neko
 
 MISC                                            *vaxe-misc*
 
