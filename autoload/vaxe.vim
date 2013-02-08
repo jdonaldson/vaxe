@@ -150,7 +150,7 @@ function! vaxe#HaxeComplete(findstart,base)
 endfunction
 
 function! vaxe#NmeTarget(...)
-    g:vaxe_nme_target = ''
+    let g:vaxe_nme_target = ''
     if a:0 > 0 && a:1 != ''
         let g:vaxe_nme_target = a:1
     else
@@ -259,13 +259,17 @@ function! vaxe#DefaultHxml(...)
             let b:vaxe_nmml = a:1
         endif
     else
-        let base_nmml = globpath(getcwd(), "**/*.nmml")
+        let base_nmml = glob("**/*.nmml")
+        if (base_nmml != '')
+            let base_nmml = base_nmml[0]
+        end
+
         let base_hxml = findfile(g:vaxe_prefer_hxml, ".;")
         if base_hxml !~ "^/"
             let base_hxml = getcwd() . s:slash . base_hxml
         endif
         if base_nmml !~ "^/"
-            let base_hxml = getcwd() . s:slash . base_hxml
+            let base_nmml = getcwd() . s:slash . base_nmml
         endif
         let b:vaxe_hxml = base_hxml
         let b:vaxe_nmml = base_nmml
@@ -326,6 +330,7 @@ function! s:SetCompiler()
         let build_command = "cd \"" . g:vaxe_working_directory . "\" &&"
                     \."nme test ". g:vaxe_nme_target . " 2>&1"
         let abspath = ''
+
     else
         let vaxe_hxml = vaxe#CurrentBuild()
         call s:Log("vaxe_hxml: ".vaxe_hxml)
