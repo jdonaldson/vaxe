@@ -335,7 +335,7 @@ endfunction
 " Sets the makeprg
 function! s:SetCompiler()
     let abspath = []
-    if exists("b:vaxe_nmml")
+    if exists("g:vaxe_nmml")
         let build_command = "cd \"" . g:vaxe_working_directory . "\" && "
                     \."nme test ". g:vaxe_nme_target . " 2>&1"
     else
