@@ -260,8 +260,9 @@ function! vaxe#DefaultHxml(...)
         endif
     else
         let base_nmml = glob("**/*.nmml")
+
         if (base_nmml != '')
-            let base_nmml = base_nmml[0]
+            let base_nmml = split(base_nmml,'\n')[0]
         end
 
         let base_hxml = findfile(g:vaxe_prefer_hxml, ".;")
@@ -276,7 +277,7 @@ function! vaxe#DefaultHxml(...)
     endif
 
     if exists("b:vaxe_nmml")
-        let base_hxml = base_nmml.".hxml"
+        let base_hxml = b:vaxe_nmml.".hxml"
 
         if !strlen(g:vaxe_nme_target)
             call vaxe#NmeTarget()
