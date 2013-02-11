@@ -14,6 +14,8 @@ let g:tagbar_type_haxe = {
     \ 'ctagstype' : 'haxe',
     \ 'kinds'     : [
         \ 'c:classes',
+        \ 'e:enums',
+        \ 'i:interfaces',
         \ 't:typedefs',
         \ 'v:variables',
         \ 'f:functions',
