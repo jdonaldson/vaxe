@@ -210,7 +210,6 @@ function! vaxe#ProjectHxml(...)
         let g:vaxe_hxml = expand(a:1,':p')
     else
         let hxmls = split(glob("**/*.hxml"),'\n')
-
         if len(hxmls) == 0
             echoerr "No hxml files found in current working directory"
             return
@@ -221,7 +220,6 @@ function! vaxe#ProjectHxml(...)
         if base_hxml !~ "^//"
             let base_hxml = getcwd() . s:slash . base_hxml
         endif
-
         let g:vaxe_hxml = base_hxml
     endif
     if !filereadable(g:vaxe_hxml)
@@ -256,11 +254,10 @@ function! vaxe#DefaultHxml(...)
     if exists('b:vaxe_nmml')
         unlet b:vaxe_nmml
     endif
-
     if a:0 > 0 && a:1 != ''
-        if matchstr(a:1,'\.hxml$' )
+        if match(a:1,'\.hxml$')
             let b:vaxe_hxml = a:1
-        elseif matchstr(a:1,'\.nmml$' )
+        elseif match(a:1,'\.nmml\$' )
             let b:vaxe_nmml = a:1
         endif
     else
@@ -297,7 +294,6 @@ function! vaxe#DefaultHxml(...)
         let g:vaxe_nmml = b:vaxe_nmml
         let b:vaxe_hxml = base_hxml
         let g:vaxe_hxml = b:vaxe_hxml
-
     endif
 
     if !filereadable(b:vaxe_hxml)
