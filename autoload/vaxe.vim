@@ -304,9 +304,14 @@ function! vaxe#DefaultHxml(...)
             call s:NmeTarget()
         endif
         let g:vaxe_working_directory = fnamemodify(b:vaxe_nmml, ":p:h")
+        let cdcmd = 'cd "'.g:vaxe_working_directory.'" && '
         if !filereadable(base_hxml)
-            call system("nme display " . g:vaxe_nme_target . " > '" . base_hxml . "'")
-            call system("nme build " . g:vaxe_nme_target)
+            " pipe nme display to an hxml for completions
+            call system(cdcmd . " nme display " . g:vaxe_nme_target
+                        \. " > '" . base_hxml . "'")
+
+            " build the assets dependencies
+            call system(cdcmd . " nme build " . g:vaxe_nme_target)
         endif
 
         let g:vaxe_nmml = b:vaxe_nmml
