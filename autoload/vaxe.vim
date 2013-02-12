@@ -7,6 +7,22 @@ if has('win32') || has('win64')
     let s:slash = '\'
 endif
 
+" Utility function that recursively searches parent directories for 'dir'
+" until a file matching "pattern" is found.
+function! s:ParentSearch(pattern, dir)
+    let current_dir = fnamemodify(a:dir,":p:h")
+    let last_dir = ''
+    while(current_dir != last_dir)
+        let last_dir = current_dir
+        let match = globpath(current_dir, a:pattern)
+        if (match != '')
+            return match
+        endif
+        let current_dir = fnamemodify(current_dir, ":p:h:h")
+    endwhile
+    return ''
+endfunction
+
 function! vaxe#SetWorkingDir()
     exe 'cd "'.g:vaxe_working_directory.'"'
 endfunction
@@ -254,6 +270,7 @@ function! vaxe#DefaultHxml(...)
     if exists('b:vaxe_nmml')
         unlet b:vaxe_nmml
     endif
+
     if a:0 > 0 && a:1 != ''
         if match(a:1,'\.hxml$')
             let b:vaxe_hxml = a:1
@@ -261,7 +278,7 @@ function! vaxe#DefaultHxml(...)
             let b:vaxe_nmml = a:1
         endif
     else
-        let base_nmml = glob("**/*.nmml")
+        let base_nmml = s:ParentSearch("*.nmml", fnamemodify(expand("%"),":p:h"))
 
         if (base_nmml != '')
             let base_nmml = split(base_nmml,'\n')[0]
@@ -286,11 +303,12 @@ function! vaxe#DefaultHxml(...)
         if !strlen(g:vaxe_nme_target)
             call s:NmeTarget()
         endif
-
+        let g:vaxe_working_directory = fnamemodify(b:vaxe_nmml, ":p:h")
         if !filereadable(base_hxml)
             call system("nme display " . g:vaxe_nme_target . " > '" . base_hxml . "'")
             call system("nme build " . g:vaxe_nme_target)
         endif
+
         let g:vaxe_nmml = b:vaxe_nmml
         let b:vaxe_hxml = base_hxml
         let g:vaxe_hxml = b:vaxe_hxml
