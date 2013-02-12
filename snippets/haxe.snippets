@@ -27,8 +27,8 @@ snippet for
 snippet class HAXE
 	class `expand('%:t:r')` {
 
-		function new(${1}) {
-			${2}
+		public function new(${1}) {
+			${2://initialize variables}
 		}
 
 		static function main() {
@@ -43,7 +43,6 @@ snippet main
 snippet new
 	public function new(${1:arg}) {
 		super($1);
-		${2}
 	}
 snippet fn func
 	function(${1:arg}) {
@@ -72,7 +71,7 @@ snippet pristafu private static function
 snippet trace
 	trace(${1});
 snippet desc function
-	trace(${1:} + " is the value for $1");
+	trace(${1} + " is the value for $1");
 snippet cast
 	cast(${1:cast_this}, ${2:type})
 snippet interface
