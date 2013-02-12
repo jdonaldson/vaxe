@@ -140,7 +140,7 @@ function! vaxe#HaxeComplete(findstart,base)
        let period = strridx(line, '.')
        let paren = strridx(line, '(')
        if (period == paren)
-           return -1;
+           return -1
        endif
        let basecol = max([period,paren]) + 1
        return basecol
