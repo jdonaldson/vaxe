@@ -44,7 +44,18 @@ if g:vim_haxe_syntax_scheme_nr == 1
   syn keyword haxeExternal	using import extern package
 
   syn match haxeMeta            '@\w+'
-  syn match haxeMacro           '@:\(macro\|keepSub\|autoBuild\|skipFields\|expose\|keep\)'
+  syn match haxeMacro           '@:\(macro\|keepSub\|keep\|autoBuild\|feature\)'
+  syn match haxeMacro           '@:\(require\|final\|hack\|native\|coreApi\)'
+  syn match haxeMacro           '@:\(fakeEnum\|overload\|extern\|optional\)'
+  syn match haxeJsMacro         '@:\(expose\|defineFeature\|runtime\|initPackage\)'
+  syn match haxeFlashMacro      '@:\(bind\|bitmap\|file\|font\|sound\|ns\|protected\)'
+  syn match haxeFlashMacro      '@:\(getter\|setter\|meta\|debug\|noDebug\)'
+  syn match haxeCPPMacro        '@:\(headerCode\|headerClassCode\|cppFileCode\)'
+  syn match haxeCPPMacro        '@:\(functionCode\|functionTailCode\|buildXml\)'
+  syn match haxeCPPMacro        '@:\(cppNameSpaceCode\|headerNamespaceCode\)'
+  syn match haxeCPPMacro        '@:\(noStack\|depend\|include\)'
+  syn match haxeJavaMacro        '@:\(protected\|internal\|final\|volatile\)'
+  syn match haxeJavaMacro        '@:\(transient\|functionBody\|classContents\)'
   syn match haxeConditional     '#\(if\|else\|elseif\|end\)'
   syn keyword haxeConditional	if else switch
   syn keyword haxeRepeat	while for do in
@@ -260,6 +271,10 @@ if g:vim_haxe_syntax_scheme_nr == 1
 
     HaxeHiLink haxeMeta                 StorageClass
     HaxeHiLink haxeMacro                Macro
+    HaxeHiLink haxeJsMacro              Macro
+    HaxeHiLink haxeFlashMacro           Macro
+    HaxeHiLink haxeCppMacro             Macro
+    HaxeHiLink haxeJavaMacro            Macro
     HaxeHiLink haxeCondIf               Macro
     HaxeHiLink haxeCondElse             Macro
     HaxeHiLink haxeCondElseIf           Macro
