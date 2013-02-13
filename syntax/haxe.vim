@@ -44,7 +44,7 @@ if g:vim_haxe_syntax_scheme_nr == 1
   syn keyword haxeExternal	using import extern package
 
   syn match haxeMeta            '@\w+'
-  syn match haxeMacro           '@:\(macro\|keep\|expose\)'
+  syn match haxeMacro           '@:\(macro\|keepSub\|autoBuild\|skipFields\|expose\|keep\)'
   syn match haxeConditional     '#\(if\|else\|elseif\|end\)'
   syn keyword haxeConditional	if else switch
   syn keyword haxeRepeat	while for do in
