@@ -356,14 +356,17 @@ endfunction
 " Sets the makeprg
 function! s:SetCompiler()
     let abspath = []
+    let escaped_wd = fnameescape(g:vaxe_working_directory)
+
     if exists("g:vaxe_nmml")
-        let build_command = "cd \"" . g:vaxe_working_directory . "\" && "
+        let build_command = "cd " . escaped_wd . " && "
                     \."nme test ". g:vaxe_nme_target . " 2>&1"
     else
         let vaxe_hxml = vaxe#CurrentBuild()
+        let escaped_hxml = fnameescape(vaxe_hxml)
         call s:Log("vaxe_hxml: " . vaxe_hxml)
-        let build_command = "cd \"" . g:vaxe_working_directory ."\" &&"
-                    \. "haxe \"" . vaxe_hxml . "\" 2>&1"
+        let build_command = "cd " . escaped_wd ." &&"
+                    \. "haxe " . escaped_hxml . " 2>&1"
         if filereadable(vaxe_hxml)
             let lines = readfile(vaxe_hxml)
             let abspath = filter(lines, 'v:val =~ "\\s*-D\\s*absolute_path"')
