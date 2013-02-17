@@ -68,7 +68,7 @@ endfunction
 function! vaxe#OpenHxml()
     let vaxe_hxml = vaxe#CurrentBuild()
     if filereadable(vaxe_hxml)
-        exe ':edit '.vaxe_hxml
+        exe ':edit '.fnameescape(vaxe_hxml)
     else
         echoerr 'build not readable: '.vaxe_hxml
     endif
