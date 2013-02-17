@@ -465,12 +465,25 @@ function! s:CurrentBlockHxml()
 
     let complete_string = complete[0]
     let parts = split(complete_string,"\n")
-    let parts = map(parts, 'substitute(v:val,"#.*","","")')
-    let parts = map(parts, 'substitute(v:val,"-cp\\s*\\(.*\\)$","-cp ''\\1''","")')
-    let parts = map(parts, 'substitute(v:val,"^\\s*-\\(cmd\\|xml\\|v\\)\\s*.*","","")')
-    let complete_string = join(parts,"\n")
+    let fixed = []
+
+    for p in parts
+        let p = substitute(p, '#.*','','') " strip comments
+        let p = substitute(p, '\s*$', '', '') " strip trailing ws
+
+        " strip cmd\xml\verbose directives
+        let p = substitute(p, '^\s*-\(cmd\|xml\|v\)\s*.*', '', '')
+
+        " fnameescape directives
+        let p = substitute(p, '^\s*\([a-z0-9\-]\+\)\s*\(.*\)$', '\=submatch(1)." ".fnameescape(submatch(2))', '')
+
+        call add(fixed, p)
+    endfor
+
+    let complete_string = join(fixed,"\n")
     return complete_string
 endfunction
+
 
 function! vaxe#CurrentBlockHxml()
     return s:CurrentBlockHxml()
