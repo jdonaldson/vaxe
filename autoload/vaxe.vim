@@ -335,7 +335,7 @@ function! vaxe#DefaultHxml(...)
     let g:vaxe_working_directory = fnamemodify(b:vaxe_hxml, ":p:h")
 
     " set quickfix to jump to working directory before populating list
-    autocmd QuickFixCmdPre <buffer>  exe 'cd ' . g:vaxe_working_directory
+    autocmd QuickFixCmdPre <buffer>  exe 'cd ' . fnameescape(g:vaxe_working_directory)
     autocmd QuickFixCmdPost <buffer>  cd -
 
     call s:SetCompiler()
