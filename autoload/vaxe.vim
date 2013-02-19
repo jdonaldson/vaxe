@@ -475,7 +475,7 @@ function! s:CurrentBlockHxml()
         let p = substitute(p, '^\s*-\(cmd\|xml\|v\)\s*.*', '', '')
 
         " fnameescape directives
-        let p = substitute(p, '^\s*\([a-z0-9\-]\+\)\s*\(.*\)$', '\=submatch(1)." ".fnameescape(submatch(2))', '')
+        let p = substitute(p, '^\s*\(--\?[a-z0-9\-]\+\)\s*\(.*\)$', '\=submatch(1)." ".fnameescape(submatch(2))', '')
 
         call add(fixed, p)
     endfor
