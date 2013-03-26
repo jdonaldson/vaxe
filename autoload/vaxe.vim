@@ -151,6 +151,10 @@ endfunction
 
 " A function suitable for omnifunc
 function! vaxe#HaxeComplete(findstart,base)
+   if !has("python")
+       echoerr 'Vaxe requires python for completions'
+       return 0
+   endif
    if a:findstart
        let line = getline('.')
        let period = strridx(line, '.')
