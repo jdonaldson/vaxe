@@ -548,7 +548,7 @@ function! s:DisplayCompletion(base)
     let tag = complete_output[1:4]
     if tag != "type" && tag != "list"
         let error = complete_output[:len(complete_output)-2]
-        cexpr error
+        cgete error
         return [{"word" : "", "abbr" : "Compiler error: ", "menu":error, "empty" : 1}]
     endif
     let output = []
