@@ -42,7 +42,7 @@ function! s:InputList(label, items)
       " 0 is the label.  If that is returned, just use the first item in the
       " list instead
       if sel == 0
-          sel = 1
+          let sel = 1
       endif
       return a:items[sel-1]
   endif
