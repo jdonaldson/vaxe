@@ -631,7 +631,7 @@ let s:nmml_targets = [ "android : Create Google Android applications"
             \, "mac -neko -64 : Build with Neko 64-bit instead of C++"
             \, "webos : Create HP webOS applications"
             \, "windows : Create Microsoft Windows applications"
-            \, "windows -neko : Build with Neko instead of C++" ]
+            \, "windows -neko : Build with Neko instead of C++" 
             \, "windows -neko -64 : Build with Neko 64-bit instead of C++" ]
 
   " -D : Specify a define to use when processing other commands
