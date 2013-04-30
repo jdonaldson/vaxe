@@ -625,12 +625,14 @@ let s:nmml_targets = [ "android : Create Google Android applications"
             \, "linux : Create Linux applications"
             \, "linux -64 : Compile for 64-bit instead of 32-bit"
             \, "linux -neko : Build with Neko instead of C++"
+            \, "linux -neko -64 : Build with Neko 64-bit instead of C++"
             \, "mac : Create Apple Mac OS X applications"
             \, "mac -neko : Build with Neko instead of C++"
+            \, "mac -neko -64 : Build with Neko 64-bit instead of C++"
             \, "webos : Create HP webOS applications"
             \, "windows : Create Microsoft Windows applications"
             \, "windows -neko : Build with Neko instead of C++" ]
-
+            \, "windows -neko -64 : Build with Neko 64-bit instead of C++" ]
 
   " -D : Specify a define to use when processing other commands
   " -debug : Use debug configuration instead of release
