@@ -58,7 +58,7 @@ function! vaxe#NmeUpdate(...)
     else
         let target = g:vaxe_nme_target
     endif
-    s:Sys("nme update ".target)
+    call s:Sys("nme update ".target)
 endfunction
 
 function! vaxe#NmeClean(...)
@@ -67,7 +67,7 @@ function! vaxe#NmeClean(...)
     else
         let target = g:vaxe_nme_target
     endif
-    s:Sys("nme clean ".target)
+    call s:Sys("nme clean ".target)
 endfunction
 
 
