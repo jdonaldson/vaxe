@@ -48,6 +48,29 @@ function! s:InputList(label, items)
   endif
 endfunction
 
+function! vaxe#NmeTargets(...)
+    return s:nmml_targets
+endfunction
+
+function! vaxe#NmeUpdate(...)
+    if (a:0)
+        let target = a:1
+    else
+        let target = g:vaxe_nme_target
+    endif
+    s:Sys("nme update ".target)
+endfunction
+
+function! vaxe#NmeClean(...)
+    if (a:0)
+        let target = a:1
+    else
+        let target = g:vaxe_nme_target
+    endif
+    s:Sys("nme clean ".target)
+endfunction
+
+
 " Utility logging function
 function! s:Log(str)
     if g:vaxe_logging
