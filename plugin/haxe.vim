@@ -8,6 +8,7 @@ command -nargs=? -complete=file ProjectHxml call vaxe#ProjectHxml(<q-args>)
 command -nargs=? -complete=file ProjectNmml call vaxe#ProjectNmml(<q-args>)
 command -nargs=? -complete=customlist,vaxe#NmeTargets NmeTarget call vaxe#NmeTarget(<q-args>)
 command -nargs=? -complete=customlist,vaxe#NmeTargets NmeClean call vaxe#NmeClean(<q-args>)
+command -nargs=? -complete=customlist,vaxe#NmeTargets NmeUpdate call vaxe#NmeUpdate(<q-args>)
 command -buffer HaxeCtags call vaxe#Ctags()
 
 autocmd FileType haxe setlocal commentstring=//%s
