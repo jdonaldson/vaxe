@@ -239,6 +239,7 @@ function! vaxe#ProjectNmml(...)
     call s:SetCompiler()
     return g:vaxe_nmml
 endfunction
+
 " A function that will search for valid hxml in the current working directory
 "  and allow the user to select the right candidate.  The selection will
 "  enable 'project mode' for vaxe.
@@ -285,6 +286,11 @@ function! vaxe#AutomaticHxml()
     endif
 endfunction
 
+"A simple system function that first changes directory to the current vaxe
+"working directory
+function! s:Sys(cmd)
+    call system("cd ".g:vaxe_working_directory." && ".a:cmd)
+endfunction
 
 " A function that sets the default hxml located in the parent directories of
 " the current buffer.
