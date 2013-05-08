@@ -304,6 +304,7 @@ function! vaxe#DefaultHxml(...)
         unlet b:vaxe_nmml
     endif
 
+    "First check if an hxml/nmml was passed explicitly
     if a:0 > 0 && a:1 != ''
         if match(a:1,'\.hxml$')
             let b:vaxe_hxml = a:1
@@ -311,6 +312,7 @@ function! vaxe#DefaultHxml(...)
             let b:vaxe_nmml = a:1
         endif
     else
+    "Now check if there's an nmml in the parent roots...
         let base_nmml = s:ParentSearch("*.nmml", fnamemodify(expand("%"),":p:h"))
 
         if (base_nmml != '')
