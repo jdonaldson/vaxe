@@ -103,7 +103,7 @@ NME Project                                      *vaxe-nme-mode*
                         directory, but will have an hxml extension.
 
 
-COMMANDS                                         *vaxe-commands*
+HAXE COMMANDS                                         *vaxe-commands*
 
 |DefaultHXML|           Call the |vaxe#DefaultHxml| function.  Accepts an
                         optional single argument that will specify the hxml or
@@ -113,15 +113,25 @@ COMMANDS                                         *vaxe-commands*
                         optional single argument that will specify the hxml to
                         use.
 
-|ProjectNmml|           Call the |vaxe#ProjectNmml| function.  Accepts an
-                        optional single argument that will specify the nmml to
                         use.
 
-|NmeTarget|             Call the |vaxe#NmeTarget| function.  It accepts an
-                        optional single argument that will specify the target
-                        to use.
-
 |HaxeCtags|             Call the |vaxe#Ctags| function
+
+NME COMMANDS                                    *vaxe-nme-commands*
+There's a number of nme-specific commands that closely match the command line
+counterparts.  NmeTarget,Clean,Update all accept an optional target argument.
+The argument can be tab-completed.  If a target is not specified with NmeTarget,
+one will be chosen from an input list.
+
+|ProjectNmml|           Call the |vaxe#ProjectNmml| function.  Accepts an
+                        optional single argument that will specify the nmml to
+
+|NmeTarget|             Call the |vaxe#NmeTarget| function.
+
+|NmeClean|              Call the |vaxe#NmeClean| function.
+
+|NmeUpdate|             Call the |vaxe#NmeUpdate| function.
+
 
 FUNCTIONS                                        *vaxe-functions*
 
@@ -176,9 +186,16 @@ FUNCTIONS                                        *vaxe-functions*
                             map <leader>pn : call vaxe#ProjectNmml()<CR>
                         <
 
-*vaxe#NmeTarget*
-                        Calling this function will select a new nme target to
+*vaxe#NmeTarget*        Calling this function will select a new nme target to
                         use for builds and completions.
+
+*vaxe#NmeUpdate*        Calling this function will update the boilerplate code
+                        for the current target, or the target specified by the
+                        (optional) argument.
+
+*vaxe#NmeClean*        Calling this function will clean the boilerplate code
+                        for the current target, or the target specified by the
+                        (optional) argument.
 
 *vaxe#ImportClass*      Calling this function on a given line will try to
                         import any classes that are given for the line.  E.g.
