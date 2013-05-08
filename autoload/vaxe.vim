@@ -316,7 +316,7 @@ function! vaxe#DefaultHxml(...)
                     \. " >> " . escape_base )
 
         " build the assets dependencies
-        call system(cdcmd . " nme build " . g:vaxe_nme_target)
+        call system(cdcmd . " nme update " . g:vaxe_nme_target)
 
         let g:vaxe_nmml = b:vaxe_nmml
         let b:vaxe_hxml = base_hxml
