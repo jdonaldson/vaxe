@@ -502,7 +502,10 @@ endfunction
 
 " The main completion function that invokes the compiler, etc.
 function! s:DisplayCompletion(base)
-    if  synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") == 'Comment'
+    " Ignore completions triggered over comments, or inside of constants
+    " (strings)
+    let syntax_type = synIDattr(synIDtrans(synID(line("."),col("."),1)),"name")
+    if syntax_type == 'Comment' || syntax_type == 'Constant'
         return []
     endif
 
