@@ -346,8 +346,12 @@ function! vaxe#DefaultHxml(...)
         call s:Sys(" nme display " . g:vaxe_nme_target
                     \. " >> " . escape_base )
 
-        " build the assets dependencies
-        call system(cdcmd . " nme update " . g:vaxe_nme_target)
+        let simple_target = split(g:vaxe_nme_target)[0]
+        if (!isdirectory(g:vaxe_working_directory."/bin/".simple_target))
+            " build the assets dependencies
+            call system(cdcmd . " nme update " . g:vaxe_nme_target)
+        else
+        endif
 
         let g:vaxe_nmml = b:vaxe_nmml
         let b:vaxe_hxml = base_hxml
