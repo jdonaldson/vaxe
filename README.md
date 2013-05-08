@@ -2,8 +2,9 @@ Vaxe is a vim bundle for [Haxe](http://www.haxe.org).  It provides support for
 syntax highlighting, indenting, compiling, and many more options.  vaxe has
 "vimdoc" documentation.  You can see the current vimdoc documentation
 [here](https://raw.github.com/jdonaldson/vaxe/master/doc/vaxe.txt), as well as
-through using `:help vaxe`  This page will describe some of the special or optional
-features that vaxe supports, in addition to recommended configuration settings.
+through using `:help vaxe` within vim.  This page will describe some of the
+special or optional features that vaxe supports, in addition to recommended
+configuration settings.
 
 ![Vaxe Screenshot](http://i.imgur.com/JFvze.png) (screenshot shows
 neocomplcache completion mode, vim-powerline, tagbar, and monokai color theme)
