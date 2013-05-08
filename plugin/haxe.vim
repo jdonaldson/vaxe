@@ -42,6 +42,6 @@ if !exists("g:vaxe_nme_target")
 endif
 
 if !exists("g:vaxe_nme_completion_target")
-    let g:vaxe_nme_completion  = "flash"
+    let g:vaxe_nme_completion_target  = "flash"
 endif
 
