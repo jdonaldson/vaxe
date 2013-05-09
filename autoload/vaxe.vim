@@ -54,7 +54,7 @@ endfunction
 
 function! vaxe#NmeUpdate(...)
     if (a:0 && a:1 != '')
-        let target = a:1
+        let target = split(a:1)[0]
     else
         let target = g:vaxe_nme_target
     endif
@@ -65,7 +65,7 @@ endfunction
 
 function! vaxe#NmeClean(...)
     if (a:0 && a:1 != '')
-        let target = a:1
+        let target = split(a:1)[0]
     else
         let target = g:vaxe_nme_target
     endif
@@ -549,6 +549,11 @@ endfunction
 
 " The main completion function that invokes the compiler, etc.
 function! s:DisplayCompletion(base)
+    " Ingore completions for traces
+    let linepart = strpart(getline('.'), 0, col('.'))
+    if match(linepart, "trace(") > 0
+        return []
+    endif
     " Ignore completions triggered over comments, or inside of constants
     " (strings)
     let syntax_type = synIDattr(synIDtrans(synID(line("."),col("."),1)),"name")
