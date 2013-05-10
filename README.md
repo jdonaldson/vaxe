@@ -17,7 +17,7 @@ as [pathogen][], [vundle][], or [vam][].
 1. Install pathogen using the [instructions][pathogen].
 2. Create/cd into `~/.vim/bundle/`
 3. Make a clone of the vaxe repo:
-    git clone https://github.com/jdonaldson/vaxe.git
+    `git clone https://github.com/jdonaldson/vaxe.git`
 
 To update:
 
@@ -28,8 +28,8 @@ To update:
 
 1. Install vundle using the [instructions][vundle]
 2. Add vaxe to your bundle list in `.vimrc` and re-source it:
-    Bundle 'jdonaldson/vaxe'
-3. Run :BundleInstall
+    `Bundle 'jdonaldson/vaxe'`
+3. Run `:BundleInstall`
 
 To update, just run `:BundleInstall!`
 
@@ -37,7 +37,7 @@ To update, just run `:BundleInstall!`
 
 1. Install VAM using the [instructions][vam]
 2. Add vaxe to the list of your activated bundles and re-source it:
-    call vam#ActivateAddons(['github:jdonaldson/vaxe'])
+    `call vam#ActivateAddons(['github:jdonaldson/vaxe'])`
 
 
 [pathogen]:https://github.com/tpope/vim-pathogen
@@ -72,7 +72,7 @@ window.
 ![Nme](http://i.imgur.com/rc8vLi2.png)
 
 Vaxe also supports [NME](http://www.nme.io) workflows.  If an Nmml project is found, Vaxe will
-use it for builds and completions. You can specify a default target if you only 
+use it for builds and completions. You can specify a default target if you only
 work with one platform.
 
 ## Omni-completions
@@ -129,6 +129,7 @@ useful for navigating a large code base.
 You'll need to define some patterns for ctags in order for it to work with
 Haxe.  Put these lines in your `.ctags` file in your home directory:
 
+```bash
     --langdef=haxe
     --langmap=haxe:.hx
     --regex-haxe=/^[ \t]*((@:?[a-zA-Z]+) )*((macro|private|public|static|inline) )*function[ \t]+([A-Za-z0-9_]+)/\5/f,function,functions/
@@ -138,6 +139,7 @@ Haxe.  Put these lines in your `.ctags` file in your home directory:
     --regex-haxe=/^[ \t]*((@:?[a-zA-Z]+) )*(extern[ \t]+)?interface[ \t]+([A-Za-z0-9_]+)/\4/i,interface/
     --regex-haxe=/^[ \t]*typedef[ \t]+([A-Za-z0-9_]+)/\1/t,typedef/
     --regex-haxe=/^[ \t]*enum[ \t]+([A-Za-z0-9_]+)/\1/e,enum/
+```
 
 Vaxe can generate a set of tags specific to the given build by running:
     vaxe#Ctags()
@@ -148,13 +150,17 @@ Other utilities, like vaxe#ImportClass() can then use this tag information in
 order to programmatically import classes.  E.g. calling vaxe#ImportClass on
 this line:
 
+```as3
     var l = new FastList<Int>();
+```
 
 will generate:
 
+```as3
     import haxe.FastList;
     ...
     var l = new FastList<Int>();
+```
 
 
 ## Tagbar
@@ -174,10 +180,14 @@ since it is slow for some languages.  However, since completions are built into
 the compiler with Haxe, they are very fast.  In order to enable automatic
 completions, you will need to add this to your `.vimrc`:
 
+```viml
+    let g:neocomplcache_enable_at_startup = 1
     if !exists('g:neocomplcache_omni_patterns')
         let g:neocomplcache_omni_patterns = {}
     endif
     let g:neocomplcache_omni_patterns.haxe = '\v([\]''"]|\w)(\.|\()'
+    let g:neocomplcache_enable_auto_select = 1
+```
 
 Once enabled, Neocomplcache will automatically invoke vaxe omnicompletion
 when you type a "." after a variable with fields, etc.
