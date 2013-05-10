@@ -4,9 +4,11 @@ import json
 
 # This is the python portion of the completion script.  Call it with the *name*
 # of the input vimscript variable, "complete_output_var".  This should contain
-# the output from the --display compiler directive.  The output is given in
-# "output_var", which is likewise the name of the vimscript variable to write.
-# This variable contains a dictionary formatted appropriately for an omnifunc.
+# the output from the --display compiler directive.  base_var is an optional
+# partial word to use for filtering completions.
+# The output is given in "output_var", which is likewise the name of the
+#vimscript variable to write. This variable contains a dictionary formatted
+# appropriately for an omnifunc.
 def complete(complete_output_var, output_var, base_var):
     complete_output = vim.eval(complete_output_var)
     base = vim.eval(base_var)
@@ -14,7 +16,7 @@ def complete(complete_output_var, output_var, base_var):
     completes = []
 
     # wrap in a tag to prevent parsing errors
-    root= ET.XML("<output>"+complete_output+"</output>")
+    root = ET.XML("<output>" + complete_output + "</output>")
 
     fields = root.findall("list/i")
     types = root.findall("type")
