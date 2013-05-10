@@ -465,6 +465,8 @@ function! vaxe#Ctags()
     if (len(paths) > 0)
         let fixed_paths = []
         for p in paths
+            " escape spaces in paths
+            let p = substitute(p, " ", "\\\\ ", "g")
             if p =~ "/std/$"
                 "this is the target std dir. We need to alter use it to add some
                 "global std utility paths, and avoid the target paths.
@@ -489,6 +491,7 @@ function! vaxe#Ctags()
         " get the hxml name so we can cd to its directory
         " TODO: this probably needs to be user specified
         let hxml_cd = fnamemodify(vaxe_hxml,":p:h")
+        let hxml_cd = substitute(hxml_cd, " ", "\\\\ ", "g")
         " call ctags recursively on the directories
         let hxml_sys = " cd " . hxml_cd . ";"
                     \." ctags --languages=haxe --exclude=_std -R " . pathstr. ";"
