@@ -118,6 +118,10 @@ function! vaxe#ImportClass()
        " get rid of the period at t*he end of the package declaration.
        let package = substitute(package, "\.$",'','g')
        let class = match_parts[3]
+       if search("^\\s*import\\s*\\(\\a\\+\\.\\)*".class, 's') > 0
+           echomsg "Class has already been imported"
+           return
+       endif
        let file_packages = {}
        let file_classes = {}
 
@@ -158,11 +162,6 @@ function! vaxe#ImportClass()
        let oldpos = getpos('.')
 
 
-       if search("^\\s*import\\s*".package."\.".class) > 0
-           let fixed = substitute(getline('.'), package.'\.', '','g')
-           echomsg "Class has already been imported"
-           return
-       endif
 
        let importline = search("^\\s*import")
        if importline == 0
