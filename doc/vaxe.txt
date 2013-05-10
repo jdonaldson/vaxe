@@ -117,6 +117,8 @@ HAXE COMMANDS                                         *vaxe-commands*
 
 |HaxeCtags|             Call the |vaxe#Ctags| function
 
+|ToggleVaxeLogging|     Turns vaxe logging on/off (logs to :message)
+
 NME COMMANDS                                    *vaxe-nme-commands*
 There's a number of nme-specific commands that closely match the command line
 counterparts.  NmeTarget,Clean,Update all accept an optional target argument.
