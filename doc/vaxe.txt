@@ -250,8 +250,17 @@ SETTINGS                                        *vaxe-settings*
 *g:vaxe_prevent_completion_bufwrite_events*
                         vaxe uses the compiler to make completions.  This can
                         happen frequently, and causes the buffer to be written.
-                        The default is "1" which prevents events.
+                        This can in turn interfere with other scripts that
+                        handle bufwrite events, triggering them excessively.
+                        The default is "1" which prevents events that are
+                        t.
 
+*g:vaxe_nme_test_on_build*
+                        By default vaxe will automatically run nme's test
+                        command, which will automatically try to run the code
+                        target (launching a browser, loading the app to the
+                        phone, etc.).  If you wish only to build, set this
+                        variable to 0.
 *g:vaxe_nme_target*
                         In |vaxe-nme-mode|, vaxe will use this target for
                         builds and to generate completions.  Check the results
