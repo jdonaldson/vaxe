@@ -40,6 +40,10 @@ if !exists('g:vaxe_logging')
     let g:vaxe_logging = 0
 endif
 
+if !exists("g:vaxe_nme_test_on_build")
+    let g:vaxe_nme_test_on_build = 1
+endif
+
 if !exists("g:vaxe_nme_target")
     let g:vaxe_nme_target  = ""
 endif
