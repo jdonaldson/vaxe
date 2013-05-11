@@ -23,30 +23,11 @@ function! s:ParentSearch(pattern, dir)
     return ''
 endfunction
 
+
 function! vaxe#SetWorkingDir()
     exe 'cd "'.g:vaxe_working_directory.'"'
 endfunction
 
-" Utility function that lets users select from a list.  If list is length 1,
-" then that item is returned.  Uses tlib#inpu#List if available.
-function! s:InputList(label, items)
-  if len(a:items) == 1
-    return a:items[0]
-  endif
-  if exists("g:loaded_tlib")
-      return tlib#input#List("s", a:label, a:items)
-  else
-      let items_list = map(range(len(a:items)),'(v:val+1)." ".a:items[v:val]')
-      let items_list = [a:label] + items_list
-      let sel = inputlist(items_list)
-      " 0 is the label.  If that is returned, just use the first item in the
-      " list instead
-      if sel == 0
-          let sel = 1
-      endif
-      return a:items[sel-1]
-  endif
-endfunction
 
 function! vaxe#NmeTargets(...)
     return s:nmml_targets
@@ -82,14 +63,6 @@ function! s:Log(str)
     endif
 endfunction
 
-" Utility function that returns a list of unique values in the list argument.
-function! s:UniqueList(items)
-    let d = {}
-    for v in a:items
-        let d[v] = 1
-    endfor
-    return keys(d)
-endfunction
 
 " Utility function to open the hxml file that vaxe is using.
 function! vaxe#OpenHxml()
@@ -151,7 +124,7 @@ function! vaxe#ImportClass()
 
            let package = packages[0]
            if len(packages) > 1
-               let package = s:InputList("Select package", packages)
+               let package = vutil#InputList("Select package", packages)
            endif
        endif
 
@@ -205,7 +178,7 @@ function! vaxe#NmeTarget(...)
     if a:0 > 0 && a:1 != ''
         let g:vaxe_nme_target = a:1
     else
-        let g:vaxe_nme_target = s:InputList("Select Target", s:nmml_targets)
+        let g:vaxe_nme_target = vutil#InputList("Select Target", s:nmml_targets)
         let g:vaxe_nme_target = split(g:vaxe_nme_target, ":")[0]
     endif
     call s:BuildNmmlHxml()
@@ -228,7 +201,7 @@ function! vaxe#ProjectNmml(...)
             echoerr "No nmml files found in current working directory"
             return
         else
-            let base_nmml = s:InputList("Select Nmml", nmmls)
+            let base_nmml = util#InputList("Select Nmml", nmmls)
         endif
 
         if base_nmml !~ "^//"
@@ -263,7 +236,7 @@ function! vaxe#ProjectHxml(...)
             echoerr "No hxml files found in current working directory"
             return
         else
-            let base_hxml = s:InputList("Select Hxml", hxmls)
+            let base_hxml = vutil#InputList("Select Hxml", hxmls)
         endif
 
         if base_hxml !~ "^//"
@@ -346,7 +319,7 @@ function! vaxe#DefaultHxml(...)
         endif
     else
     "Now check if there's an nmml in the parent roots...
-        let base_nmml = s:ParentSearch("*.nmml", fnamemodify(expand("%"),":p:h"))
+        let base_nmml = vutil#ParentSearch("*.nmml", fnamemodify(expand("%"),":p:h"))
 
         if (base_nmml != '')
             let base_nmml = split(base_nmml,'\n')[0]
@@ -454,7 +427,7 @@ function! vaxe#CompilerClassPaths()
        echoerr "The compiler exited with an error: ". paths[0]
        return []
    endif
-   let unique_paths = s:UniqueList(paths)
+   let unique_paths = vutil#UniqueList(paths)
    return unique_paths
 endfunction
 
