@@ -185,7 +185,7 @@ completions, you will need to add this to your `.vimrc`:
     if !exists('g:neocomplcache_omni_patterns')
         let g:neocomplcache_omni_patterns = {}
     endif
-    let g:neocomplcache_omni_patterns.haxe = '\v([\]''"]|\w)(\.|\()'
+    let g:neocomplcache_omni_patterns.haxe = '\v([\]''"]|\w)(\.|\()\w*'
     let g:neocomplcache_enable_auto_select = 1
 ```
 
