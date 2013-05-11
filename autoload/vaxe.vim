@@ -7,27 +7,9 @@ if has('win32') || has('win64')
     let s:slash = '\'
 endif
 
-" Utility function that recursively searches parent directories for 'dir'
-" until a file matching "pattern" is found.
-function! s:ParentSearch(pattern, dir)
-    let current_dir = fnamemodify(a:dir,":p:h")
-    let last_dir = ''
-    while(current_dir != last_dir)
-        let last_dir = current_dir
-        let match = globpath(current_dir, a:pattern)
-        if (match != '')
-            return match
-        endif
-        let current_dir = fnamemodify(current_dir, ":p:h:h")
-    endwhile
-    return ''
-endfunction
-
-
 function! vaxe#SetWorkingDir()
     exe 'cd "'.g:vaxe_working_directory.'"'
 endfunction
-
 
 function! vaxe#NmeTargets(...)
     return s:nmml_targets
@@ -55,14 +37,12 @@ function! vaxe#NmeClean(...)
     call s:Sys(command)
 endfunction
 
-
 " Utility logging function
 function! s:Log(str)
     if g:vaxe_logging
         echomsg a:str
     endif
 endfunction
-
 
 " Utility function to open the hxml file that vaxe is using.
 function! vaxe#OpenHxml()
@@ -88,7 +68,7 @@ function! vaxe#ImportClass()
    let match_parts = matchlist(getline('.'), '\(\(\l\+\.\)\+\)*\(\u\w*\)')
    if len(match_parts)
        let package = match_parts[1]
-       " get rid of the period at t*he end of the package declaration.
+       " get rid of the period at the end of the package declaration.
        let package = substitute(package, "\.$",'','g')
        let class = match_parts[3]
        if search("^\\s*import\\s*\\(\\a\\+\\.\\)*".class, 's') > 0
@@ -252,8 +232,9 @@ function! vaxe#ProjectHxml(...)
     return g:vaxe_hxml
 endfunction
 
+
 " A function that runs on a hx filetype load.  It will set the default hxml
-" path if the project hxml is not set.
+" path if the project hxml or nmml are not set.
 function! vaxe#AutomaticHxml()
     if exists ("g:vaxe_nmml")
         call vaxe#ProjectNmml(g:vaxe_nmml)
@@ -345,6 +326,7 @@ function! vaxe#DefaultHxml(...)
     if !filereadable(b:vaxe_hxml)
         if b:vaxe_hxml == expand("%")
             " hxml has been opened, but not written yet
+            " Set an autocmd to set the hxml after the buffer is written
             augroup temp_hxml
                 autocmd BufWritePost <buffer> call vaxe#DefaultHxml(expand("%"))| autocmd! temp_hxml
             augroup END
@@ -358,6 +340,8 @@ function! vaxe#DefaultHxml(...)
     let g:vaxe_working_directory = fnamemodify(b:vaxe_hxml, ":p:h")
 
     " set quickfix to jump to working directory before populating list
+    " this is necessary since use may cd to different directories during
+    " session
     autocmd QuickFixCmdPre <buffer>  exe 'cd ' . fnameescape(g:vaxe_working_directory)
     autocmd QuickFixCmdPost <buffer>  cd -
 
@@ -382,8 +366,12 @@ function! s:SetCompiler()
     let escaped_wd = fnameescape(g:vaxe_working_directory)
 
     if exists("g:vaxe_nmml")
+        let build_verb = "build"
+        if g:vaxe_nme_test_on_build
+            let build_verb = "test"
+        endif
         let build_command = "cd " . escaped_wd . " && "
-                    \."nme test ". g:vaxe_nme_target . " 2>&1"
+                    \."nme ".build_verb." ". g:vaxe_nme_target . " 2>&1"
     else
         let vaxe_hxml = vaxe#CurrentBuild()
         let escaped_hxml = fnameescape(vaxe_hxml)
