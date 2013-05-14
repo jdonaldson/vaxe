@@ -104,7 +104,7 @@ function! vaxe#ImportClass()
 
            let package = packages[0]
            if len(packages) > 1
-               let package = vutil#InputList("Select package", packages)
+               let package = vaxe#util#InputList("Select package", packages)
            endif
        endif
 
@@ -113,8 +113,6 @@ function! vaxe#ImportClass()
            return
        endif
        let oldpos = getpos('.')
-
-
 
        let importline = search("^\\s*import")
        if importline == 0
@@ -158,7 +156,7 @@ function! vaxe#NmeTarget(...)
     if a:0 > 0 && a:1 != ''
         let g:vaxe_nme_target = a:1
     else
-        let g:vaxe_nme_target = vutil#InputList("Select Target", s:nmml_targets)
+        let g:vaxe_nme_target = vaxe#util#InputList("Select Target", s:nmml_targets)
         let g:vaxe_nme_target = split(g:vaxe_nme_target, ":")[0]
     endif
     call s:BuildNmmlHxml()
@@ -216,7 +214,7 @@ function! vaxe#ProjectHxml(...)
             echoerr "No hxml files found in current working directory"
             return
         else
-            let base_hxml = vutil#InputList("Select Hxml", hxmls)
+            let base_hxml = vaxe#util#InputList("Select Hxml", hxmls)
         endif
 
         if base_hxml !~ "^//"
@@ -300,7 +298,7 @@ function! vaxe#DefaultHxml(...)
         endif
     else
     "Now check if there's an nmml in the parent roots...
-        let base_nmml = vutil#ParentSearch("*.nmml", fnamemodify(expand("%"),":p:h"))
+        let base_nmml = vaxe#util#ParentSearch("*.nmml", fnamemodify(expand("%"),":p:h"))
 
         if (base_nmml != '')
             let base_nmml = split(base_nmml,'\n')[0]
@@ -415,7 +413,7 @@ function! vaxe#CompilerClassPaths()
        echoerr "The compiler exited with an error: ". paths[0]
        return []
    endif
-   let unique_paths = vutil#UniqueList(paths)
+   let unique_paths = vaxe#util#UniqueList(paths)
    return unique_paths
 endfunction
 

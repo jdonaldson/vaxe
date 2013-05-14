@@ -2,7 +2,7 @@
 
 " Utility function that recursively searches parent directories for 'dir'
 " until a file matching "pattern" is found.
-function! vutil#ParentSearch(pattern, dir)
+function! vaxe#util#ParentSearch(pattern, dir)
     let current_dir = fnamemodify(a:dir,":p:h")
     let last_dir = ''
     while(current_dir != last_dir)
@@ -19,7 +19,7 @@ endfunction
 
 " Utility function that lets users select from a list.  If list is length 1,
 " then that item is returned.  Uses tlib#inpu#List if available.
-function! vutil#InputList(label, items)
+function! vaxe#util#InputList(label, items)
   if len(a:items) == 1
     return a:items[0]
   endif
@@ -39,10 +39,11 @@ function! vutil#InputList(label, items)
 endfunction
 
 " Utility function that returns a list of unique values in the list argument.
-function! vutil#UniqueList(items)
+function! vaxe#util#UniqueList(items)
     let d = {}
     for v in a:items
         let d[v] = 1
     endfor
     return keys(d)
 endfunction
+
