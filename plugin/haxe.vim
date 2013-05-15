@@ -7,9 +7,9 @@ command -nargs=? -complete=file DefaultHxml call vaxe#DefaultHxml(<q-args>)
 command -nargs=? -complete=file ProjectHxml call vaxe#ProjectHxml(<q-args>)
 command -nargs=? -complete=file ProjectNmml call vaxe#ProjectNmml(<q-args>)
 command ToggleVaxeLogging let g:vaxe_logging = !g:vaxe_logging
-command -nargs=? -complete=customlist,vaxe#NmeTargets NmeTarget call vaxe#NmeTarget(<q-args>)
-command -nargs=? -complete=customlist,vaxe#NmeTargets NmeClean call vaxe#NmeClean(<q-args>)
-command -nargs=? -complete=customlist,vaxe#NmeTargets NmeUpdate call vaxe#NmeUpdate(<q-args>)
+command -nargs=? -complete=customlist,vaxe#nme#Targets NmeTarget call vaxe#nme#Target(<q-args>)
+command -nargs=? -complete=customlist,vaxe#nme#Targets NmeClean call vaxe#nme#Clean(<q-args>)
+command -nargs=? -complete=customlist,vaxe#nme#Targets NmeUpdate call vaxe#nme#Update(<q-args>)
 command -buffer HaxeCtags call vaxe#Ctags()
 
 autocmd FileType haxe setlocal commentstring=//%s
