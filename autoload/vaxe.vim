@@ -426,6 +426,13 @@ function! vaxe#CurrentBlockHxml()
     return s:CurrentBlockHxml()
 endfunction
 
+function! s:Toplevel(base)
+    let matches = readfile(expand("%:p"))
+    call map(matches, 'matchstr(v:val,"\\v\\s*((\\@\\w*\\s*)*class|import|enum|typedef)\\s*\\zs\\u\\w+")')
+    call filter(matches, 'v:val ~= "' . a:base . '"')
+    return matches
+endfunction
+
 " Returns hxml that is suitable for making a --display completion call
 function! s:CompletionHxml(file_name, byte_count)
     " the stripped down haxe compiler command (no -cmd, etc.)
