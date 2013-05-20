@@ -11,8 +11,6 @@ function! vaxe#SetWorkingDir()
     exe 'cd "'.g:vaxe_working_directory.'"'
 endfunction
 
-
-
 " Utility logging function
 function! s:Log(str)
     if g:vaxe_logging
