@@ -218,7 +218,7 @@ function! vaxe#DefaultHxml(...)
     if a:0 > 0 && a:1 != ''
         if match(a:1,'\.hxml$')
             let b:vaxe_hxml = a:1
-        elseif match(a:1,'\.nmml\$' )
+        elseif match(a:1,'\.nmml$' )
             let b:vaxe_nmml = a:1
         endif
     else
