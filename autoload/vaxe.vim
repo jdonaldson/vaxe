@@ -522,43 +522,44 @@ function! s:DisplayCompletion(base)
 
     " There was no compiler completion.  Complete a Type
     " Note, this is currently unreachable code
-    if len(output) == 0 && 0
-        let classes = []
-        let line2col =getline('.')[0:col('.')]
-        let partial_word = ''
-        let obj = copy(l:)
-
-        " shortcut function that matches a regex and sets a partial word
-        " variable
-        function! obj.EML(regex)
-            let matches = matchlist(self.line2col, a:regex)
-            if len(matches) > 0
-               let self.partial_word = matches[1]
-            end
-            return len(matches)
-        endfunction
-        if obj.EML("new\\s*\\(\w*\\)$")
-            let classes = filter(taglist('^'.partial_word),
-                        \'v:val["kind"] == "c"')
-            "echomsg "constructor"
-        elseif obj.EML(":\\s*\\(\w*\\)$")
-            let classes = filter(taglist('^'.partial_word),
-                        \'v:val["kind"] == "c" '
-                        \.'|| v:val["kind"] == "t" '
-                        \.'|| v:val["kind"] == "i"')
-        elseif obj.EML("import\\s*\\(\w*\\)$")
-            let classes = filter(taglist('^'.partial_word),
-                        \'v:val["kind"] == "p"')
-        else
-            "echomsg partial_word
-            "echomsg "***".line2col."***"
-        endif
-
-        let output = map(classes,
-                    \'{"word":substitute(v:val["name"],"^".partial_word,"","g")'
-                    \.', "abbr":v:val["name"]'
-                    \.', "menu":v:val["filename"]}')
-    endif
     return output
+endfunction
+
+function! s:OldToplevel()
+    let classes = []
+    let line2col =getline('.')[0:col('.')]
+    let partial_word = ''
+    let obj = copy(l:)
+
+    " shortcut function that matches a regex and sets a partial word
+    " variable
+    function! obj.EML(regex)
+        let matches = matchlist(self.line2col, a:regex)
+        if len(matches) > 0
+            let self.partial_word = matches[1]
+        end
+        return len(matches)
+    endfunction
+    if obj.EML("new\\s*\\(\w*\\)$")
+        let classes = filter(taglist('^'.partial_word),
+                    \'v:val["kind"] == "c"')
+        "echomsg "constructor"
+    elseif obj.EML(":\\s*\\(\w*\\)$")
+        let classes = filter(taglist('^'.partial_word),
+                    \'v:val["kind"] == "c" '
+                    \.'|| v:val["kind"] == "t" '
+                    \.'|| v:val["kind"] == "i"')
+    elseif obj.EML("import\\s*\\(\w*\\)$")
+        let classes = filter(taglist('^'.partial_word),
+                    \'v:val["kind"] == "p"')
+    else
+        "echomsg partial_word
+        "echomsg "***".line2col."***"
+    endif
+
+    let output = map(classes,
+                \'{"word":substitute(v:val["name"],"^".partial_word,"","g")'
+                \.', "abbr":v:val["name"]'
+                \.', "menu":v:val["filename"]}')
 endfunction
 
