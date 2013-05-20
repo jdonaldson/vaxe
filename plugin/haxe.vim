@@ -25,6 +25,15 @@ let g:tagbar_type_haxe = {
         \ ]
     \ }
 
+if !exists("g:vaxe_use_completion_server")
+    let g:vaxe_use_completion_server = 1
+endif
+
+if !exists("g:vaxe_completion_server_port")
+    " 'hx' in hex code!  This shouldn't be commonly used...
+    let g:vaxe_completion_server_port = 6878
+endif
+
 " prevent buffer write events triggered by completions
 if !exists("g:vaxe_prevent_completion_bufwrite_events")
     let g:vaxe_prevent_completion_bufwrite_events = 1
