@@ -25,13 +25,30 @@ let g:tagbar_type_haxe = {
         \ ]
     \ }
 
-if !exists("g:vaxe_use_completion_server")
-    let g:vaxe_use_completion_server = 1
+if !exists("g:vaxe_cache_server_enable")
+    let g:vaxe_cache_server_enable = 0
 endif
 
-if !exists("g:vaxe_completion_server_port")
-    " 'hx' in hex code!  This shouldn't be commonly used...
-    let g:vaxe_completion_server_port = 6878
+
+if !exists("g:vaxe_cache_server_port")
+    " 'hx' in hex code! AFAICT this isn't a commonly used port...
+    let g:vaxe_cache_server_port = 6878
+endif
+
+if !exists("g:vaxe_cache_server_autostart")
+    let g:vaxe_cache_server_autostart = 1
+
+    if g:vaxe_cache_server_enable
+        if has('unix')
+            call system("haxe --wait " . g:vaxe_cache_server_port . "&")
+            " let g:vaxe_cache_server_pid = system("echo $!")
+        " elseif has('win32') || has('win64')
+        "     call system("start haxe --wait " . g:vaxe_cache_server_port)
+        else
+            echoerr "unsupported platform, send a note to the maintainer about adding support"
+        end
+        autocmd VimLeave call vaxe#KillCacheServer()
+    endif
 endif
 
 " prevent buffer write events triggered by completions
