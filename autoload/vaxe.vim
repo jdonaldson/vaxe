@@ -28,6 +28,13 @@ function! vaxe#OpenHxml()
     endif
 endfunction
 
+function vaxe#KillCacheServer()
+    if has('unix')
+        system("kill ". g:vaxe_cache_server_pid)
+        unlet g:vaxe_cache_server_pid
+    endif
+endfunction
+
 " Utility function that tries to 'do the right thing' in order to import a
 " given class. Call it on a given line in order to import a class definition
 " at that line.  E.g.
@@ -231,6 +238,7 @@ function! vaxe#DefaultHxml(...)
         if base_hxml !~ "^/"
             let base_hxml = getcwd() . s:slash . base_hxml
         endif
+
         if (base_nmml != '')
             if base_nmml !~ "^/"
                 let base_nmml = getcwd() . s:slash . base_nmml
@@ -424,17 +432,13 @@ function! vaxe#CurrentBlockHxml()
     return s:CurrentBlockHxml()
 endfunction
 
-function! s:Toplevel(base)
-    let matches = readfile(expand("%:p"))
-    call map(matches, 'matchstr(v:val,"\\v\\s*((\\@\\w*\\s*)*class|import|enum|typedef)\\s*\\zs\\u\\w+")')
-    call filter(matches, 'v:val ~= "' . a:base . '"')
-    return matches
-endfunction
-
 " Returns hxml that is suitable for making a --display completion call
 function! s:CompletionHxml(file_name, byte_count)
     " the stripped down haxe compiler command (no -cmd, etc.)
     let stripped = s:CurrentBlockHxml()
+    if (g:vaxe_cache_server_enable)
+        let stripped = stripped . "\n--connect " . g:vaxe_cache_server_port
+    endif
     return stripped."\n--display ".fnameescape(a:file_name).'@'.a:byte_count
 endfunction
 
@@ -478,6 +482,7 @@ function! s:DisplayCompletion(base)
     if !filereadable(vaxe_hxml)
        return [{"word" : "", "abbr" : "Compiler error: ", "menu": "No valid build file", "empty" : 1}]
     endif
+
     let offset = line2byte('.') + col('.')  -2
     " handle the BOM
     if &bomb
