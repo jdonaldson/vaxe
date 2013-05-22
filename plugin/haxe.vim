@@ -5,7 +5,7 @@ let g:loaded_vaxe_plugin = 1
 
 command -nargs=? -complete=file DefaultHxml call vaxe#DefaultHxml(<q-args>)
 command -nargs=? -complete=file ProjectHxml call vaxe#ProjectHxml(<q-args>)
-command -nargs=? -complete=file ProjectNmml call vaxe#ProjectNmml(<q-args>)
+command -nargs=? -complete=file ProjectNmml call vaxe#nme#ProjectNmml(<q-args>)
 command ToggleVaxeLogging let g:vaxe_logging = !g:vaxe_logging
 command -nargs=? -complete=customlist,vaxe#nme#Targets NmeTarget call vaxe#nme#Target(<q-args>)
 command -nargs=? -complete=customlist,vaxe#nme#Targets NmeClean call vaxe#nme#Clean(<q-args>)
@@ -28,7 +28,6 @@ let g:tagbar_type_haxe = {
 if !exists("g:vaxe_cache_server_enable")
     let g:vaxe_cache_server_enable = 0
 endif
-
 
 if !exists("g:vaxe_cache_server_port")
     " 'hx' in hex code! AFAICT this isn't a commonly used port...
