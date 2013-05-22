@@ -14,6 +14,38 @@ function! vaxe#nme#Update(...)
     call s:Sys(command)
 endfunction
 
+function! vaxe#nme#ProjectNmml(...)
+    if exists('g:vaxe_nmml')
+        unlet g:vaxe_nmml
+    endif
+    let g:vaxe_working_directory = getcwd()
+
+    if a:0 > 0 && a:1 != ''
+        let g:vaxe_nmml = expand(a:1,':p')
+    else
+        let nmmls = split(glob("**/*.nmml"),'\n')
+
+        if len(nmmls) == 0
+            echoerr "No nmml files found in current working directory"
+            return
+        else
+            let base_nmml = vaxe#util#InputList("Select Nmml", nmmls)
+        endif
+
+        if base_nmml !~ "^//"
+            let base_nmml = getcwd() . '/' . base_nmml
+        endif
+
+        let g:vaxe_nmml = base_nmml
+    endif
+    if !filereadable(g:vaxe_nmml)
+        echoerr "Project nmml file not valid, please create one."
+        return
+    endif
+    call vaxe#SetCompiler()
+    return g:vaxe_nmml
+endfunction
+
 function! vaxe#nme#Clean(...)
     if (a:0 && a:1 != '')
         let target = split(a:1)[0]

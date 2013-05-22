@@ -2,10 +2,6 @@
 " Utility variable that stores the directory that this script resides in
 let s:plugin_path = escape(expand('<sfile>:p:h'), '\')
 
-let s:slash = '/'
-if has('win32') || has('win64')
-    let s:slash = '\'
-endif
 
 function! vaxe#SetWorkingDir()
     exe 'cd "'.g:vaxe_working_directory.'"'
@@ -127,37 +123,6 @@ function! vaxe#HaxeComplete(findstart,base)
    endif
 endfunction
 
-function! vaxe#ProjectNmml(...)
-    if exists('g:vaxe_nmml')
-        unlet g:vaxe_nmml
-    endif
-    let g:vaxe_working_directory = getcwd()
-
-    if a:0 > 0 && a:1 != ''
-        let g:vaxe_nmml = expand(a:1,':p')
-    else
-        let nmmls = split(glob("**/*.nmml"),'\n')
-
-        if len(nmmls) == 0
-            echoerr "No nmml files found in current working directory"
-            return
-        else
-            let base_nmml = util#InputList("Select Nmml", nmmls)
-        endif
-
-        if base_nmml !~ "^//"
-            let base_nmml = getcwd() . s:slash . base_nmml
-        endif
-
-        let g:vaxe_nmml = base_nmml
-    endif
-    if !filereadable(g:vaxe_nmml)
-        echoerr "Project nmml file not valid, please create one."
-        return
-    endif
-    call vaxe#SetCompiler()
-    return g:vaxe_nmml
-endfunction
 
 " A function that will search for valid hxml in the current working directory
 "  and allow the user to select the right candidate.  The selection will
@@ -181,7 +146,7 @@ function! vaxe#ProjectHxml(...)
         endif
 
         if base_hxml !~ "^//"
-            let base_hxml = getcwd() . s:slash . base_hxml
+            let base_hxml = getcwd() . '/' . base_hxml
         endif
         let g:vaxe_hxml = base_hxml
     endif
@@ -198,7 +163,7 @@ endfunction
 " path if the project hxml or nmml are not set.
 function! vaxe#AutomaticHxml()
     if exists ("g:vaxe_nmml")
-        call vaxe#ProjectNmml(g:vaxe_nmml)
+        call vaxe#nme#ProjectNmml(g:vaxe_nmml)
     elseif exists('g:vaxe_hxml')
         call vaxe#ProjectHxml(g:vaxe_hxml)
     else
@@ -236,12 +201,12 @@ function! vaxe#DefaultHxml(...)
 
         let base_hxml = findfile(g:vaxe_prefer_hxml, ".;")
         if base_hxml !~ "^/"
-            let base_hxml = getcwd() . s:slash . base_hxml
+            let base_hxml = getcwd() . '/' . base_hxml
         endif
 
         if (base_nmml != '')
             if base_nmml !~ "^/"
-                let base_nmml = getcwd() . s:slash . base_nmml
+                let base_nmml = getcwd() . '/' . base_nmml
             endif
             let b:vaxe_nmml = base_nmml
         endif
