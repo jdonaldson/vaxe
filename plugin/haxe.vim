@@ -37,17 +37,6 @@ endif
 if !exists("g:vaxe_cache_server_autostart")
     let g:vaxe_cache_server_autostart = 1
 
-    if g:vaxe_cache_server_enable
-        if has('unix')
-            call system("haxe --wait " . g:vaxe_cache_server_port . "&")
-            " let g:vaxe_cache_server_pid = system("echo $!")
-        " elseif has('win32') || has('win64')
-        "     call system("start haxe --wait " . g:vaxe_cache_server_port)
-        else
-            echoerr "unsupported platform, send a note to the maintainer about adding support"
-        end
-        autocmd VimLeave call vaxe#KillCacheServer()
-    endif
 endif
 
 " prevent buffer write events triggered by completions
