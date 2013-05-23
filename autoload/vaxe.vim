@@ -402,7 +402,11 @@ function! s:CompletionHxml(file_name, byte_count)
     " the stripped down haxe compiler command (no -cmd, etc.)
     let stripped = s:CurrentBlockHxml()
     if (g:vaxe_cache_server_enable)
-        let stripped = stripped . "\n--connect " . g:vaxe_cache_server_port
+        " let stripped \. stripped " the stripped hxml
+        let stripped = "--cwd " . fnameescape(g:vaxe_working_directory)
+                    \. " \n--connect "
+                    \.  g:vaxe_cache_server_port
+                    \. " \n" . stripped
     endif
     return stripped."\n--display ".fnameescape(a:file_name).'@'.a:byte_count
 endfunction
