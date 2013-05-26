@@ -24,7 +24,8 @@ function! vaxe#OpenHxml()
     endif
 endfunction
 
-function vaxe#KillCacheServer()
+
+function! vaxe#KillCacheServer()
     if has('unix')
         system("kill ". g:vaxe_cache_server_pid)
         unlet g:vaxe_cache_server_pid
@@ -411,8 +412,7 @@ function! s:CompletionHxml(file_name, byte_count)
     return stripped."\n--display ".fnameescape(a:file_name).'@'.a:byte_count
 endfunction
 
-" The main completion function that invokes the compiler, etc.
-function! s:DisplayCompletion(base)
+function! s:RawCompletion(base)
     " Ingore completions for traces
     let linepart = strpart(getline('.'), 0, col('.'))
     if match(linepart, "trace($") > 0
@@ -466,8 +466,13 @@ function! s:DisplayCompletion(base)
     let hxml_sys = hxml_cd." haxe ".complete_args."\ 2>&1"
     let hxml_sys =  join(split(hxml_sys,"\n")," ")
     call s:Log(hxml_sys)
-
     let complete_output = system(hxml_sys)
+    return complete_output
+endfunction
+
+" The main completion function that invokes the compiler, etc.
+function! s:DisplayCompletion(base)
+    let complete_output = s:RawCompletion(a:base)
     " quick and dirty check for error
     let tag = complete_output[1:4]
     if tag != "type" && tag != "list"
