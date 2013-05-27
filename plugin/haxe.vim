@@ -29,8 +29,12 @@ if !exists("g:vaxe_cache_server_enable")
     let g:vaxe_cache_server_enable = 0
 endif
 
-if !exists("g:vaxe_alter_completion_signature")
-    let g:vaxe_alter_completion_signature = 1
+if !exists("g:vaxe_completion_alter_signature")
+    let g:vaxe_completion_alter_signature = 1
+endif
+
+if !exists("g:vaxe_completion_collapse_overload")
+    let g:vaxe_completion_collapse_overload = 0
 endif
 
 if !exists("g:vaxe_haxe_version")

@@ -265,7 +265,7 @@ SETTINGS                                        *vaxe-settings*
                         build file.  It will override the |vaxe-default-mode|
                         setting if present.
 
-*g:vaxe_alter_completion_signature*
+*g:vaxe_completion_alter_signature*
                         Changes the method signatures in autocompletions to a 
                         syntax form, instead of a type signature. This is
                         enabled by default
