@@ -491,8 +491,10 @@ function! s:DisplayCompletion(base)
 
     " execute the python completion script in autoload/vaxe.py
     exe 'pyfile '.s:plugin_path.'/vaxe.py'
+    echomsg g:vaxe_completion_collapse_overload
     py complete('complete_output','output'
-                \, 'a:base', 'g:vaxe_alter_completion_signature')
+                \, 'a:base', 'g:vaxe_completion_alter_signature'
+                \, 'g:vaxe_completion_collapse_overload')
 
     for o in output
         let tag = ''
