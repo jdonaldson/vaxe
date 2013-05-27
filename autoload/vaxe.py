@@ -10,9 +10,11 @@ import json
 # vimscript variable to write. This variable contains a dictionary formatted
 # appropriately for an omnifunc.  "base_var" contains an optional partial word
 # to filter for
-def complete(complete_output_var, output_var, base_var, alter_sig=True):
+def complete(complete_output_var, output_var, base_var , alter_var, collapse_var):
     complete_output = vim.eval(complete_output_var)
     base = vim.eval(base_var)
+    alter_sig = vim.eval(alter_var) != '0'
+    collapse_overload = vim.eval(collapse_var) != '0'
     if complete_output is None: complete_output = ''
     completes = []
 
@@ -58,9 +60,23 @@ def complete(complete_output_var, output_var, base_var, alter_sig=True):
         if alter_sig:
             abbr = alter_signature(abbr)
         completes= [{'word':word,'info':info, 'abbr':abbr, 'dup':1}]
-        print completes
 
     completes = [c for c in completes if re.search("^" + base, c['word'])]
+
+    if collapse_overload:
+        dict_complete = dict()
+        def complete_exists(c):
+            if c in dict_complete:
+                dict_complete[c] += 1
+                return True
+            else:
+                dict_complete[c] = 1
+                return False
+        completes = [c for c in completes if not complete_exists(c['abbr'])]
+        for c in completes:
+            if dict_complete[c['abbr']] > 1:
+                c['menu'] = "@:overload " + c['menu']
+
     vim.command("let " + output_var + " = " + json.dumps(completes))
 
 def alter_signature(sig):
@@ -70,7 +86,6 @@ def alter_signature(sig):
     for i in xrange(len(sig)):
         c = sig[i]
         if c == "(":
-            print c
             paren += 1
             final_expr += re.sub('->',",", last_string)
             last_string = c
@@ -83,7 +98,7 @@ def alter_signature(sig):
         else:
             last_string += c
 
-    final_expr = re.sub('\s*->\s*', ",", last_string)
+    final_expr = final_expr + re.sub('\s*->\s*', ",", last_string)
     parts = final_expr.split(',')
     ret_val = parts.pop()
     if ret_val == "Void":
