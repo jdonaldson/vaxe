@@ -478,14 +478,16 @@ function! s:DisplayCompletion(base)
     if tag != "type" && tag != "list"
         let error = complete_output[:len(complete_output)-2]
         cgete error
-        return [{"word" : "", "abbr" : "Compiler error: ", "menu":error, "empty" : 1}]
+        return [{"word" : "", "abbr" : "Compiler error: "
+                    \, "menu":error, "empty" : 1}]
     endif
     let output = []
     call s:Log(complete_output)
 
     " execute the python completion script in autoload/vaxe.py
     exe 'pyfile '.s:plugin_path.'/vaxe.py'
-    py complete('complete_output','output', 'a:base')
+    py complete('complete_output','output'
+                \, 'a:base', 'g:vaxe_alter_completion_signature')
 
     for o in output
         let tag = ''

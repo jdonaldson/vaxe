@@ -28,6 +28,11 @@ let g:tagbar_type_haxe = {
 if !exists("g:vaxe_cache_server_enable")
     let g:vaxe_cache_server_enable = 0
 endif
+
+if !exists("g:vaxe_alter_completion_signature")
+    let g:vaxe_alter_completion_signature = 1
+endif
+
 if !exists("g:vaxe_haxe_version")
     let g:vaxe_haxe_version = 2
 endif

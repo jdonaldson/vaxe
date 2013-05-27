@@ -265,6 +265,17 @@ SETTINGS                                        *vaxe-settings*
                         build file.  It will override the |vaxe-default-mode|
                         setting if present.
 
+*g:vaxe_alter_completion_signature*
+                        Changes the method signatures in autocompletions to a 
+                        syntax form, instead of a type signature. This is
+                        enabled by default
+>
+    # type signature:
+    some_method [f] arg1 : Int -> arg2 : String -> Bool
+    # syntax form:
+    some_method [f] (arg1 : Int, arg2 : String) : Bool
+<
+
 *g:vaxe_prevent_completion_bufwrite_events*
                         vaxe uses the compiler to make completions.  This can
                         happen frequently, and causes the buffer to be written.

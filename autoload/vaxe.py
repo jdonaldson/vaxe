@@ -10,7 +10,7 @@ import json
 # vimscript variable to write. This variable contains a dictionary formatted
 # appropriately for an omnifunc.  "base_var" contains an optional partial word
 # to filter for
-def complete(complete_output_var, output_var, base_var):
+def complete(complete_output_var, output_var, base_var, alter_sig=True):
     complete_output = vim.eval(complete_output_var)
     base = vim.eval(base_var)
     if complete_output is None: complete_output = ''
@@ -40,7 +40,12 @@ def complete(complete_output_var, output_var, base_var):
             abbr = word
             kind = 'v'
             if  menu == '': kind = 'm'
-            elif re.search("\->", menu): kind = 'f' # if it has a ->
+            elif re.search("\->", menu):
+                kind = 'f' # if it has a ->
+                if alter_sig:
+                    menu = alter_signature(menu)
+                word += "("
+
             return {  'word': word, 'info': info, 'kind': kind
                     ,'menu': menu, 'abbr': abbr, 'dup':1 }
         completes = map(fieldxml2completion, fields)
@@ -50,8 +55,45 @@ def complete(complete_output_var, output_var, base_var):
         word = ' '
         info = [h.unescape(otype.text).strip()]
         abbr = info[0]
+        if alter_sig:
+            abbr = alter_signature(abbr)
         completes= [{'word':word,'info':info, 'abbr':abbr, 'dup':1}]
+        print completes
 
     completes = [c for c in completes if re.search("^" + base, c['word'])]
     vim.command("let " + output_var + " = " + json.dumps(completes))
+
+def alter_signature(sig):
+    paren = 0
+    last_string = ''
+    final_expr = ''
+    for i in xrange(len(sig)):
+        c = sig[i]
+        if c == "(":
+            print c
+            paren += 1
+            final_expr += re.sub('->',",", last_string)
+            last_string = c
+        elif c == ")":
+            last_string += c
+            paren -=1
+            if paren == 0:
+                final_expr += last_string
+                last_string = ''
+        else:
+            last_string += c
+
+    final_expr = re.sub('\s*->\s*', ",", last_string)
+    parts = final_expr.split(',')
+    ret_val = parts.pop()
+    if ret_val == "Void":
+        ret_val = ''
+    else:
+        ret_val = " : " + ret_val
+
+    if len(parts) ==1 and parts[0] == "Void":
+        parts[0] = ''
+
+    final_expr = '(' + ", ".join(parts) + ')' + ret_val
+    return final_expr
 
