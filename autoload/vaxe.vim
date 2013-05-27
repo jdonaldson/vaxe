@@ -411,6 +411,11 @@ function! s:CompletionHxml(file_name, byte_count)
     endif
     return stripped."\n--display ".fnameescape(a:file_name).'@'.a:byte_count
 endfunction
+if g:vaxe_haxe_version >=3
+function! vaxe#JumpToDefintion(base)
+    let complete_string = s:RawCompletion(a:base)
+endfunction
+endif
 
 function! s:RawCompletion(base)
     " Ingore completions for traces
