@@ -16,6 +16,15 @@ function! vaxe#util#ParentSearch(pattern, dir)
     return ''
 endfunction
 
+" ye olde default config setter
+function! vaxe#util#Config(name, default)
+    if !exists(a:name)
+        return a:default
+    else
+        return eval(a:name)
+    endif
+endfunction
+
 
 " Utility function that lets users select from a list.  If list is length 1,
 " then that item is returned.  Uses tlib#inpu#List if available.
