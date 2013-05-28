@@ -1,6 +1,4 @@
 
-" Utility variable that stores the directory that this script resides in
-let s:plugin_path = escape(expand('<sfile>:p:h'), '\')
 
 
 function! vaxe#SetWorkingDir()
@@ -311,7 +309,7 @@ endfunction
 
 " returns a list of compiler class paths
 function! vaxe#CompilerClassPaths()
-   let complete_args = s:CurrentBlockHxml()
+   let complete_args = vaxe#CurrentBlockHxml()
    let complete_args.= "\n"."-v"."\n"."--no-output"
    let complete_args = join(split(complete_args,"\n"),' ')
    let vaxe_hxml = vaxe#CurrentBuild()
@@ -372,15 +370,14 @@ function! vaxe#Ctags()
     endif
 endfunction
 
+
 " Generate inline compiler declarations for the given target from the relevant
-" build hxml.  Remove any flags that generate unnecessary output or activity.
-function! s:CurrentBlockHxml()
-    let vaxe_hxml = vaxe#CurrentBuild()
-    let hxfile = join(readfile(vaxe_hxml),"\n")
-    let parts = split(hxfile, '--next')
+" build hxml string.  Remove any flags that generate unnecessary output or activity.
+function! s:CurrentBlockHxml(hxml_str)
+    let parts = split(a:hxml_str, '--next')
 
     if len(parts) == 0
-        let parts = [hxfile]
+        let parts = [hxml_str]
     endif
 
     let complete = filter(copy(parts), 'v:val =~ "#\\s*display completions"')
@@ -388,8 +385,14 @@ function! s:CurrentBlockHxml()
         let complete = parts
     endif
 
-    let complete_string = complete[0]
-    let parts = split(complete_string,"\n")
+    return s:SanitizeHxml(complete[0])
+endfunction
+
+
+" clean up hxml in string form by removing -(cmd|v|xml) directives
+" also escape spaces in arguments
+function! s:SanitizeHxml(complete_string)
+    let parts = split(a:complete_string,"\n")
     let fixed = []
 
     for p in parts
@@ -405,19 +408,24 @@ function! s:CurrentBlockHxml()
         call add(fixed, p)
     endfor
 
-    let complete_string = join(fixed,"\n")
-    return complete_string
+    return join(fixed,"\n")
 endfunction
 
 
+
+
+
+
 function! vaxe#CurrentBlockHxml()
-    return s:CurrentBlockHxml()
+    let vaxe_hxml = vaxe#CurrentBuild()
+    let hxml_str = join(readfile(vaxe_hxml),"\n")
+    return s:CurrentBlockHxml(hxml_str)
 endfunction
 
 " Returns hxml that is suitable for making a --display completion call
 function! s:CompletionHxml(file_name, byte_count)
     " the stripped down haxe compiler command (no -cmd, etc.)
-    let stripped = s:CurrentBlockHxml()
+    let stripped = vaxe#CurrentBlockHxml()
     if (g:vaxe_cache_server_enable)
         " let stripped \. stripped " the stripped hxml
         let stripped = "--cwd " . fnameescape(g:vaxe_working_directory)
@@ -432,7 +440,6 @@ if g:vaxe_haxe_version >=3
 function! vaxe#JumpToDefinition()
     let output = []
     " execute the python completion script in autoload/vaxe.py
-    exe 'pyfile '.s:plugin_path.'/vaxe.py'
     py locations('complete_output','output')
 endfunction
 endif
@@ -456,15 +463,18 @@ function! s:HandleWriteEvent()
     elseif (&autowrite)
         exe ":silent update"
     endif
+
 endfunction
-
-
-
 
 " a 'raw completion' function that will just return unformatted output
 " pass extra string options to append to the current hxml
-function! s:RawCompletion(vaxe_hxml)
-
+function! s:RawCompletion(vaxe_hxml, ...)
+    let extra_string = ''
+    if a:0 > 1
+        let extra = copy(a:000)
+        let extra_string = join(extra,' ')
+        remove(extra,0)
+    endif
     let offset = line2byte('.') + col('.')  -2
     " handle the BOM
     if &bomb
@@ -472,6 +482,7 @@ function! s:RawCompletion(vaxe_hxml)
     endif
 
     let complete_args = s:CompletionHxml(expand("%:p"), offset)
+    let complete_args = complete_args . ' ' . extra_string
 
     let hxml_cd = "cd\ \"".fnamemodify(a:vaxe_hxml,":p:h"). "\"&&"
     if exists("g:vaxe_hxml")
@@ -504,7 +515,6 @@ function! s:FormatDisplayCompletion(base)
     call s:Log('compiler output: ' . complete_output)
 
     " execute the python completion script in autoload/vaxe.py
-    exe 'pyfile '.s:plugin_path.'/vaxe.py'
     py complete('complete_output','output'
                 \, 'a:base', 'g:vaxe_completion_alter_signature'
                 \, 'g:vaxe_completion_collapse_overload')
