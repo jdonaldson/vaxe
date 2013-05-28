@@ -2,6 +2,8 @@ import vim, re, HTMLParser
 import xml.etree.ElementTree as ET
 import json
 
+
+
 # This is the python portion of the completion script.  Call it with the *name*
 # of the input vimscript variable, "complete_output_var".  This should contain
 # the output from the --display compiler directive.  base_var is an optional
@@ -25,7 +27,7 @@ def complete(complete_output_var, output_var, base_var , alter_var, collapse_var
     types = root.findall("type")
     completes = []
 
-    if len(fields) > 0:
+    if len(fields) > 0: # field completion
         def fieldxml2completion(x):
             word = x.attrib["n"]
             menu = x.find("t").text
@@ -50,8 +52,9 @@ def complete(complete_output_var, output_var, base_var , alter_var, collapse_var
 
             return {  'word': word, 'info': info, 'kind': kind
                     ,'menu': menu, 'abbr': abbr, 'dup':1 }
+
         completes = map(fieldxml2completion, fields)
-    elif len(types) > 0:
+    elif len(types) > 0: # function type completion
         otype = types[0]
         h = HTMLParser.HTMLParser()
         word = ' '
@@ -61,7 +64,8 @@ def complete(complete_output_var, output_var, base_var , alter_var, collapse_var
             abbr = alter_signature(abbr)
         completes= [{'word':word,'info':info, 'abbr':abbr, 'dup':1}]
 
-    completes = [c for c in completes if re.search("^" + base, c['word'])]
+    if base != '':
+        completes = [c for c in completes if re.search("^" + base, c['word'])]
 
     if collapse_overload:
         dict_complete = dict()
@@ -78,6 +82,18 @@ def complete(complete_output_var, output_var, base_var , alter_var, collapse_var
                 c['menu'] = "@:overload " + c['menu']
 
     vim.command("let " + output_var + " = " + json.dumps(completes))
+
+# simple script to grab lists of locations from display-mode completions
+def locations(complete_output_var, output_var):
+    complete_output = vim.eval(complete_output_var)
+    vim.command("let " + output_var + " = " + json.dumps(completes))
+    # wrap in a tag to prevent parsing errors
+    root = ET.XML("<output>" + complete_output + "</output>")
+    pos = root.findall("pos")
+    if len(pos) > 0:
+        return [p.text for p in pos]
+    else:
+        return []
 
 def alter_signature(sig):
     paren = 0
