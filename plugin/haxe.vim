@@ -13,6 +13,7 @@ command -nargs=? -complete=customlist,vaxe#nme#Targets NmeUpdate call vaxe#nme#U
 command -buffer HaxeCtags call vaxe#Ctags()
 
 autocmd FileType haxe setlocal commentstring=//%s
+
 let g:tagbar_type_haxe = {
     \ 'ctagstype' : 'haxe',
     \ 'kinds'     : [
@@ -25,56 +26,27 @@ let g:tagbar_type_haxe = {
         \ ]
     \ }
 
-if !exists("g:vaxe_cache_server_enable")
-    let g:vaxe_cache_server_enable = 0
-endif
+let C = function("vaxe#util#Config")
 
-if !exists("g:vaxe_completion_alter_signature")
-    let g:vaxe_completion_alter_signature = 1
-endif
+" misc options
+let g:vaxe_haxe_version        = C('g:vaxe_haxe_version', 2)
+let g:vaxe_cache_server_enable = C('g:vaxe_cache_server_enable', 0)
+let g:vaxe_prefer_hxml         = C('g:vaxe_prefer_hxml', 'build.hxml')
+let g:vaxe_logging             = C('g:vaxe_logging', 0)
 
-if !exists("g:vaxe_completion_collapse_overload")
-    let g:vaxe_completion_collapse_overload = 0
-endif
+" completion options
+let g:vaxe_completion_alter_signature   = C('g:vaxe_completion_alter_signature', 1)
+let g:vaxe_completion_collapse_overload = C('g:vaxe_completion_collapse_overload', 0)
 
-if !exists("g:vaxe_haxe_version")
-    let g:vaxe_haxe_version = 2
-endif
+" cache server options
+let g:vaxe_cache_server_port      = C('g:vaxe_cache_server_port', 6878)
+let g:vaxe_cache_server_autostart = C('g:vaxe_cache_server_autostart', 1)
 
-if !exists("g:vaxe_cache_server_port")
-    " 'hx' in hex code! AFAICT this isn't a commonly used port...
-    let g:vaxe_cache_server_port = 6878
-endif
+" disable bufwrite events
+let g:vaxe_prevent_completion_bufwrite_events = C('g:vaxe_prevent_completion_bufwrite_events',1)
 
-if !exists("g:vaxe_cache_server_autostart")
-    let g:vaxe_cache_server_autostart = 1
-
-endif
-
-" prevent buffer write events triggered by completions
-if !exists("g:vaxe_prevent_completion_bufwrite_events")
-    let g:vaxe_prevent_completion_bufwrite_events = 1
-endif
-
-" prefer build.hxml files
-if !exists('g:vaxe_prefer_hxml')
-    let g:vaxe_prefer_hxml = 'build.hxml'
-endif
-
-" disable logging
-if !exists('g:vaxe_logging')
-    let g:vaxe_logging = 0
-endif
-
-if !exists("g:vaxe_nme_test_on_build")
-    let g:vaxe_nme_test_on_build = 1
-endif
-
-if !exists("g:vaxe_nme_target")
-    let g:vaxe_nme_target  = ""
-endif
-
-if !exists("g:vaxe_nme_completion_target")
-    let g:vaxe_nme_completion_target  = "flash"
-endif
+" nme options
+let g:vaxe_nme_test_on_build     = C('g:vaxe_nme_test_on_build', 1)
+let g:vaxe_nme_target            = C('g:vaxe_nme_target',"")
+let g:vaxe_nme_completion_target = C('g:vaxe_nme_completion_target', 'flash')
 
