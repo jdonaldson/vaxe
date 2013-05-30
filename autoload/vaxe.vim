@@ -204,30 +204,27 @@ function! vaxe#DefaultHxml(...)
         elseif match(a:1,'\.nmml$' )
             let b:vaxe_nmml = a:1
         endif
-    else
-    "Now check if there's an nmml in the parent roots...
-        let base_nmml = vaxe#util#ParentSearch("*.nmml", fnamemodify(expand("%"),":p:h"))
-
-        if (base_nmml != '')
-            let base_nmml = split(base_nmml,'\n')[0]
-        end
-
-        let base_hxml = findfile(g:vaxe_prefer_hxml, ".;")
-        if base_hxml !~ "^/"
-            let base_hxml = getcwd() . '/' . base_hxml
-        endif
-
-        if (base_nmml != '')
-            if base_nmml !~ "^/"
-                let base_nmml = getcwd() . '/' . base_nmml
+    else " check if there's an nmml in the parent roots...
+        let base_build = vaxe#util#ParentSearch(
+                    \ g:vaxe_default_parent_search_patterns
+                    \ , fnamemodify(expand("%"),":p:h"))
+        if (base_build != '')
+            let base_build = split(base_build,'\n')[0]
+            echomsg base_build
+            if base_build !~ "^/"
+                let base_build = getcwd() . '/' . base_build
             endif
-            let b:vaxe_nmml = base_nmml
-        endif
-        let b:vaxe_hxml = base_hxml
+            if base_build =~"\.nmml"
+                let b:vaxe_nmml = base_build
+                call vaxe#nme#BuildNmmlHxml()
+            else
+                let b:vaxe_hxml = base_build
+            endif
+        end
     endif
 
-    if exists("b:vaxe_nmml")
-        call vaxe#nme#BuildNmmlHxml()
+    if !exists('b:vaxe_hxml')
+        let b:vaxe_hxml = ''
     endif
 
     if !filereadable(b:vaxe_hxml)
