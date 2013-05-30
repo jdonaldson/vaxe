@@ -209,7 +209,12 @@ function! vaxe#DefaultHxml(...)
                     \ g:vaxe_default_parent_search_patterns
                     \ , fnamemodify(expand("%"),":p:h"))
         if (base_build != '')
-            let base_build = split(base_build,'\n')[0]
+            let base_builds = split(base_build,'\n')
+            if g:vaxe_prefer_first_in_directory
+                let base_build = base_builds[0]
+            else
+                let base_build = vaxe#util#InputList(base_builds, "Select build file")
+            endif
             echomsg base_build
             if base_build !~ "^/"
                 let base_build = getcwd() . '/' . base_build
