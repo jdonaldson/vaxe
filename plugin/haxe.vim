@@ -36,8 +36,9 @@ let g:vaxe_cache_server_enable = C('g:vaxe_cache_server_enable', 0)
 let g:vaxe_logging             = C('g:vaxe_logging', 0)
 
 " default build options
-let g:vaxe_prefer_hxml = "build.hxml"
-let g:vaxe_prefer_nmml = "*.nmml"
+let g:vaxe_prefer_hxml = C('g:vaxe_prefer_hxml', "build.hxml")
+let g:vaxe_prefer_nmml = C('g:vaxe_prefer_nmml', "*.nmml")
+let g:vaxe_prefer_first_in_directory = C('g:vaxe_prefer_first_in_directory', 1)
 let g:vaxe_default_parent_search_patterns = C('g:vaxe_default_parent_search_glob'
             \, [g:vaxe_prefer_nmml, g:vaxe_prefer_hxml])
 
