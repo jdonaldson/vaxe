@@ -434,8 +434,13 @@ endfunction
 if g:vaxe_haxe_version >=3
 function! vaxe#JumpToDefinition()
     let output = []
+    let extra = "\n-D display-mode=position"
+    let complete_output = s:RawCompletion(b:vaxe_hxml, extra)
     " execute the python completion script in autoload/vaxe.py
+    call s:Log(complete_output)
     py locations('complete_output','output')
+    let output_str = join(output, '\n')
+    lexpr(output_str)
 endfunction
 endif
 
