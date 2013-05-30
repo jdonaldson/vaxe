@@ -468,13 +468,7 @@ endfunction
 
 " a 'raw completion' function that will just return unformatted output
 " pass extra string options to append to the current hxml
-function! s:RawCompletion(vaxe_hxml, ...)
-    let extra_string = ''
-    if a:0 > 1
-        let extra = copy(a:000)
-        let extra_string = join(extra,' ')
-        remove(extra,0)
-    endif
+function! s:RawCompletion(vaxe_hxml, extra_string)
     let offset = line2byte('.') + col('.')  -2
     " handle the BOM
     if &bomb
@@ -482,7 +476,7 @@ function! s:RawCompletion(vaxe_hxml, ...)
     endif
 
     let complete_args = s:CompletionHxml(expand("%:p"), offset)
-    let complete_args = complete_args . ' ' . extra_string
+    let complete_args = complete_args . ' ' . a:extra_string
 
     let hxml_cd = "cd\ \"".fnamemodify(a:vaxe_hxml,":p:h"). "\"&&"
     if exists("g:vaxe_hxml")
@@ -502,7 +496,7 @@ function! s:FormatDisplayCompletion(base)
     if !filereadable(vaxe_hxml)
        return [{"word" : "", "abbr" : "Compiler error: ", "menu": "No valid build file", "empty" : 1}]
     endif
-    let complete_output = s:RawCompletion(vaxe_hxml)
+    let complete_output = s:RawCompletion(vaxe_hxml, '')
     " quick and dirty check for error
     let tag = complete_output[1:4]
     if tag != "type" && tag != "list" && tag != "pos>"
