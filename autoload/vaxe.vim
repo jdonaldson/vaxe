@@ -1,6 +1,4 @@
 
-
-
 function! vaxe#SetWorkingDir()
     exe 'cd "'.g:vaxe_working_directory.'"'
 endfunction
@@ -104,13 +102,13 @@ endfunction
 
 " A function suitable for omnifunc
 function! vaxe#HaxeComplete(findstart,base)
-    " ERROR: no python!
+    " ERROR: no python
     if !has("python")
         echoerr 'Vaxe requires python for completions'
-        return 0
+        return []
     endif
 
-    " EXIT: trace( has no completion
+    " EXIT: trace does not have function argument completion
     let linepart = strpart(getline('.'), 0, col('.'))
     if match(linepart, "trace($") > 0
         return []
