@@ -2,19 +2,22 @@
 
 " Utility function that recursively searches parent directories for 'dir'
 " until a file matching "pattern" is found.
-function! vaxe#util#ParentSearch(pattern, dir)
+function! vaxe#util#ParentSearch(patterns, dir)
     let current_dir = fnamemodify(a:dir,":p:h")
     let last_dir = ''
     while(current_dir != last_dir)
         let last_dir = current_dir
-        let match = globpath(current_dir, a:pattern)
-        if (match != '')
-            return match
-        endif
+        for p in a:patterns
+            let match = globpath(current_dir, p)
+            if match != ''
+                return match
+            endif
+        endfor
         let current_dir = fnamemodify(current_dir, ":p:h:h")
     endwhile
     return ''
 endfunction
+
 
 " ye olde default config setter
 function! vaxe#util#Config(name, default)
