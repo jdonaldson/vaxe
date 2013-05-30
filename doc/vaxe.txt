@@ -258,7 +258,7 @@ SETTINGS                                        *vaxe-settings*
                         automatically.  The default is "build.hxml".
 
 *g:vaxe_prefer_nmml*    The name of the nmml file/glob to search for and use
-                        automatically.  The default is "*.hxml".
+                        automatically.  The default is "*.nmml".
 
 *g:vaxe_prefer_first_in_directory*
                         When vaxe finds more than one build file in a directory,
