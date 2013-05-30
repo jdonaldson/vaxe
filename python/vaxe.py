@@ -86,14 +86,15 @@ def complete(complete_output_var, output_var, base_var , alter_var, collapse_var
 # simple script to grab lists of locations from display-mode completions
 def locations(complete_output_var, output_var):
     complete_output = vim.eval(complete_output_var)
-    vim.command("let " + output_var + " = " + json.dumps(completes))
     # wrap in a tag to prevent parsing errors
     root = ET.XML("<output>" + complete_output + "</output>")
     pos = root.findall("pos")
+    completes = []
     if len(pos) > 0:
-        return [p.text for p in pos]
+        completes = [p.text for p in pos]
     else:
-        return []
+        completes = []
+    vim.command("let " + output_var + " = " + json.dumps(completes))
 
 def alter_signature(sig):
     paren = 0
