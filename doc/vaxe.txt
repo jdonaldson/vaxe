@@ -63,19 +63,15 @@ Default                                         *vaxe-default-mode*
                         is opened.  It can be retriggered by calling
                         |vaxe#DefaultHxml|. Vaxe will search the project
                         path for the preferred file indicated by
-                        |g:vaxe_prefer_hxml|, as well as searching for any
-                        nmml files.
-
-                        If it finds an nmml file, it will use that by default.
-                        see |vaxe-nme-mode| for more details.
+                        |g:vaxe_default_parent_search_glob|.
 
                         If it finds a preferred build file in the parent
                         directories of the currently edited file, it will set
                         a b:vaxe_hxml variable for the current buffer.
                         It sets a |makeprg| that has the following behavior:
-                        It will cd to the preferred hxml directory, call the
-                        compiler with the preferred hxml, and redirect errors
-                        to standard out.
+                        It will cd to the discovered hxml directory, call the
+                        compiler with the hxml, and redirect errors to
+                        standard out.
 
 Project                                         *vaxe-project-mode*
                         This mode is used when |vaxe#ProjectHxml| is called.
@@ -170,8 +166,8 @@ FUNCTIONS                                        *vaxe-functions*
 *vaxe#DefaultHxml*      Find the preferred build file recursively in the
                         parents of the working directory. This function is
                         called automatically whenever any hx file is opened.
-                        Accepts a single argument that will specify the hxml
-                        to use.
+                        Accepts a single optional argument that will specify
+                        the hxml (or nmml) to use.
 
 *vaxe#HaxeComplete*     The |omnifunc| provided for vaxe.
 
@@ -258,15 +254,33 @@ paths, and for generating ctags.
 
 SETTINGS                                        *vaxe-settings*
 
-*g:vaxe_prefer_hxml*    The preferred name for hxml files to search for in
-                        default build mode. The default is "build.hxml"
+*g:vaxe_prefer_hxml*    The name of the hxml file/glob to search for and use
+                        automatically.  The default is "build.hxml".
+*g:vaxe_prefer_nmml*    The name of the nmml file/glob to search for and use
+                        automatically.  The default is "*.hxml".
+
+*g:vaxe_default_parent_search_patterns*
+                        This is a list of |glob| patterns that vaxe uses to
+                        determine which hxml (or nmml) file to use on startup.
+                        The default is:
+                        >
+                        [g:vaxe_prefer_nmml, g:vaxe_prefer_hxml]
+                        <
+
+                        Note that vaxe will search recursively through
+                        each parent directory, and stop at the first file that
+                        matches the pattern.  E.g., by default, vaxe will
+                        recursively look for *any* nmml file, or one called
+                        'build.hxml'.  It will give precedence to the nmml file,
+                        since it occurs before the hxml file in the search
+                        pattern list.
 
 *g:vaxe_hxml*           A variable that indicates the |vaxe-project-mode|
                         build file.  It will override the |vaxe-default-mode|
                         setting if present.
 
 *g:vaxe_completion_alter_signature*
-                        Changes the method signatures in autocompletions to a 
+                        Changes the method signatures in autocompletions to a
                         syntax form, instead of a type signature. This is
                         enabled by default
 >
@@ -281,11 +295,11 @@ SETTINGS                                        *vaxe-settings*
                         happen frequently, and causes the buffer to be written.
                         This can in turn interfere with other scripts that
                         handle bufwrite events, triggering them excessively.
-                        The default is "1" which prevents events that are
-                        t.
+                        The default is "1" which prevents events that happen
+                        as the result of completion activity.
 
 *g:vaxe_nme_test_on_build*
-                        By default vaxe will automatically run nme's test
+                        By default vaxe will automatically run nme's "test"
                         command, which will automatically try to run the code
                         target (launching a browser, loading the app to the
                         phone, etc.).  If you wish only to build, set this
