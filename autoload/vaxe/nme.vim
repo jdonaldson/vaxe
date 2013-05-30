@@ -92,7 +92,7 @@ function! vaxe#nme#BuildNmmlHxml()
 
     let g:vaxe_nmml = b:vaxe_nmml
     let b:vaxe_hxml = base_hxml
-    let g:vaxe_hxml = b:vaxe_hxml
+    " let g:vaxe_hxml = b:vaxe_hxml " don't set a global projet var by default
 endfunction
 
 "Sets the target.  If target is missing it asks the user. Also updates the
