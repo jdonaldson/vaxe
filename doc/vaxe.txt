@@ -256,8 +256,15 @@ SETTINGS                                        *vaxe-settings*
 
 *g:vaxe_prefer_hxml*    The name of the hxml file/glob to search for and use
                         automatically.  The default is "build.hxml".
+
 *g:vaxe_prefer_nmml*    The name of the nmml file/glob to search for and use
                         automatically.  The default is "*.hxml".
+
+*g:vaxe_prefer_first_in_directory*
+                        When vaxe finds more than one build file in a directory,
+                        setting this variable to 1 will make vaxe always choose 
+                        the first one.  If it is set to 0, then it will present 
+                        a list of options.  The default is 1.
 
 *g:vaxe_default_parent_search_patterns*
                         This is a list of |glob| patterns that vaxe uses to
