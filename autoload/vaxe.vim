@@ -1,3 +1,4 @@
+let unsupported_msg = 'Unsupported platform, send a note to the maintainer about adding support'
 
 function! vaxe#SetWorkingDir()
     exe 'cd "'.g:vaxe_working_directory.'"'
@@ -20,11 +21,38 @@ function! vaxe#OpenHxml()
     endif
 endfunction
 
-
 function! vaxe#KillCacheServer()
     if has('unix')
-        system("kill ". g:vaxe_cache_server_pid)
+        call system("kill ". g:vaxe_cache_server_pid)
         unlet g:vaxe_cache_server_pid
+    else
+        echoerr unsupported_msg
+    endif
+endfunction
+
+function! vaxe#StartCacheServer()
+    if has('unix')
+        let haxe_version = vaxe#util#HaxeServerVersion()
+        if haxe_version != '0'
+            echomsg "Compilation server is already running on port "
+                        \ . g:vaxe_cache_server_port
+        else
+            let pid =  vaxe#util#SimpleSystem("haxe --wait "
+                        \. g:vaxe_cache_server_port . "& echo $!")
+            if pid =~ '\v[0-9]+'
+                let g:vaxe_cache_server_pid = pid
+                echomsg "Started a haxe compilation cache server on port "
+                            \ . g:vaxe_cache_server_port
+                            \ . " with pid " . g:vaxe_cache_server_pid
+                autocmd VimLeavePre * call vaxe#KillCacheServer()
+            else
+                echoerr "Could not start haxe cache server."
+                            \. "See docs for more details."
+                            \. "(help vaxe-cache-server)"
+            endif
+        endif
+    else
+        echoerr unsupported_msg
     endif
 endfunction
 
