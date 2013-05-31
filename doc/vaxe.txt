@@ -109,9 +109,10 @@ COMPILATION CACHE SERVER SUPPORT                *vaxe-cache-server*
 Vaxe can spawn a simple compilation cache server, which can speed up
 compilation in many cases.  Currently, it only supports
 unix-based systems, and is only used during compiler-based completion requests
-(not for builds).  Also, vaxe does not reliably close the cache server when vim
-exits.  In some cases the cache server may need to be closed manually.
+(not for builds).
 
+The server will be killed upon exiting vim.  You can also kill it with
+|KillHaxeCompletionServer|, and start it again with |StartHaxeCompletionServer|.
 
 HAXE COMMANDS                                    *vaxe-commands*
 
@@ -128,6 +129,12 @@ HAXE COMMANDS                                    *vaxe-commands*
 |HaxeCtags|             Call the |vaxe#Ctags| function
 
 |ToggleVaxeLogging|     Turns vaxe logging on/off (logs to :message)
+
+|KillHaxeCompletionServer|
+                        Kills the Haxe completion server
+
+|StartHaxeCompletionServer|
+                        Starts the Haxe completion server
 
 NME COMMANDS                                    *vaxe-nme-commands*
 There's a number of nme-specific commands that closely match the command line
@@ -262,8 +269,8 @@ SETTINGS                                        *vaxe-settings*
 
 *g:vaxe_prefer_first_in_directory*
                         When vaxe finds more than one build file in a directory,
-                        setting this variable to 1 will make vaxe always choose 
-                        the first one.  If it is set to 0, then it will present 
+                        setting this variable to 1 will make vaxe always choose
+                        the first one.  If it is set to 0, then it will present
                         a list of options.  The default is 1.
 
 *g:vaxe_default_parent_search_patterns*
