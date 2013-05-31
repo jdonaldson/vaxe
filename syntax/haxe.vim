@@ -151,19 +151,22 @@ if g:vim_haxe_syntax_scheme_nr == 1
   " Strings and constants
   syn match   haxeSpecialError     contained "\\."
   " syn match   haxeSpecialCharError contained "[^']"
-  syn match   haxeSpecialChar      contained "\\\([4-9]\d\|[0-3]\d\d\|[\"\\'ntbrf]\|u\x\{4\}\)"
+  " syn match   haxeSpecialChar      contained "\\\([4-9]\d\|[0-3]\d\d\|[\"\\'ntbrf]\|u\x\{4\}\)"
   syn match haxeEregEscape	contained "\(\\\\\|\\/\)"
   syn region  haxeEreg		start=+\~\/+ end=+\/[gims]*+ contains=haxeEregEscape
 
-  syn region  haxeString		start=+"+ end=+"+ contains=haxeSpecialChar,haxeSpecialError,@Spell
-  syn region  haxeSingleString  start=+'+ end=+'+
+  " syn region  haxeString  start=+"+  end=+"+  skip=+\\"+ contains=haxeSpecialChar,haxeSpecialError,@Spell
+  " syn region  haxeString  start=+"+  end=+"+  skip=+\\"+
+  " syn region  haxeSingleString  start=+'+ end=+'+ skip=+\\'+
+  syn region haxeString start=/"/ skip=/\\"/ end=/"/
+  syn region haxeSingleString start=/'/ skip=/\\'/ end=/'/
+
   " next line disabled, it can cause a crash for a long line
   "syn match   haxeStringError	  +"\([^"\\]\|\\.\)*$+
-  syn match   haxeCharacter	 "'[^']*'" contains=haxeSpecialChar,haxeSpecialCharError
-  syn match   haxeCharacter	 "'\\''" contains=haxeSpecialChar
-  syn match   haxeCharacter	 "'[^\\]'"
+  " syn match   haxeCharacter	 "'[^']*'" contains=haxeSpecialChar,haxeSpecialCharError
+  " syn match   haxeCharacter	 "'\\''" contains=haxeSpecialChar
+  " syn match   haxeCharacter	 "'[^\\]'"
   syn match   haxeNumber		 "\<\(0[0-7]*\|0[xX]\x\+\|\d\+\)[lL]\=\>"
-  "syn match   haxeNumber		 "\(\<\d\+\.\d*\|\.\d\+\)\([eE][-+]\=\d\+\)\=[fFdD]\="
   syn match   haxeNumber		 "\(\<\d\+\.\d\+\)\([eE][-+]\=\d\+\)\=[fFdD]\="
   syn match   haxeNumber		 "\<\d\+[eE][-+]\=\d\+[fFdD]\=\>"
   syn match   haxeNumber		 "\<\d\+\([eE][-+]\=\d\+\)\=[fFdD]\>"
