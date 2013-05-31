@@ -22,7 +22,7 @@ endfunction
 function! vaxe#util#HaxeServerVersion()
     let response = vaxe#util#SimpleSystem("haxe --connect "
                 \ . g:vaxe_cache_server_port . ' -version' )
-    if response =~ '\v([0-9]\.)*[0-9]'
+    if response =~ '\v^([0-9]\.)*[0-9]$'
         return response
     else
         return '0'
