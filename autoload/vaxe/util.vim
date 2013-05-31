@@ -18,6 +18,27 @@ function! vaxe#util#ParentSearch(patterns, dir)
     return ''
 endfunction
 
+" returns the current running haxe version on the cache server
+function! vaxe#util#HaxeServerVersion()
+    let response = vaxe#util#SimpleSystem("haxe --connect "
+                \ . g:vaxe_cache_server_port . ' -version' )
+    if response =~ '\v([0-9]\.)*[0-9]'
+        return response
+    else
+        return '0'
+    endif
+endfunction
+
+function! vaxe#util#Strip(str)
+        return substitute(a:str, '^\s*\(.\{-}\)\s*$', '\1', '')
+endfunction
+
+function! vaxe#util#SimpleSystem(cmd)
+    let lines = system(a:cmd)
+    let firstline = split(lines,'\n')[0]
+    return vaxe#util#Strip(firstline)
+endfunction
+
 
 " ye olde default config setter
 function! vaxe#util#Config(name, default)
