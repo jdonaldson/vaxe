@@ -427,8 +427,8 @@ function! s:SanitizeHxml(complete_string)
         let p = substitute(p, '#.*','','') " strip comments
         let p = substitute(p, '\s*$', '', '') " strip trailing ws
 
-        " strip cmd\xml\verbose directives
-        let p = substitute(p, '^\s*-\(cmd\|xml\|v\)\s*.*', '', '')
+        " strip cmd\xml\verbose\times directives
+        let p = substitute(p, '^\s*-\(cmd\|xml\|v\|-times\)\s*.*', '', '')
 
         " fnameescape directives
         let p = substitute(p, '^\s*\(--\?[a-z0-9\-]\+\)\s*\(.*\)$', '\=submatch(1)." ".fnameescape(submatch(2))', '')
