@@ -117,7 +117,7 @@ pathogen, vundle, or vam to manage installation and updates.
 ## Misc Config
 Vaxe provides a full completion specification for vim, which includes providing
 function documentation via the [preview
-window][http://vimdoc.sourceforge.net/htmldoc/windows.html#preview-window].
+window]( http://vimdoc.sourceforge.net/htmldoc/windows.html#preview-window ).
 This can be turned off with:
 
 ```viml
