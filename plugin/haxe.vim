@@ -5,11 +5,20 @@ let g:loaded_vaxe_plugin = 1
 
 command -nargs=? -complete=file DefaultHxml call vaxe#DefaultHxml(<q-args>)
 command -nargs=? -complete=file ProjectHxml call vaxe#ProjectHxml(<q-args>)
-command -nargs=? -complete=file ProjectNmml call vaxe#nme#ProjectNmml(<q-args>)
 command ToggleVaxeLogging let g:vaxe_logging = !g:vaxe_logging
+
+" Nme commands
+command -nargs=? -complete=file ProjectNmml call vaxe#nme#ProjectNmml(<q-args>)
 command -nargs=? -complete=customlist,vaxe#nme#Targets NmeTarget call vaxe#nme#Target(<q-args>)
 command -nargs=? -complete=customlist,vaxe#nme#Targets NmeClean call vaxe#nme#Clean(<q-args>)
 command -nargs=? -complete=customlist,vaxe#nme#Targets NmeUpdate call vaxe#nme#Update(<q-args>)
+
+" Openfl commands
+command -nargs=? -complete=file ProjectOpenfl call vaxe#openfl#ProjectOpenfl(<q-args>)
+command -nargs=? -complete=customlist,vaxe#openfl#Targets OpenflTarget call vaxe#openfl#Target(<q-args>)
+command -nargs=? -complete=customlist,vaxe#openfl#Targets OpenflClean  call vaxe#openfl#Clean(<q-args>)
+command -nargs=? -complete=customlist,vaxe#openfl#Targets OpenflUpdate call vaxe#openfl#Update(<q-args>)
+
 command -buffer HaxeCtags call vaxe#Ctags()
 
 autocmd FileType haxe setlocal commentstring=//%s
@@ -35,12 +44,6 @@ let g:vaxe_haxe_version        = C('g:vaxe_haxe_version', 2)
 let g:vaxe_cache_server_enable = C('g:vaxe_cache_server_enable', 0)
 let g:vaxe_logging             = C('g:vaxe_logging', 0)
 
-" default build options
-let g:vaxe_prefer_hxml = C('g:vaxe_prefer_hxml', "build.hxml")
-let g:vaxe_prefer_nmml = C('g:vaxe_prefer_nmml', "*.nmml")
-let g:vaxe_prefer_first_in_directory = C('g:vaxe_prefer_first_in_directory', 1)
-let g:vaxe_default_parent_search_patterns = C('g:vaxe_default_parent_search_patterns'
-            \, [g:vaxe_prefer_nmml, g:vaxe_prefer_hxml])
 
 " completion options
 let g:vaxe_completion_alter_signature   = C('g:vaxe_completion_alter_signature', 1)
@@ -59,3 +62,15 @@ let g:vaxe_nme_test_on_build     = C('g:vaxe_nme_test_on_build', 1)
 let g:vaxe_nme_target            = C('g:vaxe_nme_target',"")
 let g:vaxe_nme_completion_target = C('g:vaxe_nme_completion_target', 'flash')
 
+" openfl options
+let g:vaxe_openfl_test_on_build     = C('g:vaxe_nme_test_on_build', 1)
+let g:vaxe_openfl_target            = C('g:vaxe_nme_target',"")
+let g:vaxe_openfl_completion_target = C('g:vaxe_nme_completion_target', 'flash')
+
+" default build options
+let g:vaxe_prefer_hxml = C('g:vaxe_prefer_hxml', "build.hxml")
+let g:vaxe_prefer_nmml = C('g:vaxe_prefer_nmml', "*.nmml")
+let g:vaxe_prefer_openfl = C('g:vaxe_prefer_openfl', "project.xml")
+let g:vaxe_prefer_first_in_directory = C('g:vaxe_prefer_first_in_directory', 1)
+let g:vaxe_default_parent_search_patterns = C('g:vaxe_default_parent_search_patterns'
+            \, [g:vaxe_prefer_openfl, g:vaxe_prefer_nmml, g:vaxe_prefer_hxml])
