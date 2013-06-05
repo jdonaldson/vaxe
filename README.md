@@ -121,8 +121,11 @@ window]( http://vimdoc.sourceforge.net/htmldoc/windows.html#preview-window ).
 This can be turned off with:
 
 ```viml
-set completopt=menuone
+set completeopt=menu
 ```
+
+This will only use the menu, and not the preview window.  See ```:help
+preview-window``` for more details.
 
 ## Powerline
 
