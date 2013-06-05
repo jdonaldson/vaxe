@@ -1,4 +1,3 @@
-
 function! vaxe#nme#Targets(...)
     return s:nmml_targets
 endfunction
@@ -102,7 +101,7 @@ function! vaxe#nme#Target(...)
     if a:0 > 0 && a:1 != ''
         let g:vaxe_nme_target = a:1
     else
-        let g:vaxe_nme_target = vaxe#util#InputList("Select Target", s:nmml_targets)
+        let g:vaxe_nme_target = vaxe#util#InputList("Select Nmml Target", s:nmml_targets)
         let g:vaxe_nme_target = split(g:vaxe_nme_target, ":")[0]
     endif
     call vaxe#nme#BuildNmmlHxml()
