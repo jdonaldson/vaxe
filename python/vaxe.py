@@ -64,7 +64,7 @@ def complete(complete_output_var, output_var, base_var , alter_var, collapse_var
             abbr = alter_signature(abbr)
         completes= [{'word':word,'info':info, 'abbr':abbr, 'dup':1}]
 
-    if base != '':
+    if base != '' and base is not None:
         completes = [c for c in completes if re.search("^" + base, c['word'])]
 
     if collapse_overload:
