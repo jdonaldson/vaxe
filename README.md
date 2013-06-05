@@ -83,7 +83,7 @@ function that can use the haxe compiler in order to [display field
 completions](http://haxe.org/manual/completion).  Visual Studio users will
 recognize this as being similar to "intellisense".
 
-You can trigger an omnicompletion (C-X C-O in Insert Mode) after the period at
+eou can trigger an omnicompletion (C-X C-O in Insert Mode) after the period at
 the start of a field, submodule, or class access, or after the first
 parentheses of a function invocation. See the [haxe
 documentation](http://haxe.org/manual/completion) for more details.
@@ -101,11 +101,21 @@ If Vaxe finds that line, it will use that target to generate completions and
 perform other miscellaneous tasks.  The target that Vaxe uses is called the
 "active" target here.
 
-# Recommended Plugins/Additions
+# Recommended Plugins/Additions/Config
 
 Vaxe will work fine on its own, but it is designed to integrate cleanly with
 a number of other bundles and plugins. Once again, it is recommended to use
 pathogen, vundle, or vam to manage installation and updates.
+
+## Misc Config
+Vaxe provides a full completion specification for vim, which includes providing
+function documentation via the [preview 
+window][http://vimdoc.sourceforge.net/htmldoc/windows.html#preview-window].
+This can be turned off with:
+
+```viml
+set completopt=menuone
+```
 
 ## Powerline
 
