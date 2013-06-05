@@ -109,7 +109,7 @@ pathogen, vundle, or vam to manage installation and updates.
 
 ## Misc Config
 Vaxe provides a full completion specification for vim, which includes providing
-function documentation via the [preview 
+function documentation via the [preview
 window][http://vimdoc.sourceforge.net/htmldoc/windows.html#preview-window].
 This can be turned off with:
 
@@ -187,10 +187,10 @@ automatically, but only for the current vaxe buffer.
 plugin for vim that can manage virtually any type of
 completion (omni, keyword, file, etc). It won't use omnicompletion by default
 since it is slow for some languages.  However, since completions are built into
-the compiler with Haxe, they are very fast.  In fact, it's possible to check 
-for completions as you are typing using Neocomplcache.  Neocomplcache can be 
-tricky to set up.  Here's a self-contained vimrc that gives you a minimal 
-vaxe and neocomplcache config.
+the compiler with Haxe, they are very fast.  In fact, it's possible to check
+for completions as you are typing using Neocomplcache.  Neocomplcache can be
+tricky to set up.  Here's a self-contained vimrc that gives you a minimal
+vaxe and neocomplcache config.  
 
 ```viml
 " set the bundle root, and vundle directory
@@ -226,12 +226,17 @@ Bundle 'Shougo/neocomplcache'
     if !exists('g:neocomplcache_omni_patterns')
         let g:neocomplcache_omni_patterns = {} " set a default pattern dict
     endif
-  
+
     " this tells neocc when to try for completions... after '.', '(', etc.
     let g:neocomplcache_omni_patterns.haxe = '\v([\]''"\)]|\w|(^\s*))(\.|\()'
 
 filetype plugin indent on " re-enable plugin settings
 ```
+After you start vim the first time, run:
+```viml
+:BundleInstall
+```
+Then, restart vim and your completions should work.
 
 Once enabled, Neocomplcache will automatically invoke vaxe omnicompletion
 when you type a "." after a variable with fields, etc.
