@@ -187,16 +187,50 @@ automatically, but only for the current vaxe buffer.
 plugin for vim that can manage virtually any type of
 completion (omni, keyword, file, etc). It won't use omnicompletion by default
 since it is slow for some languages.  However, since completions are built into
-the compiler with Haxe, they are very fast.  In order to enable automatic
-completions, you will need to add this to your `.vimrc`:
+the compiler with Haxe, they are very fast.  In fact, it's possible to check 
+for completions as you are typing using Neocomplcache.  Neocomplcache can be 
+tricky to set up.  Here's a self-contained vimrc that gives you a minimal 
+vaxe and neocomplcache config.
 
 ```viml
-    let g:neocomplcache_enable_at_startup = 1
+" set the bundle root, and vundle directory
+let root = '~/.vim/bundle'
+let src = 'http://github.com/gmarik/vundle.git'
+
+" clone vundle if it's missing
+if !isdirectory(expand(root, 1).'/vundle')
+  exec '!git clone '.src.' '.shellescape(expand(root.'/vundle', 1))
+endif
+
+" immediately make vundle accessible in the rtp
+exec 'set rtp+='.root.'/vundle'
+
+" initialise vundle's boot script
+call vundle#rc(root)
+
+set autowrite " vaxe likes autowrite
+set nocompatible " we need fancy new vim 7.0 features
+syntax enable on " turn on syntax highlighting
+
+" This disables the preview window for function completions.
+" This window can get distracting, so I often just turn it off.
+" set completeopt=menuone
+
+filetype off " turn off filetype settings, which is required for vundle
+
+" load vaxe, and neocomplcache with the given config"
+Bundle 'jdonaldson/vaxe'
+Bundle 'Shougo/neocomplcache'
+    let g:neocomplcache_enable_at_startup = 1 " always load neocc
+    let g:neocomplcache_enable_auto_select = 1 " auto-popup!
     if !exists('g:neocomplcache_omni_patterns')
-        let g:neocomplcache_omni_patterns = {}
+        let g:neocomplcache_omni_patterns = {} " set a default pattern dict
     endif
+  
+    " this tells neocc when to try for completions... after '.', '(', etc.
     let g:neocomplcache_omni_patterns.haxe = '\v([\]''"\)]|\w|(^\s*))(\.|\()'
-    let g:neocomplcache_enable_auto_select = 1
+
+filetype plugin indent on " re-enable plugin settings
 ```
 
 Once enabled, Neocomplcache will automatically invoke vaxe omnicompletion
