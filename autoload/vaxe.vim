@@ -225,12 +225,18 @@ function! vaxe#DefaultHxml(...)
         unlet b:vaxe_nmml
     endif
 
+    if exists('b:vaxe_openfl')
+       unlet b:vaxe_openfl
+    endif
+
     "First check if an hxml/nmml was passed explicitly
     if a:0 > 0 && a:1 != ''
         if match(a:1,'\.hxml$')
             let b:vaxe_hxml = a:1
         elseif match(a:1,'\.nmml$' )
             let b:vaxe_nmml = a:1
+        elseif match(a:1,'\.xml$' )
+            let b:vaxe_openfl = a:1
         endif
     else " check if there's an nmml in the parent roots...
         let base_build = vaxe#util#ParentSearch(
@@ -243,13 +249,16 @@ function! vaxe#DefaultHxml(...)
             else
                 let base_build = vaxe#util#InputList(base_builds, "Select build file")
             endif
-            echomsg base_build
-            if base_build !~ "^/"
+            if base_build !~ '^/'
                 let base_build = getcwd() . '/' . base_build
             endif
-            if base_build =~"\.nmml"
-                let b:vaxe_nmml = base_build
-                call vaxe#nme#BuildNmmlHxml()
+
+            if base_build =~ '\.xml'
+               let b:vaxe_openfl = base_build
+               call vaxe#openfl#BuildOpenflHxml()
+            elseif base_build =~'\.nmml'
+               let b:vaxe_nmml = base_build
+               call vaxe#nme#BuildNmmlHxml()
             else
                 let b:vaxe_hxml = base_build
             endif
@@ -302,7 +311,14 @@ function! vaxe#SetCompiler()
     let abspath = []
     let escaped_wd = fnameescape(g:vaxe_working_directory)
 
-    if exists("g:vaxe_nmml")
+    if exists("g:vaxe_openfl")
+        let build_verb = "build"
+        if g:vaxe_openfl_test_on_build
+            let build_verb = "test"
+        endif
+        let build_command = "cd " . escaped_wd . " && "
+                    \."openfl ".build_verb." ". g:vaxe_openfl_target . " 2>&1"
+    elseif exists("g:vaxe_nmml")
         let build_verb = "build"
         if g:vaxe_nme_test_on_build
             let build_verb = "test"
