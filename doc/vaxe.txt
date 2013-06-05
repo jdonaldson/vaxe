@@ -83,33 +83,50 @@ Project                                         *vaxe-project-mode*
                         assumes that you will keep the same working directory
                         throughout your vim session.
 
-NME Project                                      *vaxe-nme-mode*
-                        This mode is used when |vaxe#ProjectNmml| is called,
-                        or if an nmml file is detected on startup.
-                        It will set a g:vaxe_nmml variable that will
-                        override any b:vaxe_nmml variables set by the default
-                        method.  It also sets a |makeprg| that simply executes
-                        the nme command in the working directory,
-                        and redirects errors to standard out.  Nme mode
-                        assumes that you will keep the same working directory
-                        throughout your vim session.  When this mode is active,
-                        an hxml file is generated that contains information
-                        used for completions.  It will be named the same as
-                        the selectd nmml file, and be located in the same
-                        directory, but will have an hxml extension.
+nme project                                      *vaxe-nme-mode*
+                        This mode is used when |vaxe#nme#ProjectNmml| is
+                        called, or if an nmml file is detected on startup.  it
+                        will set a g:vaxe_nmml variable that will override any
+                        b:vaxe_nmml variables set by the default method.  it
+                        also sets a |makeprg| that simply executes the nme
+                        command in the working directory, and redirects errors
+                        to standard out.  Nme mode assumes that you will keep
+                        the same working directory throughout your vim session.
+                        when this mode is active, an hxml file is generated
+                        that contains information used for completions.  it
+                        will be named the same as the selectd nmml file, and be
+                        located in the same directory, but will have an hxml
+                        extension.
 
+
+openfl project                                    *vaxe-openfl-mode*
+                        This mode is used when |vaxe#openfl#ProjectOpenfl| is
+                        called, or if an nmml file is detected on startup.  it
+                        will set a g:vaxe_openfl variable that will override any
+                        b:vaxe_openfl variables set by the default method.  it
+                        also sets a |makeprg| that simply executes the nme
+                        command in the working directory, and redirects errors
+                        to standard out.  Openfl mode assumes that you will keep
+                        the same working directory throughout your vim session.
+                        when this mode is active, an hxml file is generated
+                        that contains information used for completions.  it
+                        will be named the same as the selectd openfl file, and be
+                        located in the same directory, but will have an hxml
+                        extension. Currently, this mode is near identical to
+                        nme project mode, and openfl can be used on nmml files
+                        as well.
 
 
 
 COMPILATION CACHE SERVER SUPPORT                *vaxe-cache-server*
 
-(This feature is new, unpolished, and disabled by default.  Set
-|g:vaxe_cache_server_enable| to 1 in order to enable).
+Set |g:vaxe_cache_server_enable| to 1 in order to enable a cache server for
+compilation.  The haxe compiler will cache unchanged modules, which will
+greatly speed up the compilation of larger projects. It is currently only 
+supported on unix/darwin targets.
 
-Vaxe can spawn a simple compilation cache server, which can speed up
-compilation in many cases.  Currently, it only supports
-unix-based systems, and is only used during compiler-based completion requests
-(not for builds).
+Currently, it only supports unix-based systems, and is only used during
+compiler-based completion requests (not for builds).
 
 The server will be killed upon exiting vim.  You can also kill it with
 |KillHaxeCompletionServer|, and start it again with |StartHaxeCompletionServer|.
@@ -145,12 +162,26 @@ one will be chosen from an input list.
 |ProjectNmml|           Call the |vaxe#ProjectNmml| function.  Accepts an
                         optional single argument that will specify the nmml to
 
-|NmeTarget|             Call the |vaxe#NmeTarget| function.
+|NmeTarget|             Call the |vaxe#nme#Target| function.
 
-|NmeClean|              Call the |vaxe#NmeClean| function.
+|NmeClean|              Call the |vaxe#nme#Clean| function.
 
-|NmeUpdate|             Call the |vaxe#NmeUpdate| function.
+|NmeUpdate|             Call the |vaxe#nme#Update| function.
 
+OPENFL COMMANDS                                 *vaxe-openfl-commands*
+There's a number of openfl-specific commands that closely match the command
+line counterparts.  OpenflTarget,Clean,Update all accept an optional target
+argument.  The argument can be tab-completed.  If a target is not specified
+with OpenflTarget, one will be chosen from an input list.
+
+|ProjectOpenfl|         Call the |vaxe#ProjectOpenfl| function.  Accepts an
+                        optional single argument that will specify the nmml to
+
+|OpenflTarget|             Call the |vaxe#openfl#Target| function.
+
+|OpenflClean|              Call the |vaxe#openfl#Clean| function.
+
+|OpenflUpdate|             Call the |vaxe#openfl#Update| function.
 
 FUNCTIONS                                        *vaxe-functions*
 
@@ -241,6 +272,20 @@ FUNCTIONS                                        *vaxe-functions*
                         for the current target, or the target specified by the
                         (optional) argument.
 
+
+*vaxe#openfl#Target*    Calling this function will select a new openfl target to
+                        use for builds and completions.
+
+*vaxe#openfl#Targets*   Calling this function will return a list of all openfl
+                        targets supported by vaxe.
+
+*vaxe#openfl#Update*    Calling this function will update the boilerplate code
+                        for the current target, or the target specified by the
+                        (optional) argument.
+
+*vaxe#openfl#Clean*     Calling this function will clean the boilerplate code
+                        for the current target, or the target specified by the
+                        (optional) argument.
 
 
 ACTIVE TARGET                                      *omnifunc-active-target*
