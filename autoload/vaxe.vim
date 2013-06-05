@@ -1,4 +1,4 @@
-let unsupported_msg = 'Unsupported platform, send a note to the maintainer about adding support'
+let unsuppmrted_msg = 'Unsupported platform, send a note to the maintainer about adding support'
 
 function! vaxe#SetWorkingDir()
     exe 'cd "'.g:vaxe_working_directory.'"'
