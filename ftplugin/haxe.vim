@@ -11,13 +11,8 @@ if g:vaxe_cache_server_enable && ! exists('g:vaxe_cache_server_pid')
 endif
 
 "Load the first time a haxe file is opened
-let g:vaxe_python_script_loaded = 0
-if !has("python") && g:vaxe_python_script_loaded == 0
-    echomsg 'Vaxe requires python for a lot of functionality.  '
-                \'Please use a version of vim compiled with python support'
-else
-    " Utility variable that stores the directory that this script resides in
-    let s:plugin_path = escape(expand('<sfile>:p:h') . '/../python/', '\')
-    exe 'pyfile '.s:plugin_path.'/vaxe.py'
-endif
-let g:vaxe_python_script_loaded = 1
+" let g:vaxe_python_script_loaded = 0
+"
+" Utility variable that stores the directory that this script resides in
+let s:plugin_path = escape(expand('<sfile>:p:h') . '/../python/', '\')
+exe 'pyfile '.s:plugin_path.'/vaxe.py'
