@@ -7,7 +7,6 @@
 " Please check :help haxe.vim for comments on some of the options available.
 
 "set errorformat=%f\:%l\:\ characters\ %c-%*[^\ ]\ %m,%f\:%l\:\ %m
-set errorformat=%f\:%l\:\ characters\ %c-%*[^\ ]\ %m,%f\:%l\:\ %m
 
 " Quit when a syntax file was already loaded
 if !exists("main_syntax")
