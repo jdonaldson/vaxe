@@ -31,7 +31,7 @@ To update:
     `Bundle 'jdonaldson/vaxe'`
 3. Run `:BundleInstall`
 
-To update, just run `:BundleInstall!`
+To update, just run `:BundleUpdate`
 
 # Install with VAM
 
