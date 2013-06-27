@@ -28,7 +28,8 @@ syntax and support for Hxml.
 Vaxe uses the Haxe compiler extensively to determine code completions, and
 generate various metadata.  The compiler, in turn, uses sequences of compiler
 directives in "hxml" files in order to specify build and output options,
-similar to gnu makefiles.
+similar to gnu makefiles.  To trigger completions manually, use CTRL-X CTRL-O
+after the period following a field or module.  This will trigger the |omnifunc|.
 
 Vaxe has two different "build modes" that designate how to find the hxml
 file, as well as how to set up the |makeprg|.  If you're working with simple
@@ -122,7 +123,7 @@ COMPILATION CACHE SERVER SUPPORT                *vaxe-cache-server*
 
 Set |g:vaxe_cache_server_enable| to 1 in order to enable a cache server for
 compilation.  The haxe compiler will cache unchanged modules, which will
-greatly speed up the compilation of larger projects. It is currently only 
+greatly speed up the compilation of larger projects. It is currently only
 supported on unix/darwin targets.
 
 Currently, it only supports unix-based systems, and is only used during
