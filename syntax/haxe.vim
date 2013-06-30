@@ -34,7 +34,7 @@ HaxeHiLink haxeError2 haxeError
 
 
 " keyword definitions
-syn keyword haxeExternal	import extern package
+syn keyword haxeExternal	import extern package using
 syn keyword haxeConditional	if else switch
 syn keyword haxeRepeat		while for do in
 syn keyword haxeBoolean		true false
