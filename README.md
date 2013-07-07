@@ -252,8 +252,10 @@ Once enabled, Neocomplcache will automatically invoke vaxe omnicompletion
 when you type a "." after a variable with fields, etc.
 
 # Acknowledgements
-* Marc Weber (marco-oweber@gmx.de) : Most of the syntax and snippets are based
-off of his [vim bundle](https://github.com/MarcWeber/vim-haxe).
+* Marc Weber (marco-oweber@gmx.de) : Most of the haxe syntax and snippets are based
+off of his [vim bundle](https://github.com/MarcWeber/vim-haxe).  Some of the hss
+functionality comes from his work on
+[scss-vim](https://github.com/cakebaker/scss-syntax.vim).
 
 * Ganesh Gunasegaran(me at itsgg.com) : I based my hxml syntax file off of [his
 version](http://lists.motion-twin.com/pipermail/haxe/2008-July/018220.html).
