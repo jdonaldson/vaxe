@@ -1,4 +1,5 @@
-Vaxe is a vim bundle for [Haxe](http://www.haxe.org).  It provides support for
+Vaxe is a vim bundle for [Haxe](http://www.haxe.org) and
+[Hss](http://ncannasse.fr/projects/hss).  It provides support for
 syntax highlighting, indenting, compiling, and many more options.  vaxe has
 "vimdoc" documentation.  You can see the current vimdoc documentation
 [here](https://raw.github.com/jdonaldson/vaxe/master/doc/vaxe.txt), as well as
@@ -117,6 +118,10 @@ If Vaxe finds that line, it will use that target to generate completions and
 perform other miscellaneous tasks.  The target that Vaxe uses is called the
 "active" target here.
 
+# HSS Support
+Vaxe will also support the [hss](http://ncannasse.fr/projects/hss) language,
+with support for syntax highlighting, and compilation to css.
+
 # Recommended Plugins/Additions/Config
 
 Vaxe will work fine on its own, but it is designed to integrate cleanly with
@@ -200,6 +205,14 @@ overview of the classes, methods, and variables in your current haxe file.  You
 do not need to call `vaxe#Ctags()` in order to use Tagbar, it works
 automatically, but only for the current vaxe buffer.
 
+## Syntastic
+
+[Syntastic](https://github.com/scrooloose/syntastic) is a popular bundle that
+enables syntax errors to be displayed in a small gutter on the left of the
+editor buffer.  I've patched Syntastic to use vaxe compilation information for
+haxe and hss, including errors and traces.  All that is necessary is to install
+the bundle.
+
 ## Neocomplcache
 
 [Neocomplcache](https://github.com/Shougo/neocomplcache) is a
@@ -209,7 +222,7 @@ since it is slow for some languages.  However, since completions are built into
 the compiler with Haxe, they are very fast.  In fact, it's possible to check
 for completions as you are typing using Neocomplcache.  Neocomplcache can be
 tricky to set up.  Here's a self-contained vimrc that gives you a minimal
-vaxe and neocomplcache config.  
+vaxe and neocomplcache config.
 
 ```viml
 " set the bundle root, and vundle directory
