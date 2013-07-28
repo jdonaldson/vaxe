@@ -146,10 +146,31 @@ preview-window``` for more details.
 Powerline ( [by Kim Silkebækken](https://github.com/lokaltog)) is a handy
 [status line](http://vimdoc.sourceforge.net/htmldoc/windows.html#status-line)
 replacement.  I think it looks better, and provides a good deal more
-functionality over a normal status line setting.  Unfortunately, Powerline is
-still fairly new, and doesn't have a plugin framework for it yet.  So, I have a
-special branch of it available [here on
-github](https://github.com/jdonaldson/vim-powerline).
+functionality over a normal status line setting.
+
+Powerline comes in two versions:
+
+[vim-powerline](https://github.com/Lokaltog/vim-powerline) (depracated) is a
+version of powerline specifically for vim.  It is necessary to use [my personal
+fork](https://github.com/jdonaldson/vim-powerline) in order for it to work
+properly with vaxe.  You can install it with any of the bundle installers.
+
+[powerline](https://github.com/Lokaltog/powerline) is the new version of
+powerline, currently in a stable beta.  In order to use this version, you need
+to install powerline as a vim bundle.  E.g.:
+
+```viml
+Bundle 'Lokaltog/powerline', {'rtp':'powerline/bindings/vim'}
+```
+
+Also see [the powerline installation
+page](https://powerline.readthedocs.org/en/latest/installation/osx.html#installation-osx)
+for more details.
+
+The new powerline vaxe plugin is currently available [from my
+repo](https://github.com/jdonaldson/linepower.vim).  Copy the configuration
+information there instead of the configuration information from the main
+powerline repo in order to enable the vaxe plugin.
 
 When it is installed, the current hxml build file will be displayed next to the
 file info.
