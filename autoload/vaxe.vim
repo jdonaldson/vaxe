@@ -21,6 +21,12 @@ function! vaxe#OpenHxml()
     endif
 endfunction
 
+" Generate a nicely formatted build file name for powerline, etc.
+function! vaxe#CurrentBuildPowerline()
+   let short_name = fnamemodify(vaxe#CurrentBuild(), ":.")
+   return "☢ " . short_name
+endfunction
+
 function! vaxe#KillCacheServer()
     if has('unix')
         call system("kill ". g:vaxe_cache_server_pid)
