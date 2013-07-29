@@ -453,7 +453,7 @@ function! s:SanitizeHxml(complete_string)
         let p = substitute(p, '^\s*-\(cmd\|xml\|v\|-times\)\s*.*', '', '')
 
         " fnameescape directives
-        let p = substitute(p, '^\s*\(--\?[a-z0-9\-]\+\)\s*\(.*\)$', '\=submatch(1)." ".fnameescape(submatch(2))', '')
+        let p = substitute(p, '^\s*\(--\?[a-z0-9\-]\+\)\s*\(.*\)$', '\=submatch(1)." ".escape(fnameescape(submatch(2)), "()")', '')
 
         call add(fixed, p)
     endfor
