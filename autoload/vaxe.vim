@@ -24,7 +24,10 @@ endfunction
 " Generate a nicely formatted build file name for powerline, etc.
 function! vaxe#CurrentBuildPowerline()
    let short_name = fnamemodify(vaxe#CurrentBuild(), ":.")
-   return "☢ " . short_name
+   if len(short_name) > 0
+      let short_name = "☢ " . short_name
+   endif
+   return short_name
 endfunction
 
 function! vaxe#KillCacheServer()
