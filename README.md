@@ -69,9 +69,6 @@ If vaxe has found your build file, you can just run the make command:
 :make
 ```
 
-Vim will compile the code, and populate the quickfix window with any errors
-that it finds.
-
 Vaxe will also specify an
 [errorformat](http://vimdoc.sourceforge.net/htmldoc/options.html#'errorformat'),
 so that errors and trace messages show up in the
