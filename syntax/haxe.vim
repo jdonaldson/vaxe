@@ -151,6 +151,7 @@ syn match   haxeNumber		 "\<\d\+\([eE][-+]\=\d\+\)\=[fFdD]\>"
 
 syn match haxeCondIf "#if\>"
 syn match haxeCondElse "#else\>"
+syn match haxeCondElseIf "#elseif\>"
 syn match haxeCondEnd "#end\>"
 
 " unicode characters
@@ -247,6 +248,7 @@ if version >= 508 || !exists("did_haxe_syn_inits")
 
   HaxeHiLink haxeCondIf Macro
   HaxeHiLink haxeCondElse Macro
+  HaxeHiLink haxeCondElseIf Macro
   HaxeHiLink haxeCondEnd Macro
   HaxeHiLink haxeCondError Error
 endif
