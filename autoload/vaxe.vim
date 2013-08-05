@@ -11,6 +11,16 @@ function! s:Log(str)
     endif
 endfunction
 
+function! vaxe#CurrentTarget()
+   if exists("g:vaxe_openfl_target")
+      return "g:vaxe_openfl_target"
+   elseif exists("g:vaxe_nme_target")
+      return "g:vaxe_nme_target"
+   else
+      return ''
+   endif
+endfunction
+
 " Utility function to open the hxml file that vaxe is using.
 function! vaxe#OpenHxml()
     let vaxe_hxml = vaxe#CurrentBuild()
@@ -362,8 +372,12 @@ endfunction
 
 " returns a list of compiler class paths
 function! vaxe#CompilerClassPaths()
+   let output_phrase = "\n--no-output"
+   if g:vaxe_completion_write_compiler_output
+      let output_phrase = ""
+   endif
    let complete_args = vaxe#CurrentBlockHxml()
-   let complete_args.= "\n"."-v"."\n"."--no-output"
+   let complete_args.= "\n"."-v".output_phrase
    let complete_args = join(split(complete_args,"\n"),' ')
    let vaxe_hxml = vaxe#CurrentBuild()
    let hxml_cd = fnamemodify(vaxe_hxml,":p:h")
@@ -506,7 +520,7 @@ endif
 function! s:HandleWriteEvent()
     let events = ''
     let old_ignore = &l:eventignore
-    if (g:vaxe_prevent_completion_bufwrite_events)
+    if (g:vaxe_completion_prevent_bufwrite_events)
         let events = "BufWritePost,BufWritePre,BufWriteCmd"
     endif
     let &l:eventignore = old_ignore
