@@ -46,16 +46,19 @@ let g:vaxe_logging             = C('g:vaxe_logging', 0)
 
 
 " completion options
-let g:vaxe_completion_alter_signature   = C('g:vaxe_completion_alter_signature', 1)
-let g:vaxe_completion_collapse_overload = C('g:vaxe_completion_collapse_overload', 0)
+let g:vaxe_completion_alter_signature
+            \= C('g:vaxe_completion_alter_signature', 1)
+let g:vaxe_completion_collapse_overload
+            \= C('g:vaxe_completion_collapse_overload', 0)
+let g:vaxe_completion_write_compiler_output
+            \= C('g:vaxe_completion_write_compiler_output', 0)
+let g:vaxe_completion_prevent_bufwrite_events
+            \= C('g:vaxe_completion_prevent_bufwrite_events',1)
 
 " cache server options
 let g:vaxe_cache_server_port      = C('g:vaxe_cache_server_port', 6878)
 let g:vaxe_cache_server_autostart = C('g:vaxe_cache_server_autostart', 1)
 
-" disable bufwrite events
-let g:vaxe_prevent_completion_bufwrite_events
-            \= C('g:vaxe_prevent_completion_bufwrite_events',1)
 
 " nme options
 let g:vaxe_nme_test_on_build     = C('g:vaxe_nme_test_on_build', 1)
