@@ -354,7 +354,13 @@ SETTINGS                                        *vaxe-settings*
     some_method [f] (arg1 : Int, arg2 : String) : Bool
 <
 
-*g:vaxe_prevent_completion_bufwrite_events*
+*g:vaxe_completion_write_compiler_ouput*
+                        Determines whether or not vaxe should let the compiler
+                        write the output generated from a completion request.
+                        Defaults to 0 (equivalent to always adding --no-output
+                        in the hxml).
+
+*g:vaxe_completion_completion_bufwrite_events*
                         vaxe uses the compiler to make completions.  This can
                         happen frequently, and causes the buffer to be written.
                         This can in turn interfere with other scripts that
