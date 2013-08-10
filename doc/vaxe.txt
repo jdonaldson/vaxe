@@ -391,7 +391,12 @@ SETTINGS                                        *vaxe-settings*
 
 *g:vaxe_cache_server_autostart*
                         Whether the server should be autostarted with vim
-                        (defaults to 1)
+                        (defaults to 1).
+
+*g:vaxe_enable_airline*
+                        Vaxe provides support for vim-airline by changing the
+                        filename display to also include the current hxml build
+                        file (defaults to 1).
 
 MISC                                            *vaxe-misc*
 

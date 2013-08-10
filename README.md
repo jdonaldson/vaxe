@@ -139,7 +139,7 @@ This will only use the menu, and not the preview window.  See ```:help
 preview-window``` for more details.
 
 Also, it is recommended that ```autowrite``` is set for haxe/hxml files.
-Otherwise, completions will not be available as you type.  See 
+Otherwise, completions will not be available as you type.  See
 ```help autowrite``` for more details.
 
 ## Powerline
@@ -151,12 +151,13 @@ functionality over a normal status line setting.
 
 Powerline comes in two versions:
 
-1) [vim-powerline](https://github.com/Lokaltog/vim-powerline) (deprecated) is a
-version of powerline specifically for vim.  It is necessary to use [my personal
-fork](https://github.com/jdonaldson/vim-powerline) in order for it to work
-properly with vaxe.  You can install it with any of the bundle installers.
 
-2) [powerline](https://github.com/Lokaltog/powerline) is the new version of
+1) [airline](https://github.com/bling/vim-airline) is a lightweight version of
+powerline that only works with vim.  Airline support is provided by default in
+vaxe.  Current support enables the display of the current hxml build file.  You
+can disable this by changing ```g:vaxe_enable_airline``` to 0.
+
+1) [powerline](https://github.com/Lokaltog/powerline) is the new version of
 powerline, currently in a stable beta.  In order to use this version, you need
 to install powerline as a vim bundle.  E.g.:
 
