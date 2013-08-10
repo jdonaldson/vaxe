@@ -157,7 +157,7 @@ powerline that only works with vim.  Airline support is provided by default in
 vaxe.  Current support enables the display of the current hxml build file.  You
 can disable this by changing ```g:vaxe_enable_airline``` to 0.
 
-1) [powerline](https://github.com/Lokaltog/powerline) is the new version of
+2) [powerline](https://github.com/Lokaltog/powerline) is the new version of
 powerline, currently in a stable beta.  In order to use this version, you need
 to install powerline as a vim bundle.  E.g.:
 
