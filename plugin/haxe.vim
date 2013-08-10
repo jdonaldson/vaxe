@@ -35,9 +35,8 @@ let g:tagbar_type_haxe = {
         \ ]
     \ }
 
-let C = function("vaxe#util#Config")
 
-" let g:vaxe_hxml_search_priority = C(g:vaxe_hxml_search_priority, ['**;
+let C = function("vaxe#util#Config")
 
 " misc options
 let g:vaxe_haxe_version        = C('g:vaxe_haxe_version', 2)
@@ -77,3 +76,7 @@ let g:vaxe_prefer_openfl = C('g:vaxe_prefer_openfl', "project.xml")
 let g:vaxe_prefer_first_in_directory = C('g:vaxe_prefer_first_in_directory', 1)
 let g:vaxe_default_parent_search_patterns = C('g:vaxe_default_parent_search_patterns'
             \, [g:vaxe_prefer_openfl, g:vaxe_prefer_nmml, g:vaxe_prefer_hxml])
+
+" plugin options
+let g:vaxe_enable_airline = C('g:vaxe_enable_airline', 1)
+
