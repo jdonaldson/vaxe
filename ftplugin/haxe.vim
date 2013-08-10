@@ -1,10 +1,6 @@
 compiler haxe
 setlocal omnifunc=vaxe#HaxeComplete
 
-if (!&autowrite)
-    echomsg "Please enable autowrite (see :help autowrite) in order for vaxe autocompletion to work naturally"
-endif
-
 let run_once = 0
 if (!run_once)
     " Start a server the first time a hx file is edited
