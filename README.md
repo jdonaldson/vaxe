@@ -97,7 +97,7 @@ function that can use the haxe compiler in order to [display field
 completions](http://haxe.org/manual/completion).  Visual Studio users will
 recognize this as being similar to "intellisense".
 
-eou can trigger an omnicompletion (C-X C-O in Insert Mode) after the period at
+You can trigger an omnicompletion (C-X C-O in Insert Mode) after the period at
 the start of a field, submodule, or class access, or after the first
 parentheses of a function invocation. See the [haxe
 documentation](http://haxe.org/manual/completion) for more details.
