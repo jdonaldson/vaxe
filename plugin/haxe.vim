@@ -78,5 +78,6 @@ let g:vaxe_default_parent_search_patterns = C('g:vaxe_default_parent_search_patt
             \, [g:vaxe_prefer_openfl, g:vaxe_prefer_nmml, g:vaxe_prefer_hxml])
 
 " plugin options
-let g:vaxe_enable_airline = C('g:vaxe_enable_airline', 1)
+let g:vaxe_enable_airline_defaults = C('g:vaxe_enable_airline_defaults', 1)
+let g:vaxe_enable_ycm_defaults = C('g:vaxe_enable_ycm_defaults', 1)
 

@@ -14,7 +14,7 @@ if (!run_once)
     exe 'pyfile '.s:plugin_path.'/vaxe.py'
 
     " load special configuration for vim-airline if it exists
-    if (exists("g:loaded_airline") && g:vaxe_enable_airline )
+    if (exists("g:loaded_airline") && g:vaxe_enable_airline_defaults )
         function! AirlineBuild()
             if &filetype == 'haxe'
                 let w:airline_section_c =
@@ -25,5 +25,11 @@ if (!run_once)
             endif
         endfunction
         call add(g:airline_statusline_funcrefs, function('AirlineBuild'))
+    endif
+
+    if (    exists("g:loaded_youcompleteme") 
+        \&& exists("g:ycm_semantic_triggers")  
+        \&& g:vaxe_enable_ycm_defaults)
+        let g:ycm_semantic_triggers['haxe'] = ['.', '('] 
     endif
 endif

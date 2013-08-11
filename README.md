@@ -236,15 +236,24 @@ editor buffer.  I've patched Syntastic to use vaxe compilation information for
 haxe and hss, including errors and traces.  All that is necessary is to install
 the bundle.
 
-## Neocomplcache
 
+## YouCompleteMe
+[YouCompleteMe](https://github.com/Valloric/YouCompleteMe) (YCM) is a bundle that
+provides completeions for c-style languages.  However, it has the ability to
+provide support for other languages as well, such as the completion methods
+provided through vaxe.  Vaxe will let YCM use its completion methods
+automatically, all that is required is that YCM (and its libraries) be compiled
+and installed. 
+
+## Neocomplcache
 [Neocomplcache](https://github.com/Shougo/neocomplcache) is a
 plugin for vim that can manage virtually any type of
 completion (omni, keyword, file, etc). It won't use omnicompletion by default
 since it is slow for some languages.  However, since completions are built into
 the compiler with Haxe, they are very fast.  In fact, it's possible to check
 for completions as you are typing using Neocomplcache.  Neocomplcache can be
-tricky to set up.  Here's a self-contained vimrc that gives you a minimal
+tricky to set up, but it runs on pure Vimscript, making it available in almost
+any modern vim distribution.  Here's a self-contained vimrc that gives you a minimal
 vaxe and neocomplcache config.
 
 ```viml

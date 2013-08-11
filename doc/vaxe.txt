@@ -1,9 +1,9 @@
 *vaxe.txt* A plugin for working with the Haxe language. For Vim version 7.3
 
-=============================================================================
+==============================================================================
 Author:  Justin Donaldson <jdonaldson@gmail.com>              *vaxe-author*
 License: WTFPL (see |vaxe-license|)
-=============================================================================
+==============================================================================
 CONTENTS                                        *vaxe-contents*
 
 |vaxe-introduction|                   Introduction and Feature Summary
@@ -14,7 +14,7 @@ CONTENTS                                        *vaxe-contents*
 
 {Incompatible with Vi}
 
-=============================================================================
+==============================================================================
 
 INTRODUCTION                                    *vaxe*
                                                 *vaxe-introduction*
@@ -57,6 +57,7 @@ file is being used for "make" and completions:
 :autocmd BufNewFile,BufRead *.hx set statusline+=\ build:\ %{vaxe#CurrentBuild()}
 <
 
+==============================================================================
 BUILD MODES                                     *vaxe-build*
 
 Default                                         *vaxe-default-mode*
@@ -118,6 +119,7 @@ openfl project                                    *vaxe-openfl-mode*
                         as well.
 
 
+==============================================================================
 
 COMPILATION CACHE SERVER SUPPORT                *vaxe-cache-server*
 
@@ -131,6 +133,8 @@ compiler-based completion requests (not for builds).
 
 The server will be killed upon exiting vim.  You can also kill it with
 |KillHaxeCompletionServer|, and start it again with |StartHaxeCompletionServer|.
+
+==============================================================================
 
 HAXE COMMANDS                                    *vaxe-commands*
 
@@ -154,6 +158,8 @@ HAXE COMMANDS                                    *vaxe-commands*
 |StartHaxeCompletionServer|
                         Starts the Haxe completion server
 
+==============================================================================
+
 NME COMMANDS                                    *vaxe-nme-commands*
 There's a number of nme-specific commands that closely match the command line
 counterparts.  NmeTarget,Clean,Update all accept an optional target argument.
@@ -169,6 +175,8 @@ one will be chosen from an input list.
 
 |NmeUpdate|             Call the |vaxe#nme#Update| function.
 
+==============================================================================
+
 OPENFL COMMANDS                                 *vaxe-openfl-commands*
 There's a number of openfl-specific commands that closely match the command
 line counterparts.  OpenflTarget,Clean,Update all accept an optional target
@@ -183,6 +191,8 @@ with OpenflTarget, one will be chosen from an input list.
 |OpenflClean|              Call the |vaxe#openfl#Clean| function.
 
 |OpenflUpdate|             Call the |vaxe#openfl#Update| function.
+
+==============================================================================
 
 FUNCTIONS                                        *vaxe-functions*
 
@@ -289,6 +299,8 @@ FUNCTIONS                                        *vaxe-functions*
                         (optional) argument.
 
 
+==============================================================================
+
 ACTIVE TARGET                                      *omnifunc-active-target*
 
 In some cases, an hxml file may specify multiple targets via a "--next"
@@ -304,6 +316,8 @@ your hxml:
 The target that vaxe uses is called the "active" target.  This target is used
 for generating completions, as well as for determining current compiler class
 paths, and for generating ctags.
+
+==============================================================================
 
 SETTINGS                                        *vaxe-settings*
 
@@ -393,10 +407,17 @@ SETTINGS                                        *vaxe-settings*
                         Whether the server should be autostarted with vim
                         (defaults to 1).
 
-*g:vaxe_enable_airline*
+*g:vaxe_enable_airline_defaults*
                         Vaxe provides support for vim-airline by changing the
                         filename display to also include the current hxml build
                         file (defaults to 1).
+
+*g:vaxe_enable_ycm_defaults*
+                        Vaxe provides support for YouCompleteMe by providing a
+                        filetype and completion trigger characters 
+                        (defaults to 1).
+                        
+==============================================================================
 
 MISC                                            *vaxe-misc*
 
@@ -404,6 +425,7 @@ Vaxe will change the errrorformat syntax if it finds "-D absolute_path" in the
 current hxml.  This -D compiler switch adds the full path for files in trace
 output, making it possible to jump to trace declarations in the quickfix
 window.
+
 
 LICENSE                                         *vaxe-license*
 
