@@ -18,8 +18,8 @@ if (!run_once)
         function! AirlineBuild()
             if &filetype == 'haxe'
                 let w:airline_section_c =
-                            \'☢ %{pathshorten(fnamemodify(vaxe#CurrentBuild(), ":."))'
-                            \. '} '
+                            \'☢ %{pathshorten(fnamemodify(vaxe#CurrentBuild(), ":."))}'
+                            \. ' [%{vaxe#CurrentBuildPlatform()}] '
                             \. g:airline_left_alt_sep
                             \.' %f%m'
             endif

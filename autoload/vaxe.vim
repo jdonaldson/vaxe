@@ -481,6 +481,27 @@ endfunction
 
 
 
+function! vaxe#CurrentBuildPlatform()
+   let block = vaxe#CurrentBlockHxml()
+   if     (block =~ "-as3")
+      return "as3"
+   elseif (block =~ "-cpp")
+      return "cpp"
+   elseif (block =~ "-cs")
+      return "cs"
+   elseif (block =~ "-js")
+      return "js"
+   elseif (block =~ "-swf")
+      return "swf"
+   elseif (block =~ "-php")
+      return "php"
+   elseif (block =~ "-neko" || block =~ "-x ")
+      return "neko"
+   else
+      return "?"
+   endif
+endfunction
+
 
 
 function! vaxe#CurrentBlockHxml()
