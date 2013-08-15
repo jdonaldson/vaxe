@@ -617,8 +617,6 @@ function! s:FormatDisplayCompletion(base)
         endif
     endfor
 
-    " There was no compiler completion.  Complete a Type
-    " Note, this is currently unreachable code
     return output
 endfunction
 
