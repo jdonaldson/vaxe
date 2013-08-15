@@ -81,3 +81,10 @@ let g:vaxe_default_parent_search_patterns = C('g:vaxe_default_parent_search_patt
 let g:vaxe_enable_airline_defaults = C('g:vaxe_enable_airline_defaults', 1)
 let g:vaxe_enable_ycm_defaults = C('g:vaxe_enable_ycm_defaults', 1)
 
+if (g:vaxe_enable_ycm_defaults)
+    if ( exists("g:ycm_semantic_triggers")  )
+        let g:ycm_semantic_triggers['haxe'] = ['.', '(']
+    else
+        let g:ycm_semantic_triggers = { 'haxe' : ['.', '('] }
+    endif
+endif

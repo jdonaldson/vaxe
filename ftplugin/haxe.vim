@@ -26,10 +26,4 @@ if (!run_once)
         endfunction
         call add(g:airline_statusline_funcrefs, function('AirlineBuild'))
     endif
-
-    if (    exists("g:loaded_youcompleteme") 
-        \&& exists("g:ycm_semantic_triggers")  
-        \&& g:vaxe_enable_ycm_defaults)
-        let g:ycm_semantic_triggers['haxe'] = ['.', '('] 
-    endif
 endif
