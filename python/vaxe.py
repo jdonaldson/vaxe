@@ -55,14 +55,19 @@ def complete(complete_output_var, output_var, base_var , alter_var, collapse_var
 
         completes = map(fieldxml2completion, fields)
     elif len(types) > 0: # function type completion
-        otype = types[0]
+        otype = types[0].text.strip()
         h = HTMLParser.HTMLParser()
         word = ' '
-        info = [h.unescape(otype.text).strip()]
+        info = [h.unescape(otype)]
         abbr = info[0]
-        if alter_sig:
+        if otype == "Dynamic":
+            completes = [{'word': word,'info':info
+                        , 'abbr': "Dynamic (Will likely cause compiler error.)"
+                        , 'dup':1}
+                        ]
+        elif alter_sig:
             abbr = alter_signature(abbr)
-        completes= [{'word':word,'info':info, 'abbr':abbr, 'dup':1}]
+            completes= [{'word': word,'info':info, 'abbr':abbr, 'dup':1}]
 
     if base != '' and base is not None:
         completes = [c for c in completes if re.search("^" + base, c['word'])]
