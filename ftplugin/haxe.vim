@@ -15,7 +15,7 @@ if (!run_once)
 
     " load special configuration for vim-airline if it exists
     if (exists("g:loaded_airline") && g:vaxe_enable_airline_defaults )
-        function! AirlineBuild()
+        function! AirlineBuild(...)
             if &filetype == 'haxe'
                 let w:airline_section_c =
                             \'☢ %{pathshorten(fnamemodify(vaxe#CurrentBuild(), ":."))}'
