@@ -1,8 +1,5 @@
-Why a separate repository?
-There are 3 plugins:
+There are a few vim plugins for Haxe:  
+1) [vaxe](https://github.com/jdonaldson/vaxe)
+2) [vim-haxe](https://github.com/MarcWeber/vim-haxe)
 
-  - vaxe
-  - vim-haxe
-  - vim-haxe-2 (this will be a merge of vaxe and vim-haxe)
-
-I want to have the perfect syntax now, cannot wait for vim-haxe-2
+This syntax file serves as a common form for syntax highlighting.
