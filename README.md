@@ -306,9 +306,9 @@ Once enabled, Neocomplcache will automatically invoke vaxe omnicompletion
 when you type a "." after a variable with fields, etc.
 
 # Acknowledgements
-* Marc Weber (marco-oweber@gmx.de) : Most of the haxe syntax and snippets are based
-off of his [vim bundle](https://github.com/MarcWeber/vim-haxe).  Some of the hss
-functionality comes from his work on
+* Marc Weber (marco-oweber@gmx.de) : Most of the early work for the bundle was
+based off of his [vim-haxe bundle](https://github.com/MarcWeber/vim-haxe).  
+Some of the hss functionality comes from his work on
 [scss-vim](https://github.com/cakebaker/scss-syntax.vim).
 
 * Ganesh Gunasegaran(me at itsgg.com) : I based my hxml syntax file off of [his
@@ -316,3 +316,6 @@ version](http://lists.motion-twin.com/pipermail/haxe/2008-July/018220.html).
 
 * Laurence Taylor (polysemantic at gmail): I based my ctags description of of [his mailing list post]
 (http://haxe.org/forum/thread/3395#nabble-td3443583)
+
+* Luca Deltodesco (luca@deltaluca.me.uk): The main Haxe syntax file is based 
+off of[his version](https://gist.github.com/deltaluca/6330630).
