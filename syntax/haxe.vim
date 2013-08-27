@@ -1,7 +1,7 @@
 " Vim syntax file
 " Language: Haxe
 " Maintainer: Luca Deltodesco <luca@deltaluca.me.uk>
-" Last Change: 2013 August 24
+" Last Change: 2013 August 26
 
 if exists("b:current_syntax")
     finish
@@ -33,7 +33,7 @@ syn keyword haxeLabel case
 syn keyword haxeConditional switch
 syn match haxeConditional "\<\#\@<!\(if\|else\)\>"
 syn keyword haxeConstant null never super this default get set
-syn keyword haxeFunction function __dollar__new
+syn keyword haxeFunction function __dollar__new new
 syn match haxeFunction "\<__[^_]\+__\>"
 syn keyword haxeKeyword untyped cast continue break return trace var
 syn match haxeKeyword "\$type"
@@ -85,16 +85,16 @@ syn match haxeOperator "|\@<!|=\?[=|]\@!"
 " ---------------
 " Did a lot of work to ensure that string interpolations are handled nicely
 syn match haxeErrorCharacter contained "\\\(x.\{0,2}\|u.\{0,4\}\|[^"'\\/nrt]\)"
-syn match haxeSpecialCharacter contained "\\\(x[a-fA-F0-9]\{2\}\|[0-7]\{3\}\|["'\\/nrt]\)"
-syn match haxeIntSpecialChar contained "\$\@<!\(\$\$\)\+\$\@!"
-syn match haxeInterpolatedIdent contained "\(\$\(\$\$\)\+\)\@<!$[a-zA-Z_][a-zA-Z_0-9]*"
+syn match haxeIntSpecialChar contained "\$\@<!\(\$\$\)\+\(\(\$\$\)\+\)\@!"
+syn match haxeInterpolatedIdent contained "\((\$\$)\+\)\@<!\$[a-zA-Z_][a-zA-Z_0-9]*"
+syn region haxeInterpolated contained start=+\((\$\$)\+\)\@<!\${+ end=+}+ contains=TOP
 syn region haxeInterpolated contained start=+\(\$\(\$\$\)\+\)\@<!${+ end=+}+ contains=TOP
 syn region haxeDString start=+"+ end=+"+ contains=haxeSpecialCharacter,haxeErrorCharacter,@Spell
-syn region haxeSString start=+'+ end=+'+ contains=haxeSpecialCharacter,haxeIntSpecialChar,haxeErrorCharacter,haxeInterpolated,haxeInterpolatedIdent,@Spell
+syn region haxeSString start=+'+ end=+'+ contains=haxeSpecialCharacter,haxeErrorCharacter,haxeIntSpecialChar,haxeInterpolatedIdent,haxeInterpolated,@Spell
 
 " int/float/bool literal
 " ----------------------
-syn match haxeInt "\<\([0-9]\+\|0x[0-9]\+\)\>"
+syn match haxeInt "\<\([0-9]\+\|0x[0-9a-fA-F]\+\)\>"
 syn match haxeFloat "\<\([\-+]\?[0-9]*\.\?[0-9]\+([eE][\-+]\?[0-9]\+)\?\)\>"
 syn keyword haxeBool true false
 
