@@ -66,6 +66,13 @@ syntax match hxmlStatement "--remap"
 syntax match hxmlStatement "--times"
 syntax match hxmlStatement "--wait"
 
+" haxe 3.0 flags
+syntax match hxmlStatement "-dce"
+syntax match hxmlStatement "-swf-lib-extern"
+syntax match hxmlStatement "-version"
+syntax match hxmlStatement "-help-metas"
+syntax match hxmlStatement "-help-defines"
+
 " Highlight them
 highlight link hxmlType Type
 highlight link hxmlStatement Statement
