@@ -506,6 +506,9 @@ endfunction
 
 function! vaxe#CurrentBlockHxml()
     let vaxe_hxml = vaxe#CurrentBuild()
+    if (!filereadable(vaxe_hxml))
+       return ''
+    endif
     let hxml_str = join(readfile(vaxe_hxml),"\n")
     return s:CurrentBlockHxml(hxml_str)
 endfunction
