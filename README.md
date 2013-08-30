@@ -318,4 +318,4 @@ version](http://lists.motion-twin.com/pipermail/haxe/2008-July/018220.html).
 (http://haxe.org/forum/thread/3395#nabble-td3443583)
 
 * Luca Deltodesco (luca@deltaluca.me.uk): The main Haxe syntax file is based 
-off of[his version](https://gist.github.com/deltaluca/6330630).
+off of [his version](https://gist.github.com/deltaluca/6330630).
