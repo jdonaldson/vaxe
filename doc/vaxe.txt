@@ -39,7 +39,7 @@ using |vaxe-project-mode|.  You can set up an autocommand to set the project
 hxml:
 
 >
-:autocmd BufNewFile,BufRead /project/* vaxe#ProjectMode("/project/project.hxml")
+:autocmd BufNewFile,BufRead /project/* vaxe#ProjectHxml("/project/project.hxml")
 <
 
 Keep in mind that the project mode will persist throughout your entire session.
