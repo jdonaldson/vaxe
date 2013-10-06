@@ -42,6 +42,13 @@ syntax match hxmlType "-v"
 syntax match hxmlType "-x"
 syntax match hxmlType "-xml"
 
+" haxe 3.0 flags
+syntax match hxmlType "-dce"
+syntax match hxmlType "-swf-lib-extern"
+syntax match hxmlType "-version"
+syntax match hxmlType "-help-metas"
+syntax match hxmlType "-help-defines"
+
 " advanced flags
 syntax match hxmlStatement "--connect"
 syntax match hxmlStatement "--cwd"
@@ -66,12 +73,6 @@ syntax match hxmlStatement "--remap"
 syntax match hxmlStatement "--times"
 syntax match hxmlStatement "--wait"
 
-" haxe 3.0 flags
-syntax match hxmlStatement "-dce"
-syntax match hxmlStatement "-swf-lib-extern"
-syntax match hxmlStatement "-version"
-syntax match hxmlStatement "-help-metas"
-syntax match hxmlStatement "-help-defines"
 
 " Highlight them
 highlight link hxmlType Type
