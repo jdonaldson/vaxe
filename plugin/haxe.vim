@@ -19,6 +19,10 @@ command -nargs=? -complete=customlist,vaxe#openfl#Targets OpenflTarget call vaxe
 command -nargs=? -complete=customlist,vaxe#openfl#Targets OpenflClean  call vaxe#openfl#Clean(<q-args>)
 command -nargs=? -complete=customlist,vaxe#openfl#Targets OpenflUpdate call vaxe#openfl#Update(<q-args>)
 
+# Completion Server Commands
+command VaxeStopCompletionServer call vaxe#KillCacheServer()
+command VaxeStartCompletionServer call vaxe#StartCacheServer()
+
 command -buffer HaxeCtags call vaxe#Ctags()
 
 autocmd FileType haxe setlocal commentstring=//%s

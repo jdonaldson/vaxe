@@ -194,6 +194,15 @@ with OpenflTarget, one will be chosen from an input list.
 
 ==============================================================================
 
+VAXE COMPLETION SERVER COMMANDS         *vaxe-completion-server-commands*
+These are commands for starting and stopping the completion server.  If you
+wish to set defaults for the completion server, check |cache server settings|.
+
+|VaxeStartServer|       Starts the completion server
+|VaxeStopServer|        Stops the completion server
+
+==============================================================================
+
 FUNCTIONS                                        *vaxe-functions*
 
 *vaxe#CompilerClassPaths*
@@ -394,7 +403,7 @@ SETTINGS                                        *vaxe-settings*
                         from "nme help" and |vaxe#nme#Targets| for more details.
 
 
-*g:vaxe_cache_server_enable*
+*g:vaxe_cache_server_enable*                    *cache server settings*
                         Vaxe will enable the usage of a haxe compilation cache
                         server, which currently is used only for completions,
                         and defaults to 0.
