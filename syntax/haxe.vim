@@ -111,7 +111,7 @@ syn match haxePreError "#error"
 
 " regex
 " -----
-syn region haxeRegex start=+\~\/+ end=+\/+ contains=haxeSpecialCharacter,haxeErrorCharacter,@Spell
+syn region haxeRegex start=+\~\/+ end=+\/+ contains=haxeSpecialCharacter,@Spell
 
 " meta
 " ----
