@@ -115,7 +115,7 @@ syn region haxeRegex start=+\~\/+ end=+\/+ contains=haxeRegexEscape,haxeRegexErr
 
 " Order is important here. The second line selectively overrides the first.
 syn match haxeRegexError contained "\\."
-syn match haxeRegexEscape contained "\\[bdnrstwxBDSW(){}\[\]\\$^*\-+|./?]"
+syn match haxeRegexEscape contained "\\[0-9bdnrstwxBDSW(){}\[\]\\$^*\-+|./?]"
 
 " meta
 " ----
