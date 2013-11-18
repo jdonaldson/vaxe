@@ -113,8 +113,7 @@ syn match haxePreError "#error"
 " -----
 syn region haxeRegex start=+\~\/+ end=+\/+ contains=haxeRegexEscape,haxeRegexError,@Spell
 
-" Order is important here. The second line selectively overrides the first.
-syn match haxeRegexError contained "\\."
+syn match haxeRegexError contained "\\[^0-9bdnrstwxBDSW(){}\[\]\\$^*\-+|./?]"
 syn match haxeRegexEscape contained "\\[0-9bdnrstwxBDSW(){}\[\]\\$^*\-+|./?]"
 
 " meta
