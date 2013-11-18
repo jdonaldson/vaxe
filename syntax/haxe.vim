@@ -111,7 +111,11 @@ syn match haxePreError "#error"
 
 " regex
 " -----
-syn region haxeRegex start=+\~\/+ end=+\/+ contains=haxeSpecialCharacter,@Spell
+syn region haxeRegex start=+\~\/+ end=+\/+ contains=haxeRegexEscape,haxeRegexError,@Spell
+
+" Order is important here. The second line selectively overrides the first.
+syn match haxeRegexError contained "\\."
+syn match haxeRegexEscape contained "\\[bdnrstwxBDSW(){}\[\]\\$^*\-+|./?]"
 
 " meta
 " ----
@@ -125,7 +129,9 @@ HaxeHiLink haxeDString String
 HaxeHiLink haxeSString Character
 HaxeHiLink haxeSpecialCharacter SpecialChar
 HaxeHiLink haxeIntSpecialChar SpecialChar
+HaxeHiLink haxeRegexEscape SpecialChar
 HaxeHiLink haxeErrorCharacter Error
+HaxeHiLink haxeRegexError Error
 HaxeHiLink haxeInterpolatedIdent Normal
 HaxeHiLink haxeInterpolated Normal
 HaxeHiLink haxeError Error
