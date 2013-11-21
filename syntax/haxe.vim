@@ -111,10 +111,14 @@ syn match haxePreError "#error"
 
 " regex
 " -----
+<<<<<<< HEAD
 syn region haxeRegex start=+\~\/+ end=+\/+ contains=haxeRegexEscape,haxeRegexError,@Spell
 
 syn match haxeRegexError contained "\\[^0-9bdnrstwxBDSW(){}\[\]\\$^*\-+|./?]"
 syn match haxeRegexEscape contained "\\[0-9bdnrstwxBDSW(){}\[\]\\$^*\-+|./?]"
+=======
+syn region haxeRegex start=+\~\/+ end=+\/+ contains=haxeSpecialCharacter,@Spell
+>>>>>>> d0785536d592998c72a520bfe16b2667f798a480
 
 " meta
 " ----
