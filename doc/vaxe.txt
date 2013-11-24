@@ -123,7 +123,7 @@ openfl project                                    *vaxe-openfl-mode*
 
 COMPILATION CACHE SERVER SUPPORT                *vaxe-cache-server*
 
-Set |g:vaxe_cache_server_enable| to 1 in order to enable a cache server for
+Set |g:vaxe_cache_server| to 1 in order to enable a cache server for
 compilation.  The haxe compiler will cache unchanged modules, which will
 greatly speed up the compilation of larger projects. It is currently only
 supported on unix/darwin targets.
@@ -403,7 +403,7 @@ SETTINGS                                        *vaxe-settings*
                         from "nme help" and |vaxe#nme#Targets| for more details.
 
 
-*g:vaxe_cache_server_enable*                    *cache server settings*
+*g:vaxe_cache_server*                               *cache server settings*
                         Vaxe will enable the usage of a haxe compilation cache
                         server, which currently is used only for completions,
                         and defaults to 0.
@@ -416,6 +416,17 @@ SETTINGS                                        *vaxe-settings*
                         Whether the server should be autostarted with vim
                         (defaults to 1).
 
+*g:vaxe_completion_disable_optimizations*
+                        This setting adds "-D no-copt" to hxml, which will
+                        disable certain optimizations the haxe compiler uses
+                        to determine completions. By default, this is 1. 
+
+*g:vaxe_trace_absolute_path*
+                        This setting adds "-D absolute_path" to hxml, which 
+                        will enable the output of absolute path in trace
+                        messages, etc. By default, this is 1.
+
+                                                    *third party settings*
 *g:vaxe_enable_airline_defaults*
                         Vaxe provides support for vim-airline by changing the
                         filename display to also include the current hxml build

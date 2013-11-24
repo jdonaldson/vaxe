@@ -352,7 +352,6 @@ function! vaxe#SetCompiler()
                     \. "haxe " . escaped_hxml . " 2>&1"
         if filereadable(vaxe_hxml)
             let lines = readfile(vaxe_hxml)
-            let abspath = filter(lines, 'v:val =~ "\\s*-D\\s*absolute_path"')
         endif
     endif
 
@@ -361,12 +360,13 @@ function! vaxe#SetCompiler()
                 \,%E%f:%l: characters %c-%*[0-9] : %m
                 \,%E%f:%l: lines %*[0-9]-%*[0-9] : %m"
 
-    " if -D absolute_path is specified, then traces contain path information,
-    " and errorfmt can use the file/folder location
-    if (len(abspath)> 0)
+    " if g:vaxe_trace_absolute_path is specified, then traces contain useful
+    " path information, and errorfmt can use it to jump to the file/folder
+    " location
+    if (g:vaxe_trace_absolute_path)
         let &l:errorformat .= ",%I%f:%l: %m"
     endif
-    " general catch all regex that will grab misc stdout
+    " generic catch-all regex that will grab misc stdout
     let &l:errorformat .= ",%I%m"
 endfunction
 
@@ -451,8 +451,17 @@ function! s:CurrentBlockHxml(hxml_str)
     if len(complete) == 0
         let complete = parts
     endif
+    let result = complete[0]
 
-    return s:SanitizeHxml(complete[0])
+    " add some optional hxml commands that are useful for vaxe
+    if (g:vaxe_trace_absolute_path)
+        let result = result .  "\n-D absolute_path"
+    endif
+    if (g:vaxe_completion_disable_optimizations)
+        let result = result .  "\n-D no-copt"
+    endif
+
+    return s:SanitizeHxml(result)
 endfunction
 
 
@@ -491,6 +500,8 @@ function! vaxe#CurrentBuildPlatform()
       return "cs"
    elseif (block =~ "-js")
       return "js"
+   elseif (block =~ "-java")
+      return "java"
    elseif (block =~ "-swf")
       return "swf"
    elseif (block =~ "-php")
@@ -498,7 +509,7 @@ function! vaxe#CurrentBuildPlatform()
    elseif (block =~ "-neko" || block =~ "-x ")
       return "neko"
    else
-      return "?"
+      return "unknown"
    endif
 endfunction
 
@@ -517,7 +528,7 @@ endfunction
 function! s:CompletionHxml(file_name, byte_count)
     " the stripped down haxe compiler command (no -cmd, etc.)
     let stripped = vaxe#CurrentBlockHxml()
-    if (g:vaxe_cache_server_enable)
+    if (g:vaxe_cache_server)
         " let stripped \. stripped " the stripped hxml
         let stripped = "--cwd " . fnameescape(g:vaxe_working_directory)
                     \. " \n--connect "

@@ -4,7 +4,7 @@ setlocal omnifunc=vaxe#HaxeComplete
 let run_once = 0
 if (!run_once)
     " Start a server the first time a hx file is edited
-    if g:vaxe_cache_server_enable && ! exists('g:vaxe_cache_server_pid')
+    if g:vaxe_cache_server && ! exists('g:vaxe_cache_server_pid')
         call vaxe#StartCacheServer()
     endif
 
