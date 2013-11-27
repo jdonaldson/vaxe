@@ -31,7 +31,7 @@ function! vaxe#nme#ProjectNmml(...)
             let base_nmml = vaxe#util#InputList("Select Nmml", nmmls)
         endif
 
-        if base_nmml !~ "^//"
+        if base_nmml !~ "^\([a-zA-Z]:\)\=[/\\]"
             let base_nmml = getcwd() . '/' . base_nmml
         endif
 
