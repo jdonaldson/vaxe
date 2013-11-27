@@ -205,7 +205,7 @@ function! vaxe#ProjectHxml(...)
             let base_hxml = vaxe#util#InputList("Select Hxml", hxmls)
         endif
 
-        if base_hxml !~ "^//"
+        if base_hxml !~ "^\([a-zA-Z]:\)\=[/\\]"
             let base_hxml = getcwd() . '/' . base_hxml
         endif
         let g:vaxe_hxml = base_hxml
@@ -268,7 +268,7 @@ function! vaxe#DefaultHxml(...)
             else
                 let base_build = vaxe#util#InputList(base_builds, "Select build file")
             endif
-            if base_build !~ '^/'
+            if base_build !~ '^\([a-zA-Z]:\)\=[/\\]'
                 let base_build = getcwd() . '/' . base_build
             endif
 

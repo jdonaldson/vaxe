@@ -31,7 +31,7 @@ function! vaxe#openfl#ProjectOpenfl(...)
             let base_openfl = vaxe#util#InputList("Select Openfl", openfls)
         endif
 
-        if base_openfl !~ "^//"
+        if base_openfl !~ "^\([a-zA-Z]:\)\=[/\\]"
             let base_openfl = getcwd() . '/' . base_openfl
         endif
 
