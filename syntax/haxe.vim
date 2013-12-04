@@ -121,6 +121,8 @@ syn match haxeRegexEscape contained "\\[0-9bdnrstwxBDSW(){}\[\]\\$^*\-+|./?]"
 syn match haxeMeta "@:\?[a-zA-Z_][a-zA-Z_0-9]*\>"
 syn match haxeCompilerMeta "@:\(abstract\|access\|allow\|annotation\|arrayAccess\|autoBuild\|bind\|bitmap\|build\|buildXml\|classCode\|commutative\|compilerGenerated\|coreApi\|coreType\|cppFileCode\|cppNamespaceCode\|debug\|decl\|defParam\|depend\|deprecated\|expose\|extern\|fakeEnum\|file\|final\|font\|from\|functionCode\|functionTailCode\|generic\|getter\|hack\|headerClassCode\|headerCode\|headerNamespaceCode\|hxGen\|ifFeature\|include\|initPackage\|internal\|isVar\|keep\|keepInit\|keepSub\|macro\|meta\|multiType\|native\|nativeGen\|noCompletion\|noDebug\|noDoc\|noImportGlobal\|noPackageRestrict\|noStack\|noUsing\|notNull\|ns\|op\|optional\|overload\|privateAccess\|protected\|public\|publicFields\|readOnly\|remove\|require\|rtti\|runtime\|runtimeValue\|setter\|sound\|struct\|suppressWarnings\|throws\|to\|transient\|unifyMinDynamic\|unreflective\|unsafe\|usage\|volatile\)\>"
 
+syn sync ccomment haxeComment2 minlines=10
+
 HaxeHiLink haxeMeta Macro
 HaxeHiLink haxeCompilerMeta Identifier
 HaxeHiLink haxeRegex String
