@@ -85,6 +85,7 @@ syn match haxeOperator "|\@<!|=\?[=|]\@!"
 " ---------------
 " Did a lot of work to ensure that string interpolations are handled nicely
 syn match haxeErrorCharacter contained "\\\(x.\{0,2}\|u.\{0,4\}\|[^"'\\/nrt]\)"
+syn match haxeSpecialCharacter contained "\\\(x[a-fA-F0-9]\{2\}\|[0-7]\{3\}\|["'\\/nrt]\)"
 syn match haxeIntSpecialChar contained "\$\@<!\(\$\$\)\+\(\(\$\$\)\+\)\@!"
 syn match haxeInterpolatedIdent contained "\((\$\$)\+\)\@<!\$[a-zA-Z_][a-zA-Z_0-9]*"
 syn region haxeInterpolated contained start=+\((\$\$)\+\)\@<!\${+ end=+}+ contains=TOP
