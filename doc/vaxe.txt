@@ -320,7 +320,7 @@ vaxe will use the first section it finds in order to generate completions.
 It is possible to specify a different target by inserting a line like this into
 your hxml:
 >
-    # vaxe
+    # display completions
 <
 The target that vaxe uses is called the "active" target.  This target is used
 for generating completions, as well as for determining current compiler class
