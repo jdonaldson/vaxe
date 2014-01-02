@@ -75,17 +75,11 @@ so that errors and trace messages show up in the
 [quickfix](http://vimdoc.sourceforge.net/htmldoc/quickfix.html#quickfix)
 window.
 
-## NME Project Support
-![Nme](http://i.imgur.com/rc8vLi2.png)
-
-Vaxe supports [NME](http://www.nme.io) workflows.  If an Nmml project is
-found, Vaxe will use it for builds and completions. You can specify a default
-target if you only work with one platform.
-
 ## Lime Project Support
+![Lime](http://i.imgur.com/rc8vLi2.png)
 
 Vaxe supports [Lime](https://github.com/openfl/lime)
-workflows.  If an Lime project is found, Vaxe will use it for builds and
+workflows.  If a Lime project is found, Vaxe will use it for builds and
 completions. You can specify a default target if you only work with one
 platform.
 
