@@ -12,10 +12,8 @@ function! s:Log(str)
 endfunction
 
 function! vaxe#CurrentTarget()
-   if exists("g:vaxe_openfl_target")
-      return "g:vaxe_openfl_target"
-   elseif exists("g:vaxe_nme_target")
-      return "g:vaxe_nme_target"
+   if exists("g:vaxe_lime_target")
+      return "g:vaxe_lime_target"
    else
       return ''
    endif
@@ -220,10 +218,10 @@ endfunction
 
 
 " A function that runs on a hx filetype load.  It will set the default hxml
-" path if the project hxml or nmml are not set.
+" path if the project hxml or lime are not set.
 function! vaxe#AutomaticHxml()
-    if exists ("g:vaxe_nmml")
-        call vaxe#nme#ProjectNmml(g:vaxe_nmml)
+    if exists ("g:vaxe_lime")
+        call vaxe#lime#ProjectLime(g:vaxe_lime)
     elseif exists('g:vaxe_hxml')
         call vaxe#ProjectHxml(g:vaxe_hxml)
     else
@@ -240,27 +238,22 @@ function! vaxe#DefaultHxml(...)
         unlet b:vaxe_hxml
     endif
 
-    if exists('b:vaxe_nmml')
-        unlet b:vaxe_nmml
+    if exists('b:vaxe_lime')
+       unlet b:vaxe_lime
     endif
-
-    if exists('b:vaxe_openfl')
-       unlet b:vaxe_openfl
-    endif
-
-    "First check if an hxml/nmml was passed explicitly
+lkj
+    "First check if an hxml/lime was passed explicitly
     if a:0 > 0 && a:1 != ''
         if match(a:1,'\.hxml$')
             let b:vaxe_hxml = a:1
-        elseif match(a:1,'\.nmml$' )
-            let b:vaxe_nmml = a:1
-        elseif match(a:1,'\.xml$' )
-            let b:vaxe_openfl = a:1
+        elseif match(a:1,'\.lime$' )
+            let b:vaxe_lime = a:1
         endif
-    else " check if there's an nmml in the parent roots...
+    else " check if there's a lime in the parent roots...
         let base_build = vaxe#util#ParentSearch(
                     \ g:vaxe_default_parent_search_patterns
                     \ , fnamemodify(expand("%"),":p:h"))
+        echomsg
         if (base_build != '')
             let base_builds = split(base_build,'\n')
             if g:vaxe_prefer_first_in_directory
@@ -272,12 +265,9 @@ function! vaxe#DefaultHxml(...)
                 let base_build = getcwd() . '/' . base_build
             endif
 
-            if base_build =~ '\.xml'
-               let b:vaxe_openfl = base_build
-               call vaxe#openfl#BuildOpenflHxml()
-            elseif base_build =~'\.nmml'
-               let b:vaxe_nmml = base_build
-               call vaxe#nme#BuildNmmlHxml()
+            if base_build =~ '\.lime'
+               let b:vaxe_lime = base_build
+               call vaxe#lime#BuildLimeHxml()
             else
                 let b:vaxe_hxml = base_build
             endif
@@ -330,20 +320,13 @@ function! vaxe#SetCompiler()
     let abspath = []
     let escaped_wd = fnameescape(g:vaxe_working_directory)
 
-    if exists("g:vaxe_openfl")
+    if exists("g:vaxe_lime")
         let build_verb = "build"
-        if g:vaxe_openfl_test_on_build
+        if g:vaxe_lime_test_on_build
             let build_verb = "test"
         endif
         let build_command = "cd " . escaped_wd . " && "
-                    \."openfl ".build_verb." ". g:vaxe_openfl_target . " 2>&1"
-    elseif exists("g:vaxe_nmml")
-        let build_verb = "build"
-        if g:vaxe_nme_test_on_build
-            let build_verb = "test"
-        endif
-        let build_command = "cd " . escaped_wd . " && "
-                    \."nme ".build_verb." ". g:vaxe_nme_target . " 2>&1"
+                    \."lime ".build_verb." ". g:vaxe_lime_target . " 2>&1"
     else
         let vaxe_hxml = vaxe#CurrentBuild()
         let escaped_hxml = fnameescape(vaxe_hxml)

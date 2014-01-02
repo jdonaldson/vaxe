@@ -82,10 +82,10 @@ Vaxe supports [NME](http://www.nme.io) workflows.  If an Nmml project is
 found, Vaxe will use it for builds and completions. You can specify a default
 target if you only work with one platform.
 
-## Openfl Project Support
+## Lime Project Support
 
-Vaxe supports [Openfl](https://github.com/openfl/openfl/wiki/Get-Started)
-workflows.  If an Openfl project is found, Vaxe will use it for builds and
+Vaxe supports [Lime](https://github.com/openfl/lime)
+workflows.  If an Lime project is found, Vaxe will use it for builds and
 completions. You can specify a default target if you only work with one
 platform.
 

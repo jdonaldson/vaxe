@@ -20,18 +20,18 @@ command -nargs=? -complete=customlist,vaxe#nme#Targets NmeClean
 command -nargs=? -complete=customlist,vaxe#nme#Targets NmeUpdate 
             \ call vaxe#nme#Update(<q-args>)
 
-" Openfl commands
-command -nargs=? -complete=file ProjectOpenfl 
-            \ call vaxe#openfl#ProjectOpenfl(<q-args>)
+" Lime commands
+command -nargs=? -complete=file ProjectLime 
+            \ call vaxe#lime#ProjectLime(<q-args>)
 
-command -nargs=? -complete=customlist,vaxe#openfl#Targets OpenflTarget 
-            \ call vaxe#openfl#Target(<q-args>)
+command -nargs=? -complete=customlist,vaxe#lime#Targets LimeTarget 
+            \ call vaxe#lime#Target(<q-args>)
 
-command -nargs=? -complete=customlist,vaxe#openfl#Targets OpenflClean  
-            \ call vaxe#openfl#Clean(<q-args>)
+command -nargs=? -complete=customlist,vaxe#lime#Targets LimeClean  
+            \ call vaxe#lime#Clean(<q-args>)
 
-command -nargs=? -complete=customlist,vaxe#openfl#Targets OpenflUpdate 
-            \ call vaxe#openfl#Update(<q-args>)
+command -nargs=? -complete=customlist,vaxe#lime#Targets LimeUpdate 
+            \ call vaxe#lime#Update(<q-args>)
 
 " Completion Server Commands
 command VaxeStopCompletionServer call vaxe#KillCacheServer()
@@ -79,25 +79,24 @@ let g:vaxe_completion_prevent_bufwrite_events
 let g:vaxe_cache_server_port      = C('g:vaxe_cache_server_port', 6878)
 let g:vaxe_cache_server_autostart = C('g:vaxe_cache_server_autostart', 1)
 
-
 " nme options
 let g:vaxe_nme_test_on_build     = C('g:vaxe_nme_test_on_build', 1)
 let g:vaxe_nme_target            = C('g:vaxe_nme_target',"")
 let g:vaxe_nme_completion_target = C('g:vaxe_nme_completion_target', 'flash')
 
-" openfl options
-let g:vaxe_openfl_test_on_build     = C('g:vaxe_nme_test_on_build', 1)
-let g:vaxe_openfl_target            = C('g:vaxe_nme_target',"")
-let g:vaxe_openfl_completion_target = C('g:vaxe_nme_completion_target', 'flash')
+" lime options
+let g:vaxe_lime_test_on_build     = C('g:vaxe_nme_test_on_build', 1)
+let g:vaxe_lime_target            = C('g:vaxe_nme_target',"")
+let g:vaxe_lime_completion_target = C('g:vaxe_nme_completion_target', 'flash')
 
 " default build options
 let g:vaxe_prefer_hxml = C('g:vaxe_prefer_hxml', "build.hxml")
 let g:vaxe_prefer_nmml = C('g:vaxe_prefer_nmml', "*.nmml")
-let g:vaxe_prefer_openfl = C('g:vaxe_prefer_openfl', "project.xml")
+let g:vaxe_prefer_lime = C('g:vaxe_prefer_lime', "*.lime")
 let g:vaxe_prefer_first_in_directory = C('g:vaxe_prefer_first_in_directory', 1)
 let g:vaxe_default_parent_search_patterns 
             \= C('g:vaxe_default_parent_search_patterns'
-            \, [g:vaxe_prefer_openfl, g:vaxe_prefer_nmml, g:vaxe_prefer_hxml])
+            \, [g:vaxe_prefer_lime, g:vaxe_prefer_nmml, g:vaxe_prefer_hxml])
 
 " Supported 3rd party plugin options
 let g:vaxe_enable_airline_defaults = C('g:vaxe_enable_airline_defaults', 1)
