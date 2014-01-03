@@ -28,7 +28,7 @@ function! vaxe#lime#ProjectLime(...)
             " look for legacy xml files as well...
             let limes = split(glob("**/*.xml"),'\n')
             if len(limes) == 0
-                echoerr "No lime files found in current working directory"
+                echoerr "No lime/openfl project files found in current working directory"
                 return
             end
         endif 
