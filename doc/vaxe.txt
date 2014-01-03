@@ -85,28 +85,13 @@ Project                                         *vaxe-project-mode*
                         assumes that you will keep the same working directory
                         throughout your vim session.
 
-nme project                                      *vaxe-nme-mode*
-                        This mode is used when |vaxe#nme#ProjectNmml| is
-                        called, or if an nmml file is detected on startup.  it
-                        will set a g:vaxe_nmml variable that will override any
-                        b:vaxe_nmml variables set by the default method.  it
-                        also sets a |makeprg| that simply executes the nme
-                        command in the working directory, and redirects errors
-                        to standard out.  Nme mode assumes that you will keep
-                        the same working directory throughout your vim session.
-                        when this mode is active, an hxml file is generated
-                        that contains information used for completions.  it
-                        will be named the same as the selectd nmml file, and be
-                        located in the same directory, but will have an hxml
-                        extension.
 
-
-lime project                                    *vaxe-lime-mode*
+Lime Project                                    *vaxe-lime-mode*
                         This mode is used when |vaxe#lime#ProjectLime| is
-                        called, or if an nmml file is detected on startup.  it
+                        called, or if an lime file is detected on startup.  it
                         will set a g:vaxe_lime variable that will override any
                         b:vaxe_lime variables set by the default method.  it
-                        also sets a |makeprg| that simply executes the nme
+                        also sets a |makeprg| that simply executes the lime 
                         command in the working directory, and redirects errors
                         to standard out.  Lime mode assumes that you will keep
                         the same working directory throughout your vim session.
@@ -114,10 +99,7 @@ lime project                                    *vaxe-lime-mode*
                         that contains information used for completions.  it
                         will be named the same as the selectd lime file, and be
                         located in the same directory, but will have an hxml
-                        extension. Currently, this mode is near identical to
-                        nme project mode, and lime can be used on nmml files
-                        as well.
-
+                        extension. 
 
 ==============================================================================
 
@@ -140,7 +122,7 @@ HAXE COMMANDS                                    *vaxe-commands*
 
 |DefaultHXML|           Call the |vaxe#DefaultHxml| function.  Accepts an
                         optional single argument that will specify the hxml or
-                        nmml to use.
+                        lime project file to use.
 
 |ProjectHXML|           Call the |vaxe#ProjectHxml| function. Accepts an
                         optional single argument that will specify the hxml to
@@ -160,31 +142,15 @@ HAXE COMMANDS                                    *vaxe-commands*
 
 ==============================================================================
 
-NME COMMANDS                                    *vaxe-nme-commands*
-There's a number of nme-specific commands that closely match the command line
-counterparts.  NmeTarget,Clean,Update all accept an optional target argument.
-The argument can be tab-completed.  If a target is not specified with NmeTarget,
-one will be chosen from an input list.
-
-|ProjectNmml|           Call the |vaxe#ProjectNmml| function.  Accepts an
-                        optional single argument that will specify the nmml to
-
-|NmeTarget|             Call the |vaxe#nme#Target| function.
-
-|NmeClean|              Call the |vaxe#nme#Clean| function.
-
-|NmeUpdate|             Call the |vaxe#nme#Update| function.
-
-==============================================================================
-
 LIME COMMANDS                                 *vaxe-lime-commands*
 There's a number of lime-specific commands that closely match the command
 line counterparts.  LimeTarget,Clean,Update all accept an optional target
 argument.  The argument can be tab-completed.  If a target is not specified
 with LimeTarget, one will be chosen from an input list.
 
-|ProjectLime|         Call the |vaxe#ProjectLime| function.  Accepts an
-                        optional single argument that will specify the nmml to
+|ProjectLime|            Call the |vaxe#ProjectLime| function.  Accepts an
+                         optional single argument that will specify the lime to
+                         use
 
 |LimeTarget|             Call the |vaxe#lime#Target| function.
 
@@ -225,7 +191,7 @@ FUNCTIONS                                        *vaxe-functions*
                         parents of the working directory. This function is
                         called automatically whenever any hx file is opened.
                         Accepts a single optional argument that will specify
-                        the hxml (or nmml) to use.
+                        the hxml (or lime project) to use.
 
 *vaxe#HaxeComplete*     The |omnifunc| provided for vaxe.
 
@@ -246,15 +212,6 @@ FUNCTIONS                                        *vaxe-functions*
                             map <leader>ph : call vaxe#ProjectHxml()<CR>
                         <
 
-*vaxe#nme#ProjectNmml*      Find and select nmml files in the working directory.
-                        Selecting a file with this method will enter
-                        |vaxe-nme-mode|.  If you have installed |tlib|,
-                        then it will use |tlib#input#List| to select hxml
-                        candidates. If you call this often, it makes sense to
-                        map it to a leader action:
-                        >
-                            map <leader>pn : call vaxe#ProjectNmml()<CR>
-                        <
 
 *vaxe#ImportClass*      Calling this function on a given line will try to
                         import any classes that are given for the line.  E.g.
@@ -277,20 +234,6 @@ FUNCTIONS                                        *vaxe-functions*
                         >
                             var l = new FastList<Int>();
                         >
-
-*vaxe#nme#Target*       Calling this function will select a new nme target to
-                        use for builds and completions.
-
-*vaxe#nme#Targets*      Calling this function will return a list of all nme
-                        targets supported by vaxe.
-
-*vaxe#nme#Update*       Calling this function will update the boilerplate code
-                        for the current target, or the target specified by the
-                        (optional) argument.
-
-*vaxe#nme#Clean*        Calling this function will clean the boilerplate code
-                        for the current target, or the target specified by the
-                        (optional) argument.
 
 
 *vaxe#lime#Target*    Calling this function will select a new lime target to
@@ -332,13 +275,16 @@ SETTINGS                                        *vaxe-settings*
 
 
 *g:vaxe_prefer_hxml*    The name of the hxml file/glob to search for and use
-                        automatically.  The default is "build.hxml".
+                        automatically.  The default is "*.hxml".
 
-*g:vaxe_prefer_nmml*    The name of the nmml file/glob to search for and use
-                        automatically.  The default is "*.nmml".
+*g:vaxe_prefer_lime*    The name of the lime file/glob to search for and use
+                        automatically.  The default is "*.lime".
 
-*g:vaxe_prefer_lime*  The name of the lime file/glob to search for and use
+*g:vaxe_prefer_openfl*  The name of the openfl file/glob to search for and use
                         automatically.  The default is "project.xml".
+                        NOTE: this is a legacy file type that lime can still 
+                        handle, it is recommended to use a *.lime file when 
+                        possible.
 
 *g:vaxe_prefer_first_in_directory*
                         When vaxe finds more than one build file in a directory,
@@ -348,17 +294,17 @@ SETTINGS                                        *vaxe-settings*
 
 *g:vaxe_default_parent_search_patterns*
                         This is a list of |glob| patterns that vaxe uses to
-                        determine which hxml (or nmml) file to use on startup.
+                        determine which hxml (or lime) file to use on startup.
                         The default is:
                         >
-                        [g:vaxe_prefer_lime, g:vaxe_prefer_nmml, g:vaxe_prefer_hxml]
+                        [g:vaxe_prefer_lime, , g:vaxe_prefer_hxml]
                         <
 
                         Note that vaxe will search recursively through
                         each parent directory, and stop at the first file that
                         matches the pattern.  E.g., by default, vaxe will
-                        recursively look for *any* nmml file, or one called
-                        'build.hxml'.  It will give precedence to the nmml file,
+                        recursively look for *any* lime file, or one called
+                        'build.hxml'.  It will give precedence to the lime file,
                         since it occurs before the hxml file in the search
                         pattern list.
 
@@ -390,17 +336,6 @@ SETTINGS                                        *vaxe-settings*
                         handle bufwrite events, triggering them excessively.
                         The default is "1" which prevents events that happen
                         as the result of completion activity.
-
-*g:vaxe_nme_test_on_build*
-                        By default vaxe will automatically run nme's "test"
-                        command, which will automatically try to run the code
-                        target (launching a browser, loading the app to the
-                        phone, etc.).  If you wish only to build, set this
-                        variable to 0.
-
-*g:vaxe_nme_target*     In |vaxe-nme-mode|, vaxe will use this target for
-                        builds and to generate completions.  Check the results
-                        from "nme help" and |vaxe#nme#Targets| for more details.
 
 
 *g:vaxe_cache_server*                               *cache server settings*

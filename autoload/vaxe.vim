@@ -241,11 +241,13 @@ function! vaxe#DefaultHxml(...)
     if exists('b:vaxe_lime')
        unlet b:vaxe_lime
     endif
-lkj
+
     "First check if an hxml/lime was passed explicitly
     if a:0 > 0 && a:1 != ''
         if match(a:1,'\.hxml$')
             let b:vaxe_hxml = a:1
+        elseif match(a:1,'\.xml$')
+            let b:vaxe_lime = a:1
         elseif match(a:1,'\.lime$' )
             let b:vaxe_lime = a:1
         endif
@@ -266,8 +268,11 @@ lkj
             endif
 
             if base_build =~ '\.lime'
-               let b:vaxe_lime = base_build
-               call vaxe#lime#BuildLimeHxml()
+                let b:vaxe_lime = base_build
+                call vaxe#lime#BuildLimeHxml()
+            elseif base_build =~ '\.xml'
+                let b:vaxe_lime = base_build
+                call vaxe#lime#BuildLimeHxml()
             else
                 let b:vaxe_hxml = base_build
             endif

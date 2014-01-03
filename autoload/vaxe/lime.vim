@@ -22,25 +22,32 @@ function! vaxe#lime#ProjectLime(...)
     if a:0 > 0 && a:1 != ''
         let g:vaxe_lime = expand(a:1,':p')
     else
-        let limes = split(glob("**/*.xml"),'\n')
+        let limes = split(glob("**/*.lime"),'\n')
 
         if len(limes) == 0
-            echoerr "No lime files found in current working directory"
-            return
-        else
-            let base_lime = vaxe#util#InputList("Select Lime", limes)
-        endif
+            " look for legacy xml files as well...
+            let limes = split(glob("**/*.xml"),'\n')
+            if len(limes) == 0
+                echoerr "No lime files found in current working directory"
+                return
+            end
+        endif 
+
+        let base_lime = vaxe#util#InputList("Select Lime", limes)
 
         if base_lime !~ "^\([a-zA-Z]:\)\=[/\\]"
             let base_lime = getcwd() . '/' . base_lime
         endif
 
         let g:vaxe_lime = base_lime
+        let b:vaxe_lime = base_lime
     endif
     if !filereadable(g:vaxe_lime)
         echoerr "Project lime file not valid, please create one."
         return
     endif
+    call vaxe#lime#BuildLimeHxml()
+    echomsg g:vaxe_lime
     call vaxe#SetCompiler()
     return g:vaxe_lime
 endfunction
