@@ -91,7 +91,7 @@ Lime Project                                    *vaxe-lime-mode*
                         called, or if an lime file is detected on startup.  it
                         will set a g:vaxe_lime variable that will override any
                         b:vaxe_lime variables set by the default method.  it
-                        also sets a |makeprg| that simply executes the lime 
+                        also sets a |makeprg| that simply executes the lime
                         command in the working directory, and redirects errors
                         to standard out.  Lime mode assumes that you will keep
                         the same working directory throughout your vim session.
@@ -99,7 +99,7 @@ Lime Project                                    *vaxe-lime-mode*
                         that contains information used for completions.  it
                         will be named the same as the selectd lime file, and be
                         located in the same directory, but will have an hxml
-                        extension. 
+                        extension.
 
 ==============================================================================
 
@@ -275,15 +275,15 @@ SETTINGS                                        *vaxe-settings*
 
 
 *g:vaxe_prefer_hxml*    The name of the hxml file/glob to search for and use
-                        automatically.  The default is "*.hxml".
+                        automatically.  The default is "build.hxml".
 
 *g:vaxe_prefer_lime*    The name of the lime file/glob to search for and use
                         automatically.  The default is "*.lime".
 
 *g:vaxe_prefer_openfl*  The name of the openfl file/glob to search for and use
                         automatically.  The default is "project.xml".
-                        NOTE: this is a legacy file type that lime can still 
-                        handle, it is recommended to use a *.lime file when 
+                        NOTE: this is a legacy file type that lime can still
+                        handle, it is recommended to use a *.lime file where
                         possible.
 
 *g:vaxe_prefer_first_in_directory*
@@ -297,7 +297,7 @@ SETTINGS                                        *vaxe-settings*
                         determine which hxml (or lime) file to use on startup.
                         The default is:
                         >
-                        [g:vaxe_prefer_lime, , g:vaxe_prefer_hxml]
+                        [g:vaxe_prefer_lime, g:vaxe_prefer_hxml, '*.hxml']
                         <
 
                         Note that vaxe will search recursively through
@@ -306,7 +306,9 @@ SETTINGS                                        *vaxe-settings*
                         recursively look for *any* lime file, or one called
                         'build.hxml'.  It will give precedence to the lime file,
                         since it occurs before the hxml file in the search
-                        pattern list.
+                        pattern list. Finally, if none of those options are
+                        available, it will fall back to using any hxml file
+                        it can find.
 
 *g:vaxe_hxml*           A variable that indicates the |vaxe-project-mode|
                         build file.  It will override the |vaxe-default-mode|
@@ -337,7 +339,6 @@ SETTINGS                                        *vaxe-settings*
                         The default is "1" which prevents events that happen
                         as the result of completion activity.
 
-
 *g:vaxe_cache_server*                               *cache server settings*
                         Vaxe will enable the usage of a haxe compilation cache
                         server, which currently is used only for completions,
@@ -351,15 +352,27 @@ SETTINGS                                        *vaxe-settings*
                         Whether the server should be autostarted with vim
                         (defaults to 1).
 
+*g:vaxe_completion_require_autowrite*
+                        This setting requires autowrite to be enabled for
+                        completions. It defaults to 1.  If *autowrite* or
+                        *autowriteall* is not set, then Vaxe will display an
+                        error message instead of any completion results.  If
+                        set to 0, the completion will be tried normally, and
+                        the user will be expected to save each time before
+                        triggering a completion.
+
 *g:vaxe_completion_disable_optimizations*
                         This setting adds "-D no-copt" to hxml, which will
                         disable certain optimizations the haxe compiler uses
-                        to determine completions. By default, this is 1. 
+                        to determine completions. There's still a few cases
+                        where optimization causes problems, so optimizations are
+                        disabled by default.
 
 *g:vaxe_trace_absolute_path*
-                        This setting adds "-D absolute_path" to hxml, which 
+                        This setting adds "-D absolute_path" to hxml, which
                         will enable the output of absolute path in trace
-                        messages, etc. By default, this is 1.
+                        messages, etc. This enables the quickfix list to jump
+                        to files more easily, so by default, this is 1.
 
                                                     *third party settings*
 *g:vaxe_enable_airline_defaults*
@@ -369,10 +382,10 @@ SETTINGS                                        *vaxe-settings*
 
 *g:vaxe_enable_ycm_defaults*
                         Vaxe provides support for YouCompleteMe by providing a
-                        filetype and completion trigger characters 
+                        filetype and completion trigger character configuration
                         (defaults to 1).
-                        
-==============================================================================
+
+=============================================================================
 
 MISC                                            *vaxe-misc*
 

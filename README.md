@@ -134,7 +134,9 @@ preview-window``` for more details.
 
 Also, it is recommended that ```autowrite``` is set for haxe/hxml files.
 Otherwise, completions will not be available as you type.  See
-```help autowrite``` for more details.
+```help autowrite``` for more details.  If autowrite is not set,
+Vaxe will return an error when completions are requested.  It is possible to
+turn this off, see the help for g:vaxe_completion_require_autowrite.
 
 ## Powerline
 
@@ -237,7 +239,7 @@ provides completeions for c-style languages.  However, it has the ability to
 provide support for other languages as well, such as the completion methods
 provided through vaxe.  Vaxe will let YCM use its completion methods
 automatically, all that is required is that YCM (and its libraries) be compiled
-and installed. 
+and installed.
 
 ## Neocomplcache
 [Neocomplcache](https://github.com/Shougo/neocomplcache) is a
@@ -301,7 +303,7 @@ when you type a "." after a variable with fields, etc.
 
 # Acknowledgements
 * Marc Weber (marco-oweber@gmx.de) : Most of the early work for the bundle was
-based off of his [vim-haxe bundle](https://github.com/MarcWeber/vim-haxe).  
+based off of his [vim-haxe bundle](https://github.com/MarcWeber/vim-haxe).
 Some of the hss functionality comes from his work on
 [scss-vim](https://github.com/cakebaker/scss-syntax.vim).
 
@@ -311,5 +313,5 @@ version](http://lists.motion-twin.com/pipermail/haxe/2008-July/018220.html).
 * Laurence Taylor (polysemantic at gmail): I based my ctags description of of [his mailing list post]
 (http://haxe.org/forum/thread/3395#nabble-td3443583)
 
-* Luca Deltodesco (luca@deltaluca.me.uk): The main Haxe syntax file is based 
+* Luca Deltodesco (luca@deltaluca.me.uk): The main Haxe syntax file is based
 off of [his version](https://gist.github.com/deltaluca/6330630).

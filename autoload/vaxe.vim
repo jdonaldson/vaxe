@@ -146,7 +146,7 @@ function! vaxe#ImportClass()
 endfunction
 
 " A function suitable for omnifunc
-function! vaxe#HaxeComplete(findstart,base)
+function! vaxe#HaxeComplete(findstart, base)
     " ERROR: no python
     if !has("python")
         echoerr 'Vaxe requires python for completions'
@@ -587,6 +587,9 @@ endfunction
 
 " The main completion function that invokes the compiler, etc.
 function! s:FormatDisplayCompletion(base)
+    if g:vaxe_completion_require_autowrite && !(&autowrite || &autowriteall)
+       return [{"word" : "", "abbr" : "Vim configuration error: ", "menu": "Please ':set autowrite' for haxe completion to work properly ", "empty" : 1}]
+    endif
     let vaxe_hxml = vaxe#CurrentBuild()
     if !filereadable(vaxe_hxml)
        return [{"word" : "", "abbr" : "Compiler error: ", "menu": "No valid build file", "empty" : 1}]
