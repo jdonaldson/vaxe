@@ -8,18 +8,6 @@ command -nargs=? -complete=file DefaultHxml call vaxe#DefaultHxml(<q-args>)
 command -nargs=? -complete=file ProjectHxml call vaxe#ProjectHxml(<q-args>)
 command ToggleVaxeLogging let g:vaxe_logging = !g:vaxe_logging
 
-" Nme commands
-command -nargs=? -complete=file ProjectNmml call vaxe#nme#ProjectNmml(<q-args>)
-
-command -nargs=? -complete=customlist,vaxe#nme#Targets NmeTarget 
-            \ call vaxe#nme#Target(<q-args>)
-
-command -nargs=? -complete=customlist,vaxe#nme#Targets NmeClean 
-            \ call vaxe#nme#Clean(<q-args>)
-
-command -nargs=? -complete=customlist,vaxe#nme#Targets NmeUpdate 
-            \ call vaxe#nme#Update(<q-args>)
-
 " Lime commands
 command -nargs=? -complete=file ProjectLime 
             \ call vaxe#lime#ProjectLime(<q-args>)
@@ -79,15 +67,10 @@ let g:vaxe_completion_prevent_bufwrite_events
 let g:vaxe_cache_server_port      = C('g:vaxe_cache_server_port', 6878)
 let g:vaxe_cache_server_autostart = C('g:vaxe_cache_server_autostart', 1)
 
-" nme options
-let g:vaxe_nme_test_on_build     = C('g:vaxe_nme_test_on_build', 1)
-let g:vaxe_nme_target            = C('g:vaxe_nme_target',"")
-let g:vaxe_nme_completion_target = C('g:vaxe_nme_completion_target', 'flash')
-
 " lime options
-let g:vaxe_lime_test_on_build     = C('g:vaxe_nme_test_on_build', 1)
-let g:vaxe_lime_target            = C('g:vaxe_nme_target',"")
-let g:vaxe_lime_completion_target = C('g:vaxe_nme_completion_target', 'flash')
+let g:vaxe_lime_test_on_build     = C('g:vaxe_lime_test_on_build', 1)
+let g:vaxe_lime_target            = C('g:vaxe_lime_target',"")
+let g:vaxe_lime_completion_target = C('g:vaxe_lime_completion_target', 'flash')
 
 " default build options
 let g:vaxe_prefer_hxml = C('g:vaxe_prefer_hxml', "build.hxml")

@@ -432,7 +432,7 @@ function! s:CurrentBlockHxml(hxml_str)
     let parts = split(a:hxml_str, '--next')
 
     if len(parts) == 0
-        let parts = [hxml_str]
+        let parts = [a:hxml_str]
     endif
 
     let complete = filter(copy(parts), 'v:val =~ "#\\s*display completions"')
