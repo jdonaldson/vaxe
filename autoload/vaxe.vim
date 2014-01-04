@@ -573,7 +573,7 @@ function! s:RawCompletion(vaxe_hxml, extra_string)
     let complete_args = s:CompletionHxml(expand("%:p"), offset)
     let complete_args = complete_args . ' ' . a:extra_string
 
-    let hxml_cd = "cd\ \"".fnamemodify(a:vaxe_hxml,":p:h"). "\"&&"
+    let hxml_cd = "cd\ \"".fnamemodify(a:vaxe_hxml,":p:h"). "\";"
     if exists("g:vaxe_hxml")
         let hxml_cd = ''
     endif
