@@ -39,6 +39,8 @@ function! vaxe#lime#ProjectLime(...)
             let base_lime = getcwd() . '/' . base_lime
         endif
 
+        echomsg 'Project lime selected: ' . base_lime
+
         let g:vaxe_lime = base_lime
         let b:vaxe_lime = base_lime
     endif
@@ -47,7 +49,6 @@ function! vaxe#lime#ProjectLime(...)
         return
     endif
     call vaxe#lime#BuildLimeHxml()
-    echomsg g:vaxe_lime
     call vaxe#SetCompiler()
     return g:vaxe_lime
 endfunction
@@ -70,6 +71,11 @@ function! s:Sys(cmd)
 endfunction
 
 function! vaxe#lime#BuildLimeHxml()
+    if ! exists("b:vaxe_lime")
+        echoerr 'A lime project file can not be located, please select one
+                    \ with :ProjectLime'
+        return
+    endif
     let base_hxml = b:vaxe_lime.".hxml"
 
     if !strlen(g:vaxe_lime_target)

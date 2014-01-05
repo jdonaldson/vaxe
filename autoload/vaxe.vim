@@ -255,7 +255,6 @@ function! vaxe#DefaultHxml(...)
         let base_build = vaxe#util#ParentSearch(
                     \ g:vaxe_default_parent_search_patterns
                     \ , fnamemodify(expand("%"),":p:h"))
-        echomsg
         if (base_build != '')
             let base_builds = split(base_build,'\n')
             if g:vaxe_prefer_first_in_directory
