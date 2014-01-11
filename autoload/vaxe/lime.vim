@@ -9,7 +9,7 @@ function! vaxe#lime#Update(...)
         let target = g:vaxe_lime_target
     endif
     let command = "lime update ".target
-    call s:Log(command)
+    call vaxe#Log(command)
     call s:Sys(command)
 endfunction
 
@@ -60,7 +60,7 @@ function! vaxe#lime#Clean(...)
         let target = g:vaxe_lime_target
     endif
     let command = "lime clean ".target
-    call s:Log(command)
+    call vaxe#Log(command)
     call s:Sys(command)
 endfunction
 
