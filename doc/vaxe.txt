@@ -383,7 +383,14 @@ SETTINGS                                        *vaxe-settings*
 *g:vaxe_enable_ycm_defaults*
                         Vaxe provides support for YouCompleteMe by providing a
                         filetype and completion trigger character configuration
-                        (defaults to 1).
+                        (defaults to 1). Note: It is recommended to use only
+                        one autocompletion plugin.
+
+*g:vaxe_enable_acp_defaults*
+                        Vaxe provides support for AutoComplPop by providing a
+                        filetype and completion trigger character configuration
+                        (defaults to 1). Note: It is recommended to use only
+                        one autocompletion plugin.
 
 =============================================================================
 

@@ -138,7 +138,7 @@ Otherwise, completions will not be available as you type.  See
 Vaxe will return an error when completions are requested.  It is possible to
 turn this off, see the help for g:vaxe_completion_require_autowrite.
 
-## Airline 
+## Airline
 
 Airline ( [by Bailey Ling](https://github.com/bling/vim-airline)) is a handy
 [status line](http://vimdoc.sourceforge.net/htmldoc/windows.html#status-line)
@@ -153,7 +153,7 @@ check [my repo](https://github.com/jdonaldson/linepower.vim).  The original
 powerline version is more powerful, but much more difficult to install and
 configure.  Copy the configuration information from my linepower repo instead of
 the configuration information from the main powerline repo in order to enable
-the vaxe plugin.  
+the vaxe plugin.
 
 ## Tags
 
@@ -223,65 +223,16 @@ provided through vaxe.  Vaxe will let YCM use its completion methods
 automatically, all that is required is that YCM (and its libraries) be compiled
 and installed.
 
+## Autocomplpop
+[AutoComplPop](http://www.vim.org/scripts/script.php?script_id=1879) is an
+older vim script that automatically pops up a completion menu when an
+omnicompletion is available.  It should offer good basic completions using
+pure vimscript. Vaxe will let ACP use its completion methods automatically.
+
 ## Neocomplcache
-[Neocomplcache](https://github.com/Shougo/neocomplcache) is a
-plugin for vim that can manage virtually any type of
-completion (omni, keyword, file, etc). It won't use omnicompletion by default
-since it is slow for some languages.  However, since completions are built into
-the compiler with Haxe, they are very fast.  In fact, it's possible to check
-for completions as you are typing using Neocomplcache.  Neocomplcache can be
-tricky to set up, but it runs on pure Vimscript, making it available in almost
-any modern vim distribution.  Here's a self-contained vimrc that gives you a minimal
-vaxe and neocomplcache config.
-
-```viml
-" set the bundle root, and vundle directory
-let root = '~/.vim/bundle'
-let src = 'http://github.com/gmarik/vundle.git'
-
-" clone vundle if it's missing
-if !isdirectory(expand(root, 1).'/vundle')
-  exec '!git clone '.src.' '.shellescape(expand(root.'/vundle', 1))
-endif
-
-" immediately make vundle accessible in the rtp
-exec 'set rtp+='.root.'/vundle'
-
-" initialise vundle's boot script
-call vundle#rc(root)
-
-set autowrite " vaxe likes autowrite
-set nocompatible " we need fancy new vim 7.0 features
-syntax enable on " turn on syntax highlighting
-
-" This disables the preview window for function completions.
-" This window can get distracting, so I often just turn it off.
-" set completeopt=menuone
-
-filetype off " turn off filetype settings, which is required for vundle
-
-" load vaxe, and neocomplcache with the given config"
-Bundle 'jdonaldson/vaxe'
-Bundle 'Shougo/neocomplcache'
-    let g:neocomplcache_enable_at_startup = 1 " always load neocc
-    let g:neocomplcache_enable_auto_select = 1 " auto-popup!
-    if !exists('g:neocomplcache_omni_patterns')
-        let g:neocomplcache_omni_patterns = {} " set a default pattern dict
-    endif
-
-    " this tells neocc when to try for completions... after '.', '(', etc.
-    let g:neocomplcache_omni_patterns.haxe = '\v([\]''"\)]|\w|(^\s*))(\.|\()'
-
-filetype plugin indent on " re-enable plugin settings
-```
-After you start vim the first time, run:
-```viml
-:BundleInstall
-```
-Then, restart vim and your completions should work.
-
-Once enabled, Neocomplcache will automatically invoke vaxe omnicompletion
-when you type a "." after a variable with fields, etc.
+[Neocomplcache](https://github.com/Shougo/neocomplcache) is a plugin for vim
+that can manage virtually any type of completion (omni, keyword, file, etc). It
+can be tricky to set up, so follow their documentation carefully.pc
 
 # Acknowledgements
 * Marc Weber (marco-oweber@gmx.de) : Most of the early work for the bundle was
