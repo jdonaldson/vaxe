@@ -5,7 +5,7 @@ function! vaxe#SetWorkingDir()
 endfunction
 
 " Utility logging function
-function! s:Log(str)
+function! vaxe#Log(str)
     if g:vaxe_logging
         echomsg a:str
     endif
@@ -334,7 +334,7 @@ function! vaxe#SetCompiler()
     else
         let vaxe_hxml = vaxe#CurrentBuild()
         let escaped_hxml = fnameescape(vaxe_hxml)
-        call s:Log("vaxe_hxml: " . vaxe_hxml)
+        call vaxe#Log("vaxe_hxml: " . vaxe_hxml)
         let build_command = "cd " . escaped_wd ." &&"
                     \. "haxe " . escaped_hxml . " 2>&1"
         if filereadable(vaxe_hxml)
@@ -419,7 +419,7 @@ function! vaxe#Ctags()
         " call ctags recursively on the directories
         let hxml_sys = " cd " . hxml_cd . ";"
                     \." ctags --languages=haxe --exclude=_std -R " . pathstr. ";"
-        call s:Log(hxml_sys)
+        call vaxe#Log(hxml_sys)
         call system(hxml_sys)
     endif
 endfunction
@@ -531,7 +531,7 @@ function! vaxe#JumpToDefinition()
     let extra = "\n-D display-mode=position"
     let complete_output = s:RawCompletion(b:vaxe_hxml, extra)
     " execute the python completion script in autoload/vaxe.py
-    call s:Log(complete_output)
+    call vaxe#Log(complete_output)
     py locations('complete_output','output')
     let output_str = join(output, '\n')
     lexpr(output_str)
@@ -579,7 +579,7 @@ function! s:RawCompletion(vaxe_hxml, extra_string)
 
     let hxml_sys = hxml_cd." haxe ".complete_args."\ 2>&1"
     let hxml_sys =  join(split(hxml_sys,"\n")," ")
-    call s:Log(hxml_sys)
+    call vaxe#Log(hxml_sys)
     let complete_output = system(hxml_sys)
     return complete_output
 endfunction
@@ -603,14 +603,14 @@ function! s:FormatDisplayCompletion(base)
                     \, "menu":error, "empty" : 1}]
     endif
     let output = []
-    call s:Log('compiler output: ' . complete_output)
+    call vaxe#Log('compiler output: ' . complete_output)
 
     " execute the python completion script in autoload/vaxe.py
     py complete('complete_output','output'
                 \, 'a:base', 'g:vaxe_completion_alter_signature'
                 \, 'g:vaxe_completion_collapse_overload')
 
-    call s:Log("display elements: " . len(output))
+    call vaxe#Log("display elements: " . len(output))
     for o in output
         let tag = ''
         if has_key(o,'info')
