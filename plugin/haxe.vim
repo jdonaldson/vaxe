@@ -9,16 +9,16 @@ command -nargs=? -complete=file ProjectHxml call vaxe#ProjectHxml(<q-args>)
 command ToggleVaxeLogging let g:vaxe_logging = !g:vaxe_logging
 
 " Lime commands
-command -nargs=? -complete=file ProjectLime 
+command -nargs=? -complete=file ProjectLime
             \ call vaxe#lime#ProjectLime(<q-args>)
 
-command -nargs=? -complete=customlist,vaxe#lime#Targets LimeTarget 
+command -nargs=? -complete=customlist,vaxe#lime#Targets LimeTarget
             \ call vaxe#lime#Target(<q-args>)
 
-command -nargs=? -complete=customlist,vaxe#lime#Targets LimeClean  
+command -nargs=? -complete=customlist,vaxe#lime#Targets LimeClean
             \ call vaxe#lime#Clean(<q-args>)
 
-command -nargs=? -complete=customlist,vaxe#lime#Targets LimeUpdate 
+command -nargs=? -complete=customlist,vaxe#lime#Targets LimeUpdate
             \ call vaxe#lime#Update(<q-args>)
 
 " Completion Server Commands
@@ -79,18 +79,41 @@ let g:vaxe_prefer_hxml               = C('g:vaxe_prefer_hxml', "build.hxml")
 let g:vaxe_prefer_lime               = C('g:vaxe_prefer_lime', "*.lime")
 let g:vaxe_prefer_openfl             = C('g:vaxe_prefer_openfl', "project.xml")
 let g:vaxe_prefer_first_in_directory = C('g:vaxe_prefer_first_in_directory', 1)
-let g:vaxe_default_parent_search_patterns 
+let g:vaxe_default_parent_search_patterns
             \= C('g:vaxe_default_parent_search_patterns'
             \, [g:vaxe_prefer_lime, g:vaxe_prefer_openfl, g:vaxe_prefer_hxml, "*.hxml"])
 
 " Supported 3rd party plugin options
 let g:vaxe_enable_airline_defaults = C('g:vaxe_enable_airline_defaults', 1)
 let g:vaxe_enable_ycm_defaults     = C('g:vaxe_enable_ycm_defaults', 1)
+let g:vaxe_enable_acp_defaults     = C('g:vaxe_enable_acp_defaults', 1)
 
+" YCM
 if (g:vaxe_enable_ycm_defaults)
     if ( exists("g:ycm_semantic_triggers")  )
         let g:ycm_semantic_triggers['haxe'] = ['.', '(']
     else
         let g:ycm_semantic_triggers = { 'haxe' : ['.', '('] }
     endif
+endif
+
+" ACP
+if (g:vaxe_enable_acp_defaults)
+    if !exists('g:acp_behavior')
+        let g:acp_behavior = {}
+    endif
+
+    function! haxe#meetsForFile(context)
+        return a:context =~ '\(\.\|(\)$'
+    endfunction
+    if  !has_key(g:acp_behavior, 'haxe')
+        let g:acp_behavior['haxe'] = []
+    endif
+
+    let vaxe_entry = {
+                \ "meets" : "haxe#meetsForFile",
+                \ "command": "\<C-X>\<C-O>",
+                \ "completefunc" : "vaxe#HaxeComplete"}
+
+    call add(g:acp_behavior['haxe'] , vaxe_entry)
 endif
