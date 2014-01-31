@@ -42,7 +42,6 @@ function! vaxe#lime#ProjectLime(...)
         echomsg 'Project lime selected: ' . base_lime
 
         let g:vaxe_lime = base_lime
-        let b:vaxe_lime = base_lime
     endif
     if !filereadable(g:vaxe_lime)
         echoerr "Project lime file not valid, please create one."
@@ -71,18 +70,18 @@ function! s:Sys(cmd)
 endfunction
 
 function! vaxe#lime#BuildLimeHxml()
-    if ! exists("b:vaxe_lime")
+    if ! exists("g:vaxe_lime")
         echoerr 'A lime project file can not be located, please select one
                     \ with :ProjectLime'
         return
     endif
-    let base_hxml = b:vaxe_lime.".hxml"
+    let base_hxml = g:vaxe_lime.".hxml"
 
     if !strlen(g:vaxe_lime_target)
         call vaxe#lime#Target()
     endif
 
-    let g:vaxe_working_directory = fnamemodify(b:vaxe_lime, ":p:h")
+    let g:vaxe_working_directory = fnamemodify(g:vaxe_lime, ":p:h")
     let cdcmd = 'cd "'.g:vaxe_working_directory.'" && '
 
     "create the lime.hxml if not present
@@ -102,9 +101,7 @@ function! vaxe#lime#BuildLimeHxml()
     else
     endif
 
-    let g:vaxe_lime = b:vaxe_lime
-    let b:vaxe_hxml = base_hxml
-    " let g:vaxe_hxml = b:vaxe_hxml " don't set a global projet var by default
+    let g:vaxe_hxml = base_hxml
 endfunction
 
 "Sets the target.  If target is missing it asks the user. Also updates the

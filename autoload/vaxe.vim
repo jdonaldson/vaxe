@@ -238,18 +238,14 @@ function! vaxe#DefaultHxml(...)
         unlet b:vaxe_hxml
     endif
 
-    if exists('b:vaxe_lime')
-       unlet b:vaxe_lime
-    endif
-
     "First check if an hxml/lime was passed explicitly
     if a:0 > 0 && a:1 != ''
         if match(a:1,'\.hxml$')
             let b:vaxe_hxml = a:1
         elseif match(a:1,'\.xml$')
-            let b:vaxe_lime = a:1
+            let g:vaxe_lime = a:1
         elseif match(a:1,'\.lime$' )
-            let b:vaxe_lime = a:1
+            let g:vaxe_lime = a:1
         endif
     else " check if there's a lime in the parent roots...
         let base_build = vaxe#util#ParentSearch(
@@ -267,11 +263,13 @@ function! vaxe#DefaultHxml(...)
             endif
 
             if base_build =~ '\.lime'
-                let b:vaxe_lime = base_build
+                let g:vaxe_lime = base_build
                 call vaxe#lime#BuildLimeHxml()
+                let b:vaxe_hxml = g:vaxe_hxml
             elseif base_build =~ '\.xml'
-                let b:vaxe_lime = base_build
+                let g:vaxe_lime = base_build
                 call vaxe#lime#BuildLimeHxml()
+                let b:vaxe_hxml = g:vaxe_hxml
             else
                 let b:vaxe_hxml = base_build
             endif
