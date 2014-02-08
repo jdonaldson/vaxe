@@ -47,7 +47,7 @@ function! vaxe#lime#ProjectLime(...)
         echoerr "Project lime file not valid, please create one."
         return
     endif
-    call vaxe#lime#BuildLimeHxml()
+    call vaxe#lime#BuildLimeHxml(g:vaxe_lime)
     call vaxe#SetCompiler()
     return g:vaxe_lime
 endfunction
@@ -69,19 +69,14 @@ function! s:Sys(cmd)
     call system("cd ".g:vaxe_working_directory." && ".a:cmd)
 endfunction
 
-function! vaxe#lime#BuildLimeHxml()
-    if ! exists("g:vaxe_lime")
-        echoerr 'A lime project file can not be located, please select one
-                    \ with :ProjectLime'
-        return
-    endif
-    let base_hxml = g:vaxe_lime.".hxml"
+function! vaxe#lime#BuildLimeHxml(lime)
+    let base_hxml = a:lime.".hxml"
 
     if !strlen(g:vaxe_lime_target)
-        call vaxe#lime#Target()
+        call vaxe#lime#Target(a:lime)
     endif
 
-    let g:vaxe_working_directory = fnamemodify(g:vaxe_lime, ":p:h")
+    let g:vaxe_working_directory = fnamemodify(a:lime, ":p:h")
     let cdcmd = 'cd "'.g:vaxe_working_directory.'" && '
 
     "create the lime.hxml if not present
@@ -95,26 +90,28 @@ function! vaxe#lime#BuildLimeHxml()
 
     " create the boilerplate code if missing
     let simple_target = split(g:vaxe_lime_target)[0]
-    if (!isdirectory(g:vaxe_working_directory."/bin/".simple_target))
+    if (!isdirectory(g:vaxe_working_directory."/Exports/".simple_target.'/bin') &&
+                \ !isdirectory(g:vaxe_working_directory."/bin/".simple_target))
         " build the assets dependencies
         call system(cdcmd . " lime update " . g:vaxe_lime_target)
     else
     endif
 
-    let g:vaxe_hxml = base_hxml
+    let b:vaxe_hxml = base_hxml
+    " let g:vaxe_hxml = b:vaxe_hxml " don't set a global projet var by default
 endfunction
 
 "Sets the target.  If target is missing it asks the user. Also updates the
 "makeprg compiler command
-function! vaxe#lime#Target(...)
+function! vaxe#lime#Target(lime, ...)
     let g:vaxe_lime_target = ''
-    if a:0 > 0 && a:1 != ''
-        let g:vaxe_lime_target = a:1
+    if a:0 > 1 && a:2 != ''
+        let g:vaxe_lime_target = a:2
     else
         let g:vaxe_lime_target = vaxe#util#InputList("Select Lime Target", s:lime_targets)
         let g:vaxe_lime_target = split(g:vaxe_lime_target, ":")[0]
     endif
-    call vaxe#lime#BuildLimeHxml()
+    call vaxe#lime#BuildLimeHxml(a:lime)
     call vaxe#SetCompiler()
 endfunction
 

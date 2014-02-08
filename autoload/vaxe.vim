@@ -262,14 +262,12 @@ function! vaxe#DefaultHxml(...)
                 let base_build = getcwd() . '/' . base_build
             endif
 
-            if base_build =~ '\.lime'
-                let g:vaxe_lime = base_build
-                call vaxe#lime#BuildLimeHxml()
-                let b:vaxe_hxml = g:vaxe_hxml
+            if base_build =~ '\.lime' || base_build =~ '\.xml'
+                let b:vaxe_lime = base_build
+                call vaxe#lime#BuildLimeHxml(b:vaxe_lime)
             elseif base_build =~ '\.xml'
-                let g:vaxe_lime = base_build
-                call vaxe#lime#BuildLimeHxml()
-                let b:vaxe_hxml = g:vaxe_hxml
+                let b:vaxe_lime = base_build
+                call vaxe#lime#BuildLimeHxml(b:vaxe_lime)
             else
                 let b:vaxe_hxml = base_build
             endif
@@ -322,7 +320,7 @@ function! vaxe#SetCompiler()
     let abspath = []
     let escaped_wd = fnameescape(g:vaxe_working_directory)
 
-    if exists("g:vaxe_lime")
+    if exists("g:vaxe_lime") || exists("b:vaxe_lime")
         let build_verb = "build"
         if g:vaxe_lime_test_on_build
             let build_verb = "test"
