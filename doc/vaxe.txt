@@ -292,10 +292,6 @@ SETTINGS                                        *vaxe-settings*
                         the first one.  If it is set to 0, then it will present
                         a list of options.  The default is 1.
 
-*g:vaxe_lime_target*    If you commonly work with a single target, this option
-                        allows you to set a default target for lime to use when
-                        compiling.
-
 *g:vaxe_default_parent_search_patterns*
                         This is a list of |glob| patterns that vaxe uses to
                         determine which hxml (or lime) file to use on startup.
