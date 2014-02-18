@@ -1,6 +1,6 @@
 Vaxe is a vim bundle for [Haxe](http://www.haxe.org) and
 [Hss](http://ncannasse.fr/projects/hss).  It provides support for
-syntax highlighting, indenting, compiling, and many more options.  vaxe has
+syntax highlighting, indenting, compiling, and many more options.  Vaxe has
 "vimdoc" documentation.  You can see the current vimdoc documentation
 [here](https://raw.github.com/jdonaldson/vaxe/master/doc/vaxe.txt), as well as
 through using `:help vaxe` within vim.  This page will describe some of the
@@ -52,7 +52,7 @@ To update, just run `:BundleUpdate`
 ## HXML File Support
 Vaxe supports [hxml build files](http://haxe.org/doc/compiler), which provide
 all of the arguments for the compiler, similar to a  [make
-file](http://en.wikipedia.org/wiki/Make_(software).
+file](http://en.wikipedia.org/wiki/Make_(software)).
 
 Vaxe will automatically try to determine the appropriate hxml file you are
 using.  It will also let you easily override this with a specific file
