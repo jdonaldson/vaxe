@@ -30,4 +30,4 @@ endif
 
 " we need to show single entry completions for haxe, because I use those for
 " info messages on occasion
-set completeopt+=menuone
+setlocal completeopt+=menuone
