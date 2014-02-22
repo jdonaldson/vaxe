@@ -580,15 +580,25 @@ function! s:RawCompletion(vaxe_hxml, extra_string)
     return complete_output
 endfunction
 
+" Shows an error result in the completion list.  Or, if this isn't possible,
+" shows a normal error
+function! s:ShowCompletionError(title, msg)
+    if(&cot =~ 'menuone')
+        return [{"word" : "", "abbr" : a:title, "menu" : a:msg, "empty" : 1}]
+    else
+        echoerr a:title.' '.a:msg
+        return []
+    endif
+endfunction
+
 " The main completion function that invokes the compiler, etc.
 function! s:FormatDisplayCompletion(base)
     if g:vaxe_completion_require_autowrite && !(&autowrite || &autowriteall)
-        echoerr "Please ':set autowrite' for haxe completion to work properly"
-        return [{"word" : "", "abbr" : "Vim configuration error: ", "menu": "Please ':set autowrite' for haxe completion to work properly ", "empty" : 1}]
+        return s:ShowCompletionError("Vim configuration error: ", "Please ':set autowrite' for haxe completion to work properly ")
     endif
     let vaxe_hxml = vaxe#CurrentBuild()
     if !filereadable(vaxe_hxml)
-       return [{"word" : "", "abbr" : "Compiler error: ", "menu": "No valid build file", "empty" : 1}]
+        return s:ShowCompletionError("Compiler error: ",  "No valid build file")
     endif
     let complete_output = s:RawCompletion(vaxe_hxml, '')
     " quick and dirty check for error
@@ -596,8 +606,7 @@ function! s:FormatDisplayCompletion(base)
     if tag != "type" && tag != "list" && tag != "pos>"
         let error = complete_output[:len(complete_output)-2]
         cgete error
-        return [{"word" : "", "abbr" : "Compiler error: "
-                    \, "menu":error, "empty" : 1}]
+        return s:ShowCompletionError( "Compiler error: ", error)
     endif
     let output = []
     call vaxe#Log('compiler output: ' . complete_output)

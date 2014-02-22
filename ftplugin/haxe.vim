@@ -27,3 +27,7 @@ if (!run_once)
         call add(g:airline_statusline_funcrefs, function('AirlineBuild'))
     endif
 endif
+
+" we need to show single entry completions for haxe, because I use those for
+" info messages on occasion
+set completeopt+=menuone
