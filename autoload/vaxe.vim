@@ -583,7 +583,8 @@ endfunction
 " The main completion function that invokes the compiler, etc.
 function! s:FormatDisplayCompletion(base)
     if g:vaxe_completion_require_autowrite && !(&autowrite || &autowriteall)
-       return [{"word" : "", "abbr" : "Vim configuration error: ", "menu": "Please ':set autowrite' for haxe completion to work properly ", "empty" : 1}]
+        echoerr "Please ':set autowrite' for haxe completion to work properly"
+        return [{"word" : "", "abbr" : "Vim configuration error: ", "menu": "Please ':set autowrite' for haxe completion to work properly ", "empty" : 1}]
     endif
     let vaxe_hxml = vaxe#CurrentBuild()
     if !filereadable(vaxe_hxml)
