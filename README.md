@@ -145,7 +145,9 @@ Airline ( [by Bailey Ling](https://github.com/bling/vim-airline)) is a handy
 replacement.  I think it looks better, and provides a good deal more
 functionality over a normal status line setting.  Airline support is provided by
 default in vaxe.  Current support enables the display of the current hxml build
-file.  You can disable this by changing ```g:vaxe_enable_airline``` to 0.
+file.  The hxml name has an empty star if it's in default mode (☆ ), and a
+filled star if it's in project mode (★ ).  You can disable all of this by
+changing ```g:vaxe_enable_airline``` to 0.
 
 Personally, I'm perfectly happy using airline, but If you're looking for support
 for the original [powerline](https://github.com/Lokaltog/powerline), you can
@@ -197,6 +199,10 @@ will generate:
     var l = new StringMap<Int>();
 ```
 
+Keep in mind that jumping to files defined by ctags may jump to a location 
+outside of the current working directory.  If you want to keep the reference
+to you current hxml file when doing so, it is advised that you select a project
+mode hxml with ```:ProjectHxml```.
 
 ## Tagbar
 
