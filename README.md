@@ -185,16 +185,16 @@ Other utilities, like vaxe#ImportClass() can then use this tag information in
 order to programmatically import classes.  E.g. calling vaxe#ImportClass on
 this line:
 
-```as3
-    var l = new FastList<Int>();
+```haxe
+    var l = new haxe.ds.StringMap<Int>();
 ```
 
 will generate:
 
-```as3
-    import haxe.FastList;
+```haxe
+    import haxe.ds.StringMap;
     ...
-    var l = new FastList<Int>();
+    var l = new StringMap<Int>();
 ```
 
 
