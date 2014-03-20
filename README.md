@@ -237,7 +237,7 @@ pure vimscript. Vaxe will let ACP use its completion methods automatically.
 ## Neocomplcache
 [Neocomplcache](https://github.com/Shougo/neocomplcache) is a plugin for vim
 that can manage virtually any type of completion (omni, keyword, file, etc). It
-can be tricky to set up, so follow their documentation carefully.pc
+can be tricky to set up, so follow their documentation carefully.
 
 # Acknowledgements
 * Marc Weber (marco-oweber@gmx.de) : Most of the early work for the bundle was
