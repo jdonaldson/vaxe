@@ -1,12 +1,21 @@
-Vaxe is a vim bundle for [Haxe](http://www.haxe.org),
-[Hss](http://ncannasse.fr/projects/hss).  It provides support for
-syntax highlighting, indenting, compiling, and many more options.  Vaxe has
-[vimdoc](https://raw.github.com/jdonaldson/vaxe/master/doc/vaxe.txt), 
-accessible using `:help vaxe` within vim.  This page will describe some of the
+Vaxe is a vim bundle for [Haxe][haxe], [Hss][ncannasse].  It provides support
+for syntax highlighting, indenting, compiling, and many more options.  Vaxe has
+[vimdoc][github], accessible using `:help vaxe` within vim.  
+
+Vaxe requires additional vim features in order to work fully:
+
+1. Vim version >= 7 : (Vim versions prior to this may work,
+   but are not tested)
+2. Vim with python scripting support : Many default vim environments do not have
+   python support, but it's typically very easy to get an appropriate version
+   via a package manager like brew or apt-get.
+
+
+This page will describe some of the
 special or optional features that vaxe supports, in addition to recommended
 configuration settings.
 
-![Vaxe Screenshot](http://i.imgur.com/JFvze.png) (screenshot shows
+![Vaxe Screenshot][imgur] (screenshot shows
 neocomplcache completion mode, vim-airline, tagbar, and monokai color theme)
 
 The recommended way to install vaxe is using a bundle management system such
@@ -49,16 +58,16 @@ To update, just run `:BundleUpdate`
 # Compiling Haxe Projects with vaxe
 
 ## HXML File Support
-Vaxe supports [hxml build files](http://haxe.org/doc/compiler), which provide
+Vaxe supports [hxml build files][haxe 2], which provide
 all of the arguments for the compiler, similar to a  [make
-file](http://en.wikipedia.org/wiki/Make_(software)).
+file][wikipedia]).
 
 Vaxe will automatically try to determine the appropriate hxml file you are
 using.  It will also let you easily override this with a specific file
 (see vim docs for more details).
 
 Vaxe will specify a custom
-[makeprg](http://vimdoc.sourceforge.net/htmldoc/options.html#'makeprg') using
+[makeprg][sourceforge] using
 the given hxml file. The makeprg will cd to the directory containing the hxml,
 execute the haxe compiler with the hxml file, and pipe output to stdout.
 
@@ -69,15 +78,15 @@ If vaxe has found your build file, you can just run the make command:
 ```
 
 Vaxe will also specify an
-[errorformat](http://vimdoc.sourceforge.net/htmldoc/options.html#'errorformat'),
+[errorformat][sourceforge 2],
 so that errors and trace messages show up in the
-[quickfix](http://vimdoc.sourceforge.net/htmldoc/quickfix.html#quickfix)
+[quickfix][sourceforge 3]
 window.
 
 ## Lime Project Support
-![Lime](http://i.imgur.com/rc8vLi2.png)
+![Lime][imgur 2]
 
-Vaxe supports [Lime](https://github.com/openfl/lime)
+Vaxe supports [Lime][github 2]
 workflows.  If a Lime project is found, Vaxe will use it for builds and
 completions. You can specify a default target if you only work with one
 platform.
@@ -85,15 +94,15 @@ platform.
 ## Omni-completions
 
 Vaxe provides an
-[omnicompletion](http://vimdoc.sourceforge.net/htmldoc/version7.html#new-omni-completion)
+[omnicompletion][sourceforge 4]
 function that can use the haxe compiler in order to [display field
-completions](http://haxe.org/manual/completion).  Visual Studio users will
+completions][haxe 3].  Visual Studio users will
 recognize this as being similar to "intellisense".
 
 You can trigger an omnicompletion (C-X C-O in Insert Mode) after the period at
 the start of a field, submodule, or class access, or after the first
 parentheses of a function invocation. See the [haxe
-documentation](http://haxe.org/manual/completion) for more details.
+documentation][haxe 3] for more details.
 
 ### Active Targets: Dealing with --next
 
@@ -109,7 +118,7 @@ perform other miscellaneous tasks.  The target that Vaxe uses is called the
 "active" target here.
 
 # HSS Support
-Vaxe will also support the [hss](http://ncannasse.fr/projects/hss) language,
+Vaxe will also support the [hss][ncannasse] language,
 with support for syntax highlighting, and compilation to css.
 
 # Recommended Plugins/Additions/Config
@@ -139,8 +148,8 @@ turn this off, see the help for g:vaxe_completion_require_autowrite.
 
 ## Airline
 
-Airline ( [by Bailey Ling](https://github.com/bling/vim-airline)) is a handy
-[status line](http://vimdoc.sourceforge.net/htmldoc/windows.html#status-line)
+Airline ( [by Bailey Ling][github 3]) is a handy
+[status line][sourceforge 5]
 replacement.  I think it looks better, and provides a good deal more
 functionality over a normal status line setting.  Airline support is provided by
 default in vaxe.  Current support enables the display of the current hxml build
@@ -149,8 +158,8 @@ filled star if it's in project mode (★ ).  You can disable all of this by
 changing ```g:vaxe_enable_airline``` to 0.
 
 Personally, I'm perfectly happy using airline, but If you're looking for support
-for the original [powerline](https://github.com/Lokaltog/powerline), you can
-check [my repo](https://github.com/jdonaldson/linepower.vim).  The original
+for the original [powerline][github 4], you can
+check [my repo][github 5].  The original
 powerline version is more powerful, but much more difficult to install and
 configure.  Copy the configuration information from my linepower repo instead of
 the configuration information from the main powerline repo in order to enable
@@ -159,7 +168,7 @@ the vaxe plugin.
 ## Tags
 
 Vim has great support for
-[ctags](http://vimdoc.sourceforge.net/htmldoc/tagsrch.html), which are really
+[ctags][sourceforge 6], which are really
 useful for navigating a large code base.
 
 You'll need to define some patterns for ctags in order for it to work with
@@ -206,14 +215,14 @@ mode hxml with ```:ProjectHxml```.
 ## Tagbar
 
 Using the ctags lines above, the
-[Tagbar](http://majutsushi.github.com/tagbar/) bundle can display a nice
+[Tagbar][github 6] bundle can display a nice
 overview of the classes, methods, and variables in your current haxe file.  You
 do not need to call `vaxe#Ctags()` in order to use Tagbar, it works
 automatically, but only for the current vaxe buffer.
 
 ## Syntastic
 
-[Syntastic](https://github.com/scrooloose/syntastic) is a popular bundle that
+[Syntastic][github 7] is a popular bundle that
 enables syntax errors to be displayed in a small gutter on the left of the
 editor buffer.  I've patched Syntastic to use vaxe compilation information for
 haxe and hss, including errors and traces.  All that is necessary is to install
@@ -221,7 +230,7 @@ the bundle.
 
 
 ## YouCompleteMe
-[YouCompleteMe](https://github.com/Valloric/YouCompleteMe) (YCM) is a bundle that
+[YouCompleteMe][github 8] (YCM) is a bundle that
 provides completeions for c-style languages.  However, it has the ability to
 provide support for other languages as well, such as the completion methods
 provided through vaxe.  Vaxe will let YCM use its completion methods
@@ -229,27 +238,56 @@ automatically, all that is required is that YCM (and its libraries) be compiled
 and installed.
 
 ## Autocomplpop
-[AutoComplPop](http://www.vim.org/scripts/script.php?script_id=1879) is an
+[AutoComplPop][vim] is an
 older vim script that automatically pops up a completion menu when an
 omnicompletion is available.  It should offer good basic completions using
 pure vimscript. Vaxe will let ACP use its completion methods automatically.
 
 ## Neocomplcache
-[Neocomplcache](https://github.com/Shougo/neocomplcache) is a plugin for vim
+[Neocomplcache][github 9] is a plugin for vim
 that can manage virtually any type of completion (omni, keyword, file, etc). It
 can be tricky to set up, so follow their documentation carefully.
 
 # Acknowledgements
 * Marc Weber (marco-oweber@gmx.de) : Most of the early work for the bundle was
-based off of his [vim-haxe bundle](https://github.com/MarcWeber/vim-haxe).
+based off of his [vim-haxe bundle][github 10].
 Some of the hss functionality comes from his work on
-[scss-vim](https://github.com/cakebaker/scss-syntax.vim).
+[scss-vim][github 11].
 
 * Ganesh Gunasegaran(me at itsgg.com) : I based my hxml syntax file off of [his
-version](http://lists.motion-twin.com/pipermail/haxe/2008-July/018220.html).
+version][motion-twin].
 
 * Laurence Taylor (polysemantic at gmail): I based my ctags description of of [his mailing list post]
-(http://haxe.org/forum/thread/3395#nabble-td3443583)
+[haxe 4]
 
 * Luca Deltodesco (luca@deltaluca.me.uk): The main Haxe syntax file is based
-off of [his version](https://gist.github.com/deltaluca/6330630).
+off of [his version][github 12].
+
+[github]: https://raw.github.com/jdonaldson/vaxe/master/doc/vaxe.txt
+[github 10]: https://github.com/MarcWeber/vim-haxe
+[github 11]: https://github.com/cakebaker/scss-syntax.vim
+[github 12]: https://gist.github.com/deltaluca/6330630
+[github 2]: https://github.com/openfl/lime
+[github 3]: https://github.com/bling/vim-airline
+[github 4]: https://github.com/Lokaltog/powerline
+[github 5]: https://github.com/jdonaldson/linepower.vim
+[github 6]: http://majutsushi.github.com/tagbar/
+[github 7]: https://github.com/scrooloose/syntastic
+[github 8]: https://github.com/Valloric/YouCompleteMe
+[github 9]: https://github.com/Shougo/neocomplcache
+[haxe]: http://www.haxe.org
+[haxe 2]: http://haxe.org/doc/compiler
+[haxe 3]: http://haxe.org/manual/completion
+[haxe 4]: http://haxe.org/forum/thread/3395#nabble-td3443583
+[imgur]: http://i.imgur.com/JFvze.png
+[imgur 2]: http://i.imgur.com/rc8vLi2.png
+[motion-twin]: http://lists.motion-twin.com/pipermail/haxe/2008-July/018220.html
+[ncannasse]: http://ncannasse.fr/projects/hss
+[sourceforge]: http://vimdoc.sourceforge.net/htmldoc/options.html#'makeprg'
+[sourceforge 2]: http://vimdoc.sourceforge.net/htmldoc/options.html#'errorformat'
+[sourceforge 3]: http://vimdoc.sourceforge.net/htmldoc/quickfix.html#quickfix
+[sourceforge 4]: http://vimdoc.sourceforge.net/htmldoc/version7.html#new-omni-completion
+[sourceforge 5]: http://vimdoc.sourceforge.net/htmldoc/windows.html#status-line
+[sourceforge 6]: http://vimdoc.sourceforge.net/htmldoc/tagsrch.html
+[vim]: http://www.vim.org/scripts/script.php?script_id=1879
+[wikipedia]: http://en.wikipedia.org/wiki/Make_(software
