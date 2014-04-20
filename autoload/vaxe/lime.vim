@@ -76,7 +76,7 @@ function! vaxe#lime#BuildLimeHxml(lime)
         call vaxe#lime#Target(a:lime)
     endif
 
-    let g:vaxe_working_directory = fnamemodify(a:lime, ":p:h")
+    let g:vaxe_working_directory = fnameescape(fnamemodify(a:lime, ":p:h"))
     let cdcmd = 'cd "'.g:vaxe_working_directory.'" && '
 
     "create the lime.hxml if not present

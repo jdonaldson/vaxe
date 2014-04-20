@@ -319,6 +319,10 @@ endfunction
 function! vaxe#SetCompiler()
     let abspath = []
     let escaped_wd = fnameescape(g:vaxe_working_directory)
+    let dirs = split(&tags, ",")
+    if !match(dirs, g:vaxe_working_directory)
+        let &tags = &tags . ',' . g:vaxe_working_directory
+    endif
 
     if exists("g:vaxe_lime") || exists("b:vaxe_lime")
         let build_verb = "build"
