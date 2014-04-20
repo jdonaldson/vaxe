@@ -367,7 +367,7 @@ function! vaxe#CompilerClassPaths()
    let complete_args.= "\n"."-v".output_phrase
    let complete_args = join(split(complete_args,"\n"),' ')
    let vaxe_hxml = vaxe#CurrentBuild()
-   let hxml_cd = fnamemodify(vaxe_hxml,":p:h")
+   let hxml_cd = fnameescape(fnamemodify(vaxe_hxml,":p:h"))
    let hxml_sys = "cd\ ".hxml_cd."; haxe ".complete_args."\ 2>&1"
    let voutput = system(hxml_sys)
    let raw_path = split(voutput,"\n")[0]
@@ -390,7 +390,7 @@ function! vaxe#Ctags()
         let fixed_paths = []
         for p in paths
             " escape spaces in paths
-            let p = substitute(p, " ", "\\\\ ", "g")
+            let p = fnameescape(p)
             if p =~ "/std/$"
                 "this is the target std dir. We need to alter use it to add some
                 "global std utility paths, and avoid the target paths.
