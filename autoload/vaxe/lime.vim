@@ -31,7 +31,7 @@ function! vaxe#lime#ProjectLime(...)
                 echoerr "No lime/openfl project files found in current working directory"
                 return
             end
-        endif 
+        endif
 
         let base_lime = vaxe#util#InputList("Select Lime", limes)
 
@@ -76,8 +76,8 @@ function! vaxe#lime#BuildLimeHxml(lime)
         call vaxe#lime#Target(a:lime)
     endif
 
-    let g:vaxe_working_directory = fnameescape(fnamemodify(a:lime, ":p:h"))
-    let cdcmd = 'cd "'.g:vaxe_working_directory.'" && '
+    let g:vaxe_working_directory = fnamemodify(a:lime, ":p:h")
+    let cdcmd = 'cd "'.fnameescape(g:vaxe_working_directory).'" && '
 
     "create the lime.hxml if not present
     if !filereadable(base_hxml)
@@ -90,8 +90,8 @@ function! vaxe#lime#BuildLimeHxml(lime)
 
     " create the boilerplate code if missing
     let simple_target = split(g:vaxe_lime_target)[0]
-    if (!isdirectory(g:vaxe_working_directory."/Exports/".simple_target.'/bin') &&
-                \ !isdirectory(g:vaxe_working_directory."/bin/".simple_target))
+    let output_dir = g:vaxe_working_directory."/Export/".simple_target.'/bin/'
+    if (!isdirectory(g:vaxe_working_directory."/Export/".simple_target.'/bin'))
         " build the assets dependencies
         call system(cdcmd . " lime update " . g:vaxe_lime_target)
     else
