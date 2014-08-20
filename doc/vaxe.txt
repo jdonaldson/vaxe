@@ -358,8 +358,8 @@ SETTINGS                                        *vaxe-settings*
 
 *g:vaxe_completion_require_autowrite*
                         This setting requires autowrite to be enabled for
-                        completions. It defaults to 1.  If *autowrite* or
-                        *autowriteall* is not set, then Vaxe will display an
+                        completions. It defaults to 1.  If |autowrite| or
+                        |autowriteall| is not set, then Vaxe will display an
                         error message instead of any completion results.  If
                         set to 0, the completion will be tried normally, and
                         the user will be expected to save each time before
