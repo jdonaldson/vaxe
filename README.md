@@ -60,7 +60,7 @@ To update, just run `:BundleUpdate`
 ## HXML File Support
 Vaxe supports [hxml build files][haxe 2], which provide
 all of the arguments for the compiler, similar to a  [make
-file][wikipedia]).
+file][wikipedia].
 
 Vaxe will automatically try to determine the appropriate hxml file you are
 using.  It will also let you easily override this with a specific file
@@ -290,4 +290,4 @@ off of [his version][github 12].
 [sourceforge 5]: http://vimdoc.sourceforge.net/htmldoc/windows.html#status-line
 [sourceforge 6]: http://vimdoc.sourceforge.net/htmldoc/tagsrch.html
 [vim]: http://www.vim.org/scripts/script.php?script_id=1879
-[wikipedia]: http://en.wikipedia.org/wiki/Make_(software
+[wikipedia]: http://en.wikipedia.org/wiki/Make_(software)
