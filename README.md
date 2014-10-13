@@ -91,6 +91,13 @@ workflows.  If a Lime project is found, Vaxe will use it for builds and
 completions. You can specify a default target if you only work with one
 platform.
 
+## Flow Project Support
+
+Vaxe supports [Flow][github 13]
+workflows.  If a flow project is found, Vaxe will use it for builds and
+completions. You can specify a default target if you only work with one
+platform.
+
 ## Omni-completions
 
 Vaxe provides an
@@ -267,6 +274,7 @@ off of [his version][github 12].
 [github 10]: https://github.com/MarcWeber/vim-haxe
 [github 11]: https://github.com/cakebaker/scss-syntax.vim
 [github 12]: https://gist.github.com/deltaluca/6330630
+[github 13]: https://underscorediscovery.github.io/flow/
 [github 2]: https://github.com/openfl/lime
 [github 3]: https://github.com/bling/vim-airline
 [github 4]: https://github.com/Lokaltog/powerline
