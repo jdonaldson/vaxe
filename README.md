@@ -256,25 +256,36 @@ that can manage virtually any type of completion (omni, keyword, file, etc). It
 can be tricky to set up, so follow their documentation carefully.
 
 # Acknowledgements
-* Marc Weber (marco-oweber@gmx.de) : Most of the early work for the bundle was
+* [Marc Weber][github 14] : Most of the early work for the bundle was
 based off of his [vim-haxe bundle][github 10].
 Some of the hss functionality comes from his work on
 [scss-vim][github 11].
 
-* Ganesh Gunasegaran(me at itsgg.com) : I based my hxml syntax file off of [his
+* [Ganesh Gunasegaran][github 15]  : I based my hxml syntax file off of [his
 version][motion-twin].
 
-* Laurence Taylor (polysemantic at gmail): I based my ctags description of of [his mailing list post]
+* [Laurence Taylor][github 16] : I based my ctags description of of [his mailing list post]
 [haxe 4]
 
-* Luca Deltodesco (luca@deltaluca.me.uk): The main Haxe syntax file is based
+* [Luca Deltodesco][github 17] : The main Haxe syntax file is based
 off of [his version][github 12].
+
+* [Roger Duran][github 18] : Provided suport for
+[flow][github 19] 
+
+
 
 [github]: https://raw.github.com/jdonaldson/vaxe/master/doc/vaxe.txt
 [github 10]: https://github.com/MarcWeber/vim-haxe
 [github 11]: https://github.com/cakebaker/scss-syntax.vim
 [github 12]: https://gist.github.com/deltaluca/6330630
 [github 13]: https://underscorediscovery.github.io/flow/
+[github 14]: https://github.com/MarcWeber
+[github 15]: https://github.com/itsgg
+[github 16]: https://github.com/0b1kn00b
+[github 17]: https://github.com/deltaluca
+[github 18]: https://github.com/Roger
+[github 19]: https://github.com/underscorediscovery/flow
 [github 2]: https://github.com/openfl/lime
 [github 3]: https://github.com/bling/vim-airline
 [github 4]: https://github.com/Lokaltog/powerline
