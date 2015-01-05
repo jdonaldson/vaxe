@@ -35,7 +35,7 @@ command -nargs=? -complete=customlist,vaxe#flow#Targets FlowClean
 command VaxeStopCompletionServer call vaxe#KillCacheServer()
 command VaxeStartCompletionServer call vaxe#StartCacheServer()
 
-command -buffer VaxeCtags call vaxe#Ctags()
+command VaxeCtags call vaxe#Ctags()
 
 autocmd FileType haxe setlocal commentstring=//%s
 
