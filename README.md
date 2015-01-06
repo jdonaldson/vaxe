@@ -1,4 +1,4 @@
-Vaxe is a vim bundle for [Haxe][haxe], [Hss][ncannasse].  It provides support
+Vaxe is a vim bundle for [Haxe][haxe] and [Hss][ncannasse].  It provides support
 for syntax highlighting, indenting, compiling, and many more options.  Vaxe has
 [vimdoc][github], accessible using `:help vaxe` within vim.  
 
@@ -11,9 +11,8 @@ Vaxe requires additional vim features in order to work fully:
    via a package manager like brew or apt-get.
 
 
-This page will describe some of the
-special or optional features that vaxe supports, in addition to recommended
-configuration settings.
+This page will describe some of the special or optional features that vaxe
+supports, in addition to recommended configuration settings.
 
 ![Vaxe Screenshot][imgur] (screenshot shows
 neocomplcache completion mode, vim-airline, tagbar, and monokai color theme)
@@ -148,10 +147,10 @@ This will only use the menu, and not the preview window.  See ```:help
 preview-window``` for more details.
 
 Also, it is recommended that ```autowrite``` is set for haxe/hxml files.
-Otherwise, completions will not be available as you type.  See
-```help autowrite``` for more details.  If autowrite is not set,
-Vaxe will return an error when completions are requested.  It is possible to
-turn this off, see the help for g:vaxe_completion_require_autowrite.
+Otherwise, completions will not be available as you type.  See ```help
+autowrite``` for more details.  If autowrite is not set, Vaxe will return an
+error message when completions are requested.  It is possible to turn this off,
+see the help for g:vaxe_completion_require_autowrite.
 
 ## Airline
 
