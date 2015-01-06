@@ -182,16 +182,16 @@ You'll need to define some patterns for ctags in order for it to work with
 Haxe.  Put these lines in your `.ctags` file in your home directory:
 
 ```bash
-    --langdef=haxe
-    --langmap=haxe:.hx
-    --regex-haxe=/^[ \t]*((@:?[a-zA-Z]+) )*((macro|private|public|static|inline|override) )*function[ \t]+([A-Za-z0-9_]+)/\5/f,function,functions/
-    --regex-haxe=/^[ \t]*((@:?[a-zA-Z]+) )*((private|public|static|inline) )*var[ \t]+([A-Za-z0-9_]+)/\5/v,variable,variables/
-    --regex-haxe=/^[ \t]*package[ \t]*([A-Za-z0-9_\.]+)/\1/p,package/
-    --regex-haxe=/^[ \t]*((@:?[a-zA-Z]+) )*((extern|private) )*class[ \t]+([A-Za-z0-9_]+)[ \t]*[^\{]*/\4/c,class,classes/
-    --regex-haxe=/^[ \t]*((extern|private) )*abstract[ \t]+([A-Za-z0-9_]+)[ \t]*[^\{]*/\4/a,abstract,abstracts/
-    --regex-haxe=/^[ \t]*((@:?[a-zA-Z]+) )*((extern|private) )*interface[ \t]+([A-Za-z0-9_]+)/\4/i,interface/
-    --regex-haxe=/^[ \t]*(private )?typedef[ \t]+([A-Za-z0-9_]+)/\1/t,typedef/
-    --regex-haxe=/^[ \t]*enum[ \t]+([A-Za-z0-9_]+)/\1/e,enum/
+--langdef=haxe
+--langmap=haxe:.hx
+--regex-haxe=/^[ \t]*((@:?[a-zA-Z]+)[ \t]+)*((inline|macro|override|private|public|static)[ \t]+)*function[ \t]+([A-Za-z0-9_]+)/\5/f,function/
+--regex-haxe=/^[ \t]*((@:?[a-zA-Z]+)[ \t]+)*((inline|private|public|static)[ \t]+)*var[ \t]+([A-Za-z0-9_]+)/\5/v,variable/
+--regex-haxe=/^[ \t]*package[ \t]*([A-Za-z0-9_\.]+)/\1/p,package/
+--regex-haxe=/^[ \t]*((@:?[a-zA-Z]+)[ \t]+)*((extern|private)[ \t]+)?abstract[ \t]+([A-Za-z0-9_]+)[ \t]*[^\{]*/\5/a,abstract/
+--regex-haxe=/^[ \t]*((@:?[a-zA-Z]+)[ \t]+)*((extern|private)[ \t]+)?class[ \t]+([A-Za-z0-9_]+)[ \t]*[^\{]*/\5/c,class/
+--regex-haxe=/^[ \t]*((@:?[a-zA-Z]+)[ \t]+)*((extern|private)[ \t]+)?interface[ \t]+([A-Za-z0-9_]+)/\5/i,interface/
+--regex-haxe=/^[ \t]*((private)[ \t]+)?typedef[ \t]+([A-Za-z0-9_]+)/\3/t,typedef/
+--regex-haxe=/^[ \t]*enum[ \t]+([A-Za-z0-9_]+)/\1/e,enum/
 ```
 
 Vaxe can generate a set of tags specific to the given build by running:
