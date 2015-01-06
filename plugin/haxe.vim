@@ -42,6 +42,7 @@ autocmd FileType haxe setlocal commentstring=//%s
 let g:tagbar_type_haxe = {
     \ 'ctagstype' : 'haxe',
     \ 'kinds'     : [
+        \ 'a:abstracts',
         \ 'c:classes',
         \ 'e:enums',
         \ 'i:interfaces',
