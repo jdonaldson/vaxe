@@ -22,6 +22,8 @@ as [pathogen][], [vundle][], or [vam][].
 
 # Install with Pathogen
 
+[![Join the chat at https://gitter.im/jdonaldson/vaxe](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jdonaldson/vaxe?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 1. Install pathogen using the [instructions][pathogen].
 2. Create/cd into `~/.vim/bundle/`
 3. Make a clone of the vaxe repo:
