@@ -233,7 +233,6 @@ function! vaxe#AutomaticHxml()
     endif
 endfunction
 
-
 " A function that sets the default hxml located in the parent directories of
 " the current buffer.
 function! vaxe#DefaultHxml(...)
