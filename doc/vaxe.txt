@@ -393,7 +393,7 @@ SETTINGS                                        *vaxe-settings*
                         Defaults to 0 (equivalent to always adding --no-output
                         in the hxml).
 
-*g:vaxe_completion_completion_bufwrite_events*
+*g:vaxe_completion_prevent_bufwrite_events*
                         Vaxe uses the compiler to make completions.  This can
                         happen frequently, and causes the buffer to be written.
                         This can in turn interfere with other scripts that
