@@ -56,7 +56,7 @@ function! vaxe#StartCacheServer()
             echomsg "Compilation server is already running on port "
                         \ . g:vaxe_cache_server_port
         else
-            let pid =  vaxe#util#SimpleSystem("haxe --wait "
+            let pid =  vaxe#util#SimpleSystem(g:vaxe_haxe_binary . " --wait "
                         \. g:vaxe_cache_server_port . "& echo $!")
             if pid =~ '\v[0-9]+'
                 let g:vaxe_cache_server_pid = pid
@@ -348,7 +348,7 @@ function! vaxe#SetCompiler()
         let escaped_hxml = fnameescape(vaxe_hxml)
         call vaxe#Log("vaxe_hxml: " . vaxe_hxml)
         let build_command = "cd " . escaped_wd ." &&"
-                    \. "haxe " . escaped_hxml . " 2>&1"
+                    \. g:vaxe_haxe_binary . " " . escaped_hxml . " 2>&1"
         if filereadable(vaxe_hxml)
             let lines = readfile(vaxe_hxml)
         endif
@@ -380,7 +380,7 @@ function! vaxe#CompilerClassPaths()
    let complete_args = join(split(complete_args,"\n"),' ')
    let vaxe_hxml = vaxe#CurrentBuild()
    let hxml_cd = fnameescape(fnamemodify(vaxe_hxml,":p:h"))
-   let hxml_sys = "cd\ ".hxml_cd."; haxe ".complete_args."\ 2>&1"
+   let hxml_sys = "cd\ ".hxml_cd."; " . g:vaxe_haxe_binary . " ".complete_args."\ 2>&1"
    let voutput = system(hxml_sys)
    let raw_path = split(voutput,"\n")[0]
    let raw_path = substitute(raw_path, "Classpath :", "","")
@@ -589,7 +589,7 @@ function! s:RawCompletion(vaxe_hxml, extra_string)
         let hxml_cd = ''
     endif
 
-    let hxml_sys = hxml_cd." haxe ".complete_args."\ 2>&1"
+    let hxml_sys = hxml_cd." " . g:vaxe_haxe_binary ." ".complete_args."\ 2>&1"
     let hxml_sys =  join(split(hxml_sys,"\n")," ")
     call vaxe#Log(hxml_sys)
     let complete_output = system(hxml_sys)
