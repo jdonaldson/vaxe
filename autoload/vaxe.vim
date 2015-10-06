@@ -233,7 +233,6 @@ function! vaxe#AutomaticHxml()
     endif
 endfunction
 
-
 " A function that sets the default hxml located in the parent directories of
 " the current buffer.
 function! vaxe#DefaultHxml(...)
@@ -557,7 +556,7 @@ function! s:HandleWriteEvent()
     if (g:vaxe_completion_prevent_bufwrite_events)
         let events = "BufWritePost,BufWritePre,BufWriteCmd"
     endif
-    let &l:eventignore = old_ignore
+
     if (&l:eventignore)
         let &l:eventignore = &l:eventignore . ',' . events
     else
@@ -570,6 +569,7 @@ function! s:HandleWriteEvent()
         exe ":silent update"
     endif
 
+    let &l:eventignore = old_ignore
 endfunction
 
 " a 'raw completion' function that will just return unformatted output
@@ -584,7 +584,12 @@ function! s:RawCompletion(vaxe_hxml, extra_string)
     let complete_args = s:CompletionHxml(expand("%:p"), offset)
     let complete_args = complete_args . ' ' . a:extra_string
 
-    let hxml_cd = "cd\ \"".fnamemodify(a:vaxe_hxml,":p:h"). "\";"
+    let hxml_cd = "cd\ \"".fnamemodify(a:vaxe_hxml,":p:h"). "\""
+    if has('win32')
+        let hxml_cd = hxml_cd. "&"
+    else
+        let hxml_cd = hxml_cd. ";"
+    endif
     if exists("g:vaxe_hxml")
         let hxml_cd = ''
     endif

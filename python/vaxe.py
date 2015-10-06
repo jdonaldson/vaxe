@@ -38,6 +38,8 @@ def complete(complete_output_var, output_var, base_var , alter_var, collapse_var
             else:
                 # get rid of leading/trailing ws/nl
                 info = info.strip()
+                # strip html
+                info = remove_html_markup(info)
                 # split and collapse extra whitespace
                 info = [re.sub(r'\s+',' ',s.strip()) for s in info.split('\n')]
 
@@ -134,3 +136,20 @@ def alter_signature(sig):
     final_expr = '(' + ", ".join(parts) + ')' + ret_val
     return final_expr
 
+# simple script to strip html markup
+def remove_html_markup(s):
+    tag = False
+    quote = False
+    out = ""
+
+    for c in s:
+        if c == '<' and not quote:
+            tag = True
+        elif c == '>' and not quote:
+            tag = False
+        elif (c == '"' or c == "'") and tag:
+            quote = not quote
+        elif not tag:
+            out = out + c
+
+    return out

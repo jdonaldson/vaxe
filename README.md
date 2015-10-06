@@ -1,3 +1,5 @@
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jdonaldson/vaxe?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 Vaxe is a vim bundle for [Haxe][haxe] and [Hss][ncannasse].  It provides support
 for syntax highlighting, indenting, compiling, and many more options.  Vaxe has
 [vimdoc][github], accessible using `:help vaxe` within vim.  
