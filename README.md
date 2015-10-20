@@ -2,7 +2,7 @@
 
 Vaxe is a vim bundle for [Haxe][haxe] and [Hss][ncannasse].  It provides support
 for syntax highlighting, indenting, compiling, and many more options.  Vaxe has
-[vimdoc][github], accessible using `:help vaxe` within vim.  
+[vimdoc][github], accessible using `:help vaxe` within vim.
 
 Vaxe requires additional vim features in order to work fully:
 
@@ -20,7 +20,7 @@ supports, in addition to recommended configuration settings.
 neocomplcache completion mode, vim-airline, tagbar, and monokai color theme)
 
 The recommended way to install vaxe is using a bundle management system such
-as [pathogen][], [vundle][], or [vam][].
+as [pathogen][], [vundle][], [vam][], or [vim-plug][].
 
 # Install with Pathogen
 
@@ -49,12 +49,31 @@ To update, just run `:PluginUpdate`
 2. Add vaxe to the list of your activated bundles and re-source it:
     `call vam#ActivateAddons(['github:jdonaldson/vaxe'])`
 
+# Install with vim-plug
+
+1. Install vim-plug using the [instructions][vim-plug]
+2. Add vaxe to your plugin list in `.vimrc` and re-source it:
+
+    insert vaxe
+    ```
+    '' Haxe Plugin
+    Plug 'jdonaldson/vaxe'
+    ```
+    between
+    `call plug#begin('~/.vim/plugged')`
+
+    and
+    `call plug#end()`
+3. Run `:PlugInstall`
+
 
 [pathogen]:https://github.com/tpope/vim-pathogen
 
 [vundle]:https://github.com/gmarik/vundle
 
 [vam]:https://github.com/MarcWeber/vim-addon-manager
+
+[vim-plug]:https://github.com/junegunn/vim-plug
 
 # Compiling Haxe Projects with vaxe
 
@@ -216,7 +235,7 @@ will generate:
     var l = new StringMap<Int>();
 ```
 
-Keep in mind that jumping to files defined by ctags may jump to a location 
+Keep in mind that jumping to files defined by ctags may jump to a location
 outside of the current working directory.  If you want to keep the reference
 to you current hxml file when doing so, it is advised that you select a project
 mode hxml with ```:ProjectHxml```.
@@ -273,7 +292,7 @@ version][motion-twin].
 off of [his version][github 12].
 
 * [Roger Duran][github 18] : Provided suport for
-[flow][github 19] 
+[flow][github 19]
 
 
 
