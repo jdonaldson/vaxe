@@ -68,7 +68,6 @@ let g:vaxe_cache_server        = C('g:vaxe_cache_server', 0)
 let g:vaxe_logging             = C('g:vaxe_logging', 0)
 let g:vaxe_trace_absolute_path = C('g:vaxe_trace_absolute_path', 1)
 
-
 " completion options
 let g:vaxe_completion_require_autowrite
             \=C('g:vaxe_require_completion_autowrite', 1)
@@ -112,6 +111,10 @@ let g:vaxe_default_parent_search_patterns
 let g:vaxe_enable_airline_defaults = C('g:vaxe_enable_airline_defaults', 1)
 let g:vaxe_enable_ycm_defaults     = C('g:vaxe_enable_ycm_defaults', 1)
 let g:vaxe_enable_acp_defaults     = C('g:vaxe_enable_acp_defaults', 1)
+
+if !exists('g:vaxe_haxe_binary')
+	let g:vaxe_haxe_binary = 'haxe'
+endif
 
 " YCM
 if (g:vaxe_enable_ycm_defaults)
