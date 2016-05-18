@@ -171,9 +171,11 @@ syn match haxeCompilerMeta "@:\(
     \\|initPackage
     \\|internal
     \\|isVar
+    \\|jsRequire
     \\|keep
     \\|keepInit
     \\|keepSub
+    \\|luaRequire
     \\|macro
     \\|meta
     \\|multiType
