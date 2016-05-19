@@ -204,6 +204,7 @@ syn match haxeCompilerMeta "@:\(
     \\|rtti
     \\|runtime
     \\|runtimeValue
+    \\|selfCall
     \\|setter
     \\|sound
     \\|struct
