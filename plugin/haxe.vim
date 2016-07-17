@@ -4,6 +4,12 @@ endif
 
 let g:loaded_vaxe_plugin = 1
 
+if has("python3")
+    let g:vaxepy = ":python3 "
+elseif has("python")
+    let g:vaxepy = ":python "
+endif
+
 command -nargs=? -complete=file DefaultHxml call vaxe#DefaultHxml(<q-args>)
 command -nargs=? -complete=file ProjectHxml call vaxe#ProjectHxml(<q-args>)
 command VaxeToggleLogging let g:vaxe_logging = !g:vaxe_logging
@@ -145,3 +151,5 @@ if (g:vaxe_enable_acp_defaults)
 
     call add(g:acp_behavior['haxe'] , vaxe_entry)
 endif
+
+
