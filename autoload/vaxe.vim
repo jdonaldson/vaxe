@@ -625,9 +625,12 @@ function! s:FormatDisplayCompletion(base)
     " quick and dirty check for error
     let tag = complete_output[1:4]
     if tag != "type" && tag != "list" && tag != "pos>"
-        let error = complete_output[:len(complete_output)-2]
-        cgete error
-        return s:ShowCompletionError( "Compiler error: ", error)
+       let error = complete_output[:len(complete_output)-2]
+       if type(error) != type("")
+          return s:ShowCompletionError("Compiler error: ",  "No valid output was received from completion request")
+       endif
+       cgete error
+       return s:ShowCompletionError( "Compiler error: ", error)
     endif
     let output = []
     call vaxe#Log('compiler output: ' . complete_output)
