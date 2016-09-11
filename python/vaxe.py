@@ -64,7 +64,7 @@ def complete(complete_output_var, output_var, base_var , alter_var, collapse_var
         completes = [fieldxml2completion(f) for f in fields]
     elif len(types) > 0: # function type completion
         otype = types[0].text.strip()
-        h = HTMLParser.HTMLParser()
+        h = HTMLParser()
         word = ' '
         info = [h.unescape(otype)]
         abbr = info[0]
