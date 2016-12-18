@@ -75,7 +75,7 @@ let g:vaxe_trace_absolute_path = C('g:vaxe_trace_absolute_path', 1)
 
 " completion options
 let g:vaxe_completion_require_autowrite
-            \=C('g:vaxe_require_completion_autowrite', 1)
+            \=C('g:vaxe_completion_require_autowrite', 1)
 let g:vaxe_completion_disable_optimizations
             \= C('g:vaxe_completion_disable_optimizations', 1)
 let g:vaxe_completion_alter_signature
