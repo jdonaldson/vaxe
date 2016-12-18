@@ -179,6 +179,7 @@ syn match haxeCompilerMeta "@:\(
     \\|macro
     \\|meta
     \\|multiType
+    \\|multiReturn
     \\|native
     \\|nativeGen
     \\|noCompletion
