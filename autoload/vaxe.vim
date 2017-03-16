@@ -183,6 +183,36 @@ function! vaxe#HaxeComplete(findstart, base)
     endif
 endfunction
 
+function! s:getparent(item)
+    let parent = substitute(a:item, '[\/][^\/]\+[\/:]\?$', '', '')
+    if parent == '' || parent !~ '[\/]'
+        let parent .= '/'
+    endif
+    return parent
+endfunction
+
+function! s:projecthxmlrec(dir,depth)
+    let depth = a:depth + 1
+    let hxmls = split(glob(a:dir . "/*.hxml"), "\n")
+    if len(hxmls) > 0
+        let base_hxml = vaxe#util#InputList("Select Hxml", hxmls)
+        let g:vaxe_hxml = base_hxml
+        echo "found " . base_hxml
+        call vaxe#SetCompiler()
+        return g:vaxe_hxml
+    else
+        let parent = s:getparent(a:dir)
+        if parent != a:dir && a:depth < 10
+              return s:projecthxmlrec(parent,depth)
+        endif
+        echoerr "No hxml files found in current working directory"
+        return
+    endif
+endfunction
+
+function! vaxe#FindProjectHxml()
+  return s:projecthxmlrec(getcwd(),0)
+endfunction
 
 " A function that will search for valid hxml in the current working directory
 "  and allow the user to select the right candidate.  The selection will
