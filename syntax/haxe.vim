@@ -132,6 +132,7 @@ syn match haxeCompilerMeta "@:\(
     \\|bitmap
     \\|build
     \\|buildXml
+    \\|callable
     \\|classCode
     \\|commutative
     \\|compilerGenerated
