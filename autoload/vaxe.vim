@@ -86,7 +86,7 @@ endfunction
 " You can also call this without a package prefix, and vaxe will try to look
 " up packages that contain the (e.g. FastList) class name.
 function! vaxe#ImportClass()
-   let match_parts = matchlist(getline('.'), '\(\(\l\+\.\)\+\)*\(\u\w*\)')
+   let match_parts = matchlist(getline('.'), '\W\(\(\l\+\.\)\+\)*\(\u\w*\)')
    if len(match_parts)
        let package = match_parts[1]
        " get rid of the period at the end of the package declaration.
