@@ -506,6 +506,12 @@ function! vaxe#CurrentBuildPlatform()
       return "swf"
    elseif (block =~ "-php")
       return "php"
+   elseif (block =~ "-py")
+      return "python"
+   elseif (block =~ "-lua")
+      return "lua"
+   elseif (block =~ "-hl")
+      return "hashlink"
    elseif (block =~ "-neko" || block =~ "-x ")
       return "neko"
    else
