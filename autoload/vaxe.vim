@@ -461,6 +461,8 @@ function! s:CurrentBlockHxml(hxml_str)
         let result = result .  "\n-D no-copt"
     endif
 
+    let result = result . "\n-D --no-output"
+
     return s:SanitizeHxml(result)
 endfunction
 
