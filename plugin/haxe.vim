@@ -66,3 +66,13 @@ function! AdditionalTextEdits()
     endfor
   endif
 endfunction
+
+" language client settings
+let g:vaxe_lc_enableDiagnostics     = Default('g:vaxe_lc_enableDiagnostics', 1)
+let g:vaxe_lc_diagnosticsPathFilter = Default('g:vaxe_lc_diagnosticsPathFilter', "")
+let g:vaxe_lc_enableCodeLens        = Default('g:vaxe_lc_enableCodeLens', 1)
+let g:vaxe_lc_displayPort           = Default('g:vaxe_lc_displayPort', "auto")
+let g:vaxe_lc_buildCompletionCache  = Default('g:vaxe_lc_buildCompletionCache', 1)
+let g:vaxe_lc_codeGeneration        = Default('g:vaxe_lc_codeGeneration', {})
+let g:vaxe_lc_format                = Default('g:vaxe_lc_format', {})
+

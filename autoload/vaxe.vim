@@ -189,7 +189,15 @@ endfunction
 function! vaxe#SetConfig()
   if &ft=="haxe"
     call vaxe#SelectHxml(b:vaxe_hxml)
-    let haxeConfig = json_decode(system('cat ~/settings-haxe.json'))
+    let haxeConfig = {
+          \ "enableDiagnositics"    : g:vaxe_lc_enableDiagnostics,
+          \ "diagnosticsPathFilter" : g:vaxe_lc_diagnosticsPathFilter,
+          \ "enableCodeLens"        : g:vaxe_lc_enableCodeLens,
+          \ "displayPort"           : g:vaxe_lc_displayPort,
+          \ "buildCompletionCache"  : g:vaxe_lc_buildCompletionCache,
+          \ "codeGeneration"        : g:vaxe_lc_codeGeneration,
+          \ "format"                : g:vaxe_lc_format
+          \ }
     call LanguageClient#Notify('workspace/didChangeConfiguration', {'settings': {'haxe': haxeConfig}})
   endif
 endfunction
