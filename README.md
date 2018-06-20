@@ -23,11 +23,17 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
+  let g:LanguageClient_autoStart = 1
+  let g:LanguageClient_loadSettings = 1
+  let g:LanguageClient_loggingLevel = 'DEBUG'
 
 Plug 'jdonaldson/vaxe', {
     \ 'branch' : 'neovaxe',
     \ 'do' : 'bash install.sh',
     \ }
+
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    let g:deoplete#enable_at_startup = 1
 
 call plug#end()
 ```
