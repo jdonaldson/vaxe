@@ -188,7 +188,7 @@ endfunction
 
 function! vaxe#SetConfig()
   if &ft=="haxe"
-    call SelectHxml(b:vaxe_hxml)
+    call vaxe#SelectHxml(b:vaxe_hxml)
     let haxeConfig = json_decode(system('cat ~/settings-haxe.json'))
     call LanguageClient#Notify('workspace/didChangeConfiguration', {'settings': {'haxe': haxeConfig}})
   endif

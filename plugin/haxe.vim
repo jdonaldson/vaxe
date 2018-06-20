@@ -4,6 +4,10 @@ endif
 
 let g:loaded_vaxe_plugin = 1
 
+" Utility variable that stores the directory that this script resides in
+"Load the first time a haxe file is opened
+let g:vaxe_plugin_path = expand('<sfile>:p:h:h')
+
 command -nargs=? -complete=file DefaultHxml call vaxe#DefaultHxml(<q-args>)
 command -nargs=? -complete=file ProjectHxml call vaxe#ProjectHxml(<q-args>)
 command VaxeToggleLogging let g:vaxe_logging = !g:vaxe_logging
@@ -21,6 +25,7 @@ let g:vaxe_prefer_hxml               = Default('g:vaxe_prefer_hxml', "build.hxml
 let g:vaxe_prefer_lime               = Default('g:vaxe_prefer_lime', "*.lime")
 let g:vaxe_prefer_openfl             = Default('g:vaxe_prefer_openfl', "project.xml")
 let g:vaxe_prefer_first_in_directory = Default('g:vaxe_prefer_first_in_directory', 1)
+
 let g:vaxe_default_parent_search_patterns
             \= Default('g:vaxe_default_parent_search_patterns'
             \, [g:vaxe_prefer_hxml, "*.hxml"])
@@ -41,8 +46,23 @@ else
     \ 'haxe': ['node', g:vaxe_plugin_path.'/haxe-languageserver/bin/server.js'],
     \ }
 endif
+    let g:LanguageClient_serverCommands = {
+    \ 'haxe': ['node', '~/Projects/haxe-languageserver/bin/server.js'],
+    \ }
 
-" Utility variable that stores the directory that this script resides in
-"Load the first time a haxe file is opened
-let g:vaxe_plugin_path = escape(expand('<sfile>:p:h') . '/../python/', '\')
+let g:vaxe_trace_absolute_path = Default('g:vaxe_trace_absolute_path', 1)
 
+autocmd CompleteDone *.hx call AdditionalTextEdits()
+
+function! AdditionalTextEdits()
+  if has_key(v:completed_item, "user_data")
+    let dat = json_decode(v:completed_item.user_data)
+    echomsg string(dat)
+    for edit in dat.additional_text_edits
+      let pos = edit.range.start.line
+      let text = substitute(edit.newText, '\n$', '', '')
+      let text = substitute(text, '[[:cntrl:]]', '', 'g')
+      undojoin | call append(pos, text)
+    endfor
+  endif
+endfunction
