@@ -1,5 +1,5 @@
 " Language:     Haxe
-" Maintainer:   None!  Wanna improve this?
+" Maintainer:   Justin Donaldson
 " Last Change:  2007 Jan 22
 
 " Only load this indent file when no other was loaded.

@@ -27,7 +27,6 @@ if (!run_once)
             let w:airline_section_c =
                      \  '%{VaxeAirlineProject()}'
                      \. ' %{pathshorten(fnamemodify(vaxe#CurrentBuild(), ":."))}'
-                     \. ' [%{vaxe#CurrentBuildPlatform()}] '
                      \. g:airline_left_alt_sep
                      \. ' %f%m'
          endif
