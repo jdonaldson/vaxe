@@ -28,3 +28,21 @@ let g:vaxe_default_parent_search_patterns
 " Supported 3rd party plugin options
 let g:vaxe_enable_airline_defaults = Default('g:vaxe_enable_airline_defaults', 1)
 
+" Auto config Haxe LSP
+augroup LanguageClient_config
+    autocmd!
+    autocmd User LanguageClientStarted call vaxe#SetConfig()
+augroup END
+
+if exists("g:LanguageClient_serverCommands")
+    g:LanguageClient_serverCommands['haxe'] = ['node', g:vaxe_plugin_path.'/haxe-languageserver/bin/server.js']
+else
+    let g:LanguageClient_serverCommands = {
+    \ 'haxe': ['node', g:vaxe_plugin_path.'/haxe-languageserver/bin/server.js'],
+    \ }
+endif
+
+" Utility variable that stores the directory that this script resides in
+"Load the first time a haxe file is opened
+let g:vaxe_plugin_path = escape(expand('<sfile>:p:h') . '/../python/', '\')
+

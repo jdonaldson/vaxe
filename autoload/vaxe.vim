@@ -116,12 +116,6 @@ function! vaxe#DefaultHxml(...)
 
     let g:vaxe_working_directory = fnamemodify(b:vaxe_hxml, ":p:h")
 
-    " set quickfix to jump to working directory before populating list
-    " this is necessary since use may cd to different directories during
-    " session
-    autocmd QuickFixCmdPre <buffer>  exe 'cd ' . fnameescape(g:vaxe_working_directory)
-    autocmd QuickFixCmdPost <buffer>  cd -
-
     call vaxe#SetCompiler()
 endfunction
 
@@ -161,7 +155,7 @@ function! vaxe#SetCompiler()
         let escaped_hxml = fnameescape(vaxe_hxml)
         call vaxe#Log("vaxe_hxml: " . vaxe_hxml)
         let build_command = "cd " . escaped_wd ." &&"
-                    \. g:vaxe_haxe_binary . " " . escaped_hxml . " 2>&1"
+                    \. "haxe " . escaped_hxml . " 2>&1"
         if filereadable(vaxe_hxml)
             let lines = readfile(vaxe_hxml)
         endif
@@ -182,3 +176,25 @@ function! vaxe#SetCompiler()
     let &l:errorformat .= ",%I%m"
 endfunction
 
+function! vaxe#DisplayServerConfig(serverConfig)
+  call LanguageClient#Notify('haxe/didChangeDisplayServerConfig', a:serverConfig)
+endfunction
+
+function! vaxe#SelectHxml(hxml)
+  if filereadable(a:hxml)
+    call LanguageClient#Notify('haxe/didChangeDisplayArguments', {'arguments': [a:hxml]})
+  endif
+endfunction
+
+function! vaxe#SetConfig()
+  if &ft=="haxe"
+    call SelectHxml(b:vaxe_hxml)
+    let haxeConfig = json_decode(system('cat ~/settings-haxe.json'))
+    call LanguageClient#Notify('workspace/didChangeConfiguration', {'settings': {'haxe': haxeConfig}})
+  endif
+endfunction
+
+
+function! vaxe#AirlineProject()
+   return exists("g:vaxe_hxml") ? '★ ' : '☆ '
+endfunction

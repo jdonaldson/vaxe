@@ -16,18 +16,21 @@ supports, in addition to recommended configuration settings.
 
 Add vaxe to your plugin list in `.vimrc` and re-source it:
 
-    ```viml
-    call plug#begin('~/.vim/plugged')
+```viml
+call plug#begin('~/.vim/plugged')
 
-    Plug 'autozimu/LanguageClient-neovim', {
+Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
 
-    Plug 'jdonaldson/vaxe' { 'branch' : 'neovaxe'}
+Plug 'jdonaldson/vaxe', {
+    \ 'branch' : 'neovaxe',
+    \ 'do' : 'bash install.sh',
+    \ }
 
-    call plug#end()
-    ```
+call plug#end()
+```
 
 
 

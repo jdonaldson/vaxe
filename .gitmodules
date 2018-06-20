@@ -1,0 +1,3 @@
+[submodule "haxe-languagserver"]
+	path = haxe-languagserver
+	url = https://github.com/jdonaldson/haxe-languageserver
