@@ -46,9 +46,6 @@ else
     \ 'haxe': ['node', g:vaxe_plugin_path.'/haxe-languageserver/bin/server.js'],
     \ }
 endif
-    let g:LanguageClient_serverCommands = {
-    \ 'haxe': ['node', '~/Projects/haxe-languageserver/bin/server.js'],
-    \ }
 
 let g:vaxe_trace_absolute_path = Default('g:vaxe_trace_absolute_path', 1)
 
