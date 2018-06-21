@@ -52,7 +52,7 @@ let g:vaxe_trace_absolute_path = Default('g:vaxe_trace_absolute_path', 1)
 autocmd CompleteDone *.hx call AdditionalTextEdits()
 
 function! AdditionalTextEdits()
-  if has_key(v:completed_item, "user_data")
+  if has_key(v:completed_item, "user_data") && v:completed_item.user_data != ""
     let dat = json_decode(v:completed_item.user_data)
     echomsg string(dat)
     for edit in dat.additional_text_edits
