@@ -52,11 +52,4 @@ let g:vaxe_lc_codeGeneration        = Default('g:vaxe_lc_codeGeneration', {})
 let g:vaxe_lc_format                = Default('g:vaxe_lc_format', {})
 
 
-if exists("g:LanguageClient_serverCommands")
-    g:LanguageClient_serverCommands['haxe'] = ['node', '--inspect', g:vaxe_plugin_path.'/haxe-languageserver/bin/server.js']
-else
-    let g:LanguageClient_serverCommands = {
-    \ 'haxe': ['node', '--inspect', g:vaxe_plugin_path.'/haxe-languageserver/bin/server.js'],
-    \ }
-endif
 
