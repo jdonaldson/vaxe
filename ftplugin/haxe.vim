@@ -2,7 +2,7 @@ compiler haxe
 
 
 " load special configuration for vim-airline if it exists
-if (exists("g:loaded_airline") && g:vaxe_enable_airline_defaults )
+if (exists("g:airline_statusline_funcrefs") && g:vaxe_enable_airline_defaults )
    function! AirlineBuild(...)
       if &filetype == 'haxe'
          let w:airline_section_c =

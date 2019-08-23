@@ -177,12 +177,12 @@ function! vaxe#SetCompiler()
 endfunction
 
 function! vaxe#DisplayServerConfig(serverConfig)
-  call LanguageClient#Notify('haxe/didChangeDisplayServerConfig', a:serverConfig)
+  call CocRequest('haxe', 'haxe/didChangeDisplayServerConfig', a:serverConfig)
 endfunction
 
 function! vaxe#SelectHxml(hxml)
   if filereadable(a:hxml)
-    call LanguageClient#Notify('haxe/didChangeDisplayArguments', {'arguments': [a:hxml]})
+    call CocRequest('haxe', 'haxe/didChangeDisplayArguments', {'arguments': [a:hxml]})
   endif
 endfunction
 
@@ -198,7 +198,7 @@ function! vaxe#SetConfig()
           \ "codeGeneration"        : g:vaxe_lc_codeGeneration,
           \ "format"                : g:vaxe_lc_format
           \ }
-    call LanguageClient#Notify('workspace/didChangeConfiguration', {'settings': {'haxe': haxeConfig}})
+    call coc#rpc#notify('workspace/didChangeConfiguration', {'settings': {'haxe': haxeConfig}})
   endif
 endfunction
 
