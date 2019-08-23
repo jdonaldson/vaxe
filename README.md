@@ -20,9 +20,10 @@ Add vaxe to your plugin list in `.vimrc` and re-source it:
 call plug#begin('~/.vim/plugged')
 
 
-Plug 'jdonaldson/vaxe', {'branch' : 'neovaxe', 'do' : 'bash install.sh'}
-    Plug 'neoclide/coc.nvim'
-    Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
+Plug 'jdonaldson/vaxe', {'branch' : 'neovaxe', 'do' : 'sh install.sh'}
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    " add recommended coc extensions
+    g:coc_global_extensions = ['coc-snippets']
 
 call plug#end()
 ```
