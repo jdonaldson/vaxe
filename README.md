@@ -7,7 +7,7 @@ for syntax highlighting, indenting, compiling, and many more options.  Vaxe has
 Vaxe requires additional vim features in order to work fully:
 
 1. Neovim > 0.3
-2. LanguageClient-nvim
+2. Coc.nvim 
 
 This page will describe some of the special or optional features that vaxe
 supports, in addition to recommended configuration settings.
@@ -19,21 +19,10 @@ Add vaxe to your plugin list in `.vimrc` and re-source it:
 ```viml
 call plug#begin('~/.vim/plugged')
 
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-  let g:LanguageClient_autoStart = 1
-  let g:LanguageClient_loadSettings = 1
-  let g:LanguageClient_loggingLevel = 'DEBUG'
 
-Plug 'jdonaldson/vaxe', {
-    \ 'branch' : 'neovaxe',
-    \ 'do' : 'bash install.sh',
-    \ }
-
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    let g:deoplete#enable_at_startup = 1
+Plug 'jdonaldson/vaxe', {'branch' : 'neovaxe', 'do' : 'bash install.sh'}
+    Plug 'neoclide/coc.nvim'
+    Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
 
 call plug#end()
 ```
@@ -89,6 +78,4 @@ default in vaxe.  Current support enables the display of the current hxml build
 file.  The hxml name has an empty star if it's in default mode (☆ ), and a
 filled star if it's in project mode (★ ).  You can disable all of this by
 changing ```g:vaxe_enable_airline``` to 0.
-
-
 
