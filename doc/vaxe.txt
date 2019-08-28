@@ -179,6 +179,18 @@ SETTINGS                                        *vaxe-settings*
                         Vaxe provides support for vim-airline by changing the
                         filename display to also include the current hxml build
                         file (defaults to 1).
+*g:vaxe_lsp_app_location*
+                        Vaxe provides a haxe language server app as part of the
+                        bundle.  If you prefer to use your own for some reason,
+                        use this variable to set its location.
+
+*g:vaxe_lsp_args*
+                        Provide additional args to the language server.
+                        (E.g. --inspect-brk for debugging)
+
+*g:vaxe_lsp_cache_location*
+                        Provide the location where the lsp cache should be
+                        located (default /tmp/haxe_lsp_cache).
 
 
 =============================================================================

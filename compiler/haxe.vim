@@ -8,6 +8,7 @@
 " this function sets the makeprg and errorformat
 if !exists("b:vaxe_hxml")
     call vaxe#AutomaticHxml()
+    call vaxe#SetConfig()
 endif
 
 

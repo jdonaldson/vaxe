@@ -7,6 +7,9 @@ let g:loaded_vaxe_plugin = 1
 " Utility variable that stores the directory that this script resides in
 "Load the first time a haxe file is opened
 let g:vaxe_plugin_path = expand('<sfile>:p:h:h')
+let g:vaxe_lsp_app_location = g:vaxe_plugin_path . "/haxe-language-server/bin/server.js"
+let g:vaxe_lsp_args = []
+let g:vaxe_lsp_cache_location = "/tmp/haxe_lsp_cache"
 
 command -nargs=? -complete=file DefaultHxml call vaxe#DefaultHxml(<q-args>)
 command -nargs=? -complete=file ProjectHxml call vaxe#ProjectHxml(<q-args>)
@@ -32,12 +35,6 @@ let g:vaxe_default_parent_search_patterns
 
 " Supported 3rd party plugin options
 let g:vaxe_enable_airline_defaults = Default('g:vaxe_enable_airline_defaults', 1)
-
-" Auto config Haxe LSP
-augroup LanguageClient_config
-    autocmd!
-    autocmd User LanguageClientStarted call vaxe#SetConfig()
-augroup END
 
 let g:vaxe_trace_absolute_path = Default('g:vaxe_trace_absolute_path', 1)
 

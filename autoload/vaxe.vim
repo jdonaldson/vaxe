@@ -187,21 +187,25 @@ function! vaxe#SelectHxml(hxml)
 endfunction
 
 function! vaxe#SetConfig()
-  if &ft=="haxe"
-    call vaxe#SelectHxml(b:vaxe_hxml)
-    let haxeConfig = {
-          \ "enableDiagnositics"    : g:vaxe_lc_enableDiagnostics,
-          \ "diagnosticsPathFilter" : g:vaxe_lc_diagnosticsPathFilter,
-          \ "enableCodeLens"        : g:vaxe_lc_enableCodeLens,
-          \ "displayPort"           : g:vaxe_lc_displayPort,
-          \ "buildCompletionCache"  : g:vaxe_lc_buildCompletionCache,
-          \ "codeGeneration"        : g:vaxe_lc_codeGeneration,
-          \ "format"                : g:vaxe_lc_format
-          \ }
-    call coc#rpc#notify('workspace/didChangeConfiguration', {'settings': {'haxe': haxeConfig}})
-  endif
+    let s:hxml = vaxe#CurrentBuild()
+    if exists('g:did_coc_loaded')
+        let s:args = copy(g:vaxe_lsp_args)
+        call add(s:args, g:vaxe_lsp_app_location)
+        call coc#config( "languageserver", {
+                    \"haxe": {
+                        \ "command": "node",
+                        \ "args": s:args,
+                        \ "settings":{"haxe.executable": "haxe"},
+                        \ "filetypes": ["haxe"],
+                        \ "trace.server": "verbose",
+                        \ "initializationOptions": {
+                        \     "cacheDirectory": g:vaxe_lsp_cache_location,
+                        \     "displayArguments": [s:hxml]
+                        \ }
+                    \ }
+                \ })
+    endif
 endfunction
-
 
 function! vaxe#AirlineProject()
    return exists("g:vaxe_hxml") ? '★ ' : '☆ '
