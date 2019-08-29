@@ -22,9 +22,15 @@ function! s:checkEnvironment() abort
         call health#report_error('node not found! Please install node >= 8.10')
     endif
 
+    if !filereadable(expand(g:vaxe_lsp_app_location))
+        let valid = 0
+        call health#report_error('Haxe lsp app not found at '.g:vaxe_lsp_app_location)
+    endif
+
     let lix_output = system('haxelib list lix')
     if v:shell_error && lix_output !=# ""
         let valid = 0
+        call health#report_error('lix not found! Please install lix with haxelib')
         echohl Error | echom lix_output | echohl None
         return
     endif

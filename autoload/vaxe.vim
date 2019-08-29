@@ -186,24 +186,50 @@ function! vaxe#SelectHxml(hxml)
   endif
 endfunction
 
+function! vaxe#configCoc()
+    let s:args = copy(g:vaxe_lsp_args)
+    call add(s:args, g:vaxe_lsp_app_location)
+
+    let b:vaxe_lsp_config = {
+                \ "enableDiagnositics"    : g:vaxe_lc_enableDiagnostics,
+                \ "diagnosticsPathFilter" : g:vaxe_lc_diagnosticsPathFilter,
+                \ "enableCodeLens"        : g:vaxe_lc_enableCodeLens,
+                \ "displayPort"           : g:vaxe_lc_displayPort,
+                \ "buildCompletionCache"  : g:vaxe_lc_buildCompletionCache,
+                \ "codeGeneration"        : g:vaxe_lc_codeGeneration,
+                \ "format"                : g:vaxe_lc_format,
+                \ "haxe.executable" : "haxe"
+                \ }
+
+    call coc#config( "languageserver", {
+                \"haxe": {
+                    \ "command": "node",
+                    \ "args": s:args,
+                    \ "settings": b:vaxe_lsp_config,
+                    \ "filetypes": ["haxe"],
+                    \ "trace.server": "verbose",
+                    \ "initializationOptions": {
+                    \     "cacheDirectory": g:vaxe_lsp_cache_location,
+                    \     "displayArguments": [s:hxml]
+                    \ }
+                \ }
+            \ })
+endfunction
+
+function! vaxe#configLsp()
+    " pip install python-language-server
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'haxe',
+        \ 'cmd': {server_info->['pyls']},
+        \ 'whitelist': ['haxe'],
+        \ })
+endfunction
+
+
 function! vaxe#SetConfig()
     let s:hxml = vaxe#CurrentBuild()
     if exists('g:did_coc_loaded')
-        let s:args = copy(g:vaxe_lsp_args)
-        call add(s:args, g:vaxe_lsp_app_location)
-        call coc#config( "languageserver", {
-                    \"haxe": {
-                        \ "command": "node",
-                        \ "args": s:args,
-                        \ "settings":{"haxe.executable": "haxe"},
-                        \ "filetypes": ["haxe"],
-                        \ "trace.server": "verbose",
-                        \ "initializationOptions": {
-                        \     "cacheDirectory": g:vaxe_lsp_cache_location,
-                        \     "displayArguments": [s:hxml]
-                        \ }
-                    \ }
-                \ })
+        call vaxe#configCoc()
     endif
 endfunction
 
