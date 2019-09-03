@@ -51,7 +51,7 @@ endfunction
 
 
 " Utility function that lets users select from a list.  If list is length 1,
-" then that item is returned.  Uses tlib#inpu#List if available.
+" then that item is returned.  Uses tlib#input#List if available.
 function! vaxe#util#InputList(label, items)
   if len(a:items) == 1
     return a:items[0]
