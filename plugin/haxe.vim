@@ -48,5 +48,5 @@ let g:vaxe_lc_buildCompletionCache  = Default('g:vaxe_lc_buildCompletionCache', 
 let g:vaxe_lc_codeGeneration        = Default('g:vaxe_lc_codeGeneration', {})
 let g:vaxe_lc_format                = Default('g:vaxe_lc_format', {})
 
-
+lua neovaxe = require("neovaxe")
 
