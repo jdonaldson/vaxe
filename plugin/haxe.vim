@@ -49,4 +49,7 @@ let g:vaxe_lc_codeGeneration        = Default('g:vaxe_lc_codeGeneration', {})
 let g:vaxe_lc_format                = Default('g:vaxe_lc_format', {})
 
 lua neovaxe = require("neovaxe")
+command VaxeReload :lua package.loaded.neovaxe = nil; neovaxe = require("neovaxe")
+
+
 

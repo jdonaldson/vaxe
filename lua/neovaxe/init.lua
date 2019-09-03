@@ -403,7 +403,7 @@ end
 NeoVaxe.new = {}
 _hx_exports["NeoVaxe"] = NeoVaxe
 NeoVaxe.main = function() 
-  _G.print("vaxe initialized correctly");
+  _G.print("vaxe initialized correctly!!");
 end
 
 String.new = function(string) 
