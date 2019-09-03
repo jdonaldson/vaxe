@@ -24,18 +24,6 @@ snippet for
 	for( ${1:var} in ${2:itr} ){
 		${3}
 	}
-snippet class HAXE
-	class `expand('%:t:r')` {
-
-		public function new(${1}) {
-			${2://initialize variables}
-		}
-
-		static function main() {
-			${3:trace("hello world");}
-		}
-
-	}
 snippet main
 	static function main() {
 		${1:trace("hello world");}
@@ -44,32 +32,6 @@ snippet new
 	public function new(${1:arg}) {
 		super($1);
 	}
-snippet fn func
-	function(${1:arg}) {
-		${2}
-	}
-snippet fu function
-	function ${1:name}(${2:arg}) {
-		${3}
-	}
-snippet prifu private function
-	private function ${1:name}(${2:arg}) {
-		${3}
-	}
-snippet pufu public function
-	public function ${1:name}(${2:arg}) {
-		${3}
-	}
-snippet pustafu public static function
-	public static function ${1:name}(${2:arg}) {
-		${3}
-	}
-snippet pristafu private static function
-	private static function ${1:name}(${2:arg}) {
-		${3}
-	}
-snippet trace
-	trace(${1});
 snippet desc function
 	trace(${1} + " is the value for $1");
 snippet cast
