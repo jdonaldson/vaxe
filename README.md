@@ -28,6 +28,10 @@ Plug 'jdonaldson/vaxe', {'branch' : 'neovaxe', 'do' : 'sh install.sh'}
 Plug 'neoclide/coc.nvim'
     let g:coc_global_extensions = ['coc-snippets']
 
+"add snippets and add additional directories for vaxe snippets
+Plug 'SirVer/ultisnips'
+    let g:UltiSnipsSnippetDirectories=["UltiSnips", "bundle/UltiSnips/UltiSnips"]
+
 call plug#end()
 ```
 
@@ -76,7 +80,7 @@ may produce jarring color combinations on older colorschemes.  It is recommended
 to use a colorscheme that handles these new features.  The screenshots here use
 a color scheme called [gruvbox by morhetz](https://github.com/morhetz/gruvbox).
 
-## Completions - Coc.nvim 
+## Completions - Coc.nvim
 
 Coc.nvim ([by neoclide][https://github.com/neoclide/coc.nvim]) is a full
 featured intellisense engine.  Vaxe will detect and automatically configure
