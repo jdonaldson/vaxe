@@ -1,4 +1,5 @@
 import lua.Lua;
+import vim.api.Api;
 
 @:expose
 class NeoVaxe {
