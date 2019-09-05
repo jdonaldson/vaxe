@@ -1,8 +1,9 @@
 package vim.api;
+
 import lua.Table;
 import haxe.Constraints.Function;
 
-@:native("vim.api.nvim")
+@:native("api")
 extern class Nvim {
     @:native("nvim_command")
     public static function command(cmd : String) : Void;

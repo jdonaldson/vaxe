@@ -55,7 +55,6 @@ local Math = _hx_e()
 local NeoVaxe = _hx_e()
 local String = _hx_e()
 local Std = _hx_e()
-__haxe_Log = _hx_e()
 __lua_Boot = _hx_e()
 
 local _hx_bind, _hx_bit, _hx_staticToInstance, _hx_funcToField, _hx_maxn, _hx_print, _hx_apply_self, _hx_box_mr, _hx_bit_clamp, _hx_table, _hx_bit_raw
@@ -404,7 +403,6 @@ end
 NeoVaxe.new = {}
 _hx_exports["NeoVaxe"] = NeoVaxe
 NeoVaxe.main = function() 
-  __haxe_Log.trace(Std.string(Std.string(vim.api.functions())) .. Std.string(" is the value for Api.functions()"), _hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true},fileName="src/NeoVaxe.hx",lineNumber=7,className="NeoVaxe",methodName="main"}));
   _G.print("vaxe initialized correctly!");
 end
 
@@ -592,29 +590,6 @@ Std.int = function(x)
   end;
 end
 
-__haxe_Log.new = {}
-__haxe_Log.formatOutput = function(v,infos) 
-  local str = Std.string(v);
-  if (infos == nil) then 
-    do return str end;
-  end;
-  local pstr = Std.string(Std.string(infos.fileName) .. Std.string(":")) .. Std.string(infos.lineNumber);
-  if (infos.customParams ~= nil) then 
-    local _g = 0;
-    local _g1 = infos.customParams;
-    while (_g < _g1.length) do 
-      local v1 = _g1[_g];
-      _g = _g + 1;
-      str = Std.string(str) .. Std.string((Std.string(", ") .. Std.string(Std.string(v1))));
-    end;
-  end;
-  do return Std.string(Std.string(pstr) .. Std.string(": ")) .. Std.string(str) end;
-end
-__haxe_Log.trace = function(v,infos) 
-  local str = __haxe_Log.formatOutput(v, infos);
-  _hx_print(str);
-end
-
 __lua_Boot.new = {}
 __lua_Boot.isArray = function(o) 
   if (_G.type(o) == "table") then 
@@ -787,8 +762,6 @@ local _hx_static_init = function()
   
   
 end
-
-_hx_print = print or (function() end)
 
 _hx_wrap_if_string_field = function(o, fld)
   if _G.type(o) == 'string' then
