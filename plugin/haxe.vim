@@ -113,6 +113,7 @@ let g:vaxe_default_parent_search_patterns
             \= Default('g:vaxe_default_parent_search_patterns'
             \, [g:vaxe_prefer_lime, g:vaxe_prefer_flow, g:vaxe_prefer_openfl, g:vaxe_prefer_hxml, "*.hxml"])
 let g:vaxe_set_makeprg = Default('g:vaxe_set_makeprg', 1)
+let g:vaxe_no_automatic_hxml = Default('g:vaxe_no_automatic_hxml', 0)
 
 " Supported 3rd party plugin options
 let g:vaxe_enable_airline_defaults = Default('g:vaxe_enable_airline_defaults', 1)

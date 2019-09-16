@@ -378,7 +378,10 @@ SETTINGS                                        *vaxe-settings*
 
 *g:vaxe_skip_hxml*      Setting this variable will skip checks for a valid hxml
                         file.  Use this if you wish to use an alternative build
-                        system and are willing to forgo completion support.
+                        system and are willing to forgot completion support.
+
+*g:no_automatic_hxml*   Setting this variable will skip checks for a valid hxml
+                        file when compiling.
 
 *g:vaxe_completion_alter_signature*
                         Changes the method signatures in autocompletions to a
