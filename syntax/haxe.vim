@@ -57,10 +57,9 @@ syn match haxeOperator "\.\@<!\(\.\|\.\.\.\)\.\@!"
 syn match haxeError "\.\@<!\.\.\.\@!"
 syn match haxeError "\.\{4,\}"
 
-" match <,>,<<,>>,>>> as operators and more than 3 < or more than 4 > as errors
+" match <,>,<<,>>,>>> as operators
 syn match haxeOperator ">\@<!\(>\|>>\|>>>\)>\@!"
 syn match haxeOperator "<\@<!\(<\|<<\)<\@!"
-syn match haxeError ">\{4,\}\|<\{3,}"
 
 " match &| in 1 or 2 as operator, and more than 2 as error
 " match &&= and ||= as errors
