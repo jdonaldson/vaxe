@@ -316,7 +316,7 @@ off of [his version][github 12].
 [github 8]: https://github.com/Valloric/YouCompleteMe
 [github 9]: https://github.com/Shougo/neocomplcache
 [haxe]: http://www.haxe.org
-[haxe 2]: http://haxe.org/doc/compiler
+[haxe 2]: https://haxe.org/manual/compiler-usage-hxml.html
 [haxe 3]: http://haxe.org/manual/completion
 [haxe 4]: http://haxe.org/forum/thread/3395#nabble-td3443583
 [imgur]: http://i.imgur.com/JFvze.png
