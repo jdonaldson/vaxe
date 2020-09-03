@@ -154,6 +154,7 @@ syn match haxeCompilerMeta "@:\(
     \\|final
     \\|font
     \\|forward
+    \\|forwardStatics
     \\|from
     \\|functionCode
     \\|functionTailCode
