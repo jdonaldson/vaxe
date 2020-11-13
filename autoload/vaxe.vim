@@ -666,4 +666,3 @@ function! s:FormatDisplayCompletion(base)
 
     return output
 endfunction
-
