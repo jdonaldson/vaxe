@@ -7,13 +7,14 @@ function! vaxe#util#ParentSearch(patterns, dir)
     let last_dir = ''
     while(current_dir != last_dir)
         let last_dir = current_dir
+        let current_dir = join(split(current_dir, ","), "\\,")
         for p in a:patterns
             let match = globpath(current_dir, p)
             if match != ''
                 return match
             endif
         endfor
-        let current_dir = fnamemodify(current_dir, ":p:h:h")
+        let current_dir = fnamemodify(last_dir, ":p:h:h")
     endwhile
     return ''
 endfunction
