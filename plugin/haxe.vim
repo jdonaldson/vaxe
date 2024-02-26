@@ -111,7 +111,7 @@ let g:vaxe_prefer_openfl             = Default('g:vaxe_prefer_openfl', "project.
 let g:vaxe_prefer_first_in_directory = Default('g:vaxe_prefer_first_in_directory', 1)
 let g:vaxe_default_parent_search_patterns
             \= Default('g:vaxe_default_parent_search_patterns'
-            \, [g:vaxe_prefer_lime, g:vaxe_prefer_flow, g:vaxe_prefer_openfl, g:vaxe_prefer_hxml, "*.hxml"])
+            \, [g:vaxe_prefer_flow, g:vaxe_prefer_openfl, g:vaxe_prefer_hxml, "*.hxml"])
 let g:vaxe_set_makeprg = Default('g:vaxe_set_makeprg', 1)
 
 " Supported 3rd party plugin options
