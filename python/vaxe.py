@@ -54,13 +54,13 @@ def complete(complete_output_var, output_var, base_var, alter_var, collapse_var)
                 # strip html
                 info = remove_html_markup(info)
                 # split and collapse extra whitespace
-                info = [re.sub(r"\\s+", " ", s.strip()) for s in info.split("\n")]
+                info = [re.sub(r"\s+", " ", s.strip()) for s in info.split("\n")]
 
             abbr = word
             kind = "v"
             if menu == "":
                 kind = "m"
-            elif re.search("\\->", menu):
+            elif re.search(r"\->", menu):
                 kind = "f"  # if it has a ->
                 if alter_sig:
                     menu = alter_signature(menu)
@@ -149,7 +149,7 @@ def alter_signature(sig):
         else:
             last_string += c
 
-    final_expr = final_expr + re.sub("\\s*->\\s*", ",", last_string)
+    final_expr = final_expr + re.sub(r"\s*->\s*", ",", last_string)
     parts = final_expr.split(",")
     ret_val = parts.pop()
     if ret_val == "Void":
